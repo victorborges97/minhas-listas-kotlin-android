@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--   cor para a barra de aplicativos e outros elementos primários da IU -->
+    <color name="colorPrimary">#FFF</color>
+
+    <!--   uma variante mais escura da cor primária, usada para a barra
+        de status (no Android 5.0+) e barras de aplicativos contextuais -->
+    <color name="colorPrimaryDark">#232523</color>
+
+    <!--   uma cor secundária para controles como caixas de seleção e campos de texto -->
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="appPrimary">#00AAFF</color>
+    <color name="appTextPrimary">#5A5A5A</color>
+    <color name="appTextSecundary">#8D8D8D</color>
+    <color name="appColorBgText">#F1F1F1</color>
+    <color name="appBgTextInput">#0082C2</color>
+    <color name="appTransparent">#000082C2</color>
+
+</resources>

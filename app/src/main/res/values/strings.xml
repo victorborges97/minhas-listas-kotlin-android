@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Minhas Listas</string>
+    <string name="btn_login">Login</string>
+    <string name="text_email">E-mail</string>
+    <string name="text_senha">Senha</string>
+    <string name="logo_app">Minhas Listas</string>
+    <string name="btn_register">Register</string>
+    <string name="comece_a_adicionar_suas_listas">Comece a adicionar suas listas</string>
+    <string name="mega_f_cil">é mega fácil</string>
+    <string name="listas_de_compra">Listas de Compra</string>
+    <string name="n_o_tem_conta_inscreva_se_agora">Não tem conta? Inscreva-se agora!</string>
+</resources>
