@@ -1,0 +1,34 @@
+{
+  "project_info": {
+    "project_number": "23352328487",
+    "project_id": "minhas-listas-530bf",
+    "storage_bucket": "minhas-listas-530bf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:23352328487:android:1beebe9383940f1426a902",
+        "android_client_info": {
+          "package_name": "com.borges.minhaslistas"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJWdEr5zuw_YXc1Ax5ZnIzNNvE0mvd9p8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "23352328487-c4cmt2cjnj9c14cuarv532pnfu1eoahv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

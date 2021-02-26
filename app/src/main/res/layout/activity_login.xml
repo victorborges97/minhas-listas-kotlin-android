@@ -9,6 +9,7 @@
     android:paddingRight="35dp"
     tools:context=".LoginActivity">
 
+    <!--LOGO-->
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/logo"
         android:layout_width="wrap_content"
@@ -19,6 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!--Email-->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/container_email"
         android:layout_width="match_parent"
@@ -32,7 +34,7 @@
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/text_input_email"
+            android:id="@+id/input_text_email_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/base_borderradius"
@@ -45,6 +47,7 @@
             android:textColorHint="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!--Email-->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/container_password"
         android:layout_width="match_parent"
@@ -59,7 +62,7 @@
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/input_text_password"
+            android:id="@+id/input_text_password_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/base_borderradius"
@@ -71,6 +74,7 @@
             android:textColor="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!--Botão de Login E-mail e Senha-->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
@@ -79,13 +83,23 @@
         android:background="@drawable/base_borderradius"
         android:backgroundTint="@color/white"
         android:fontFamily="@font/montserrat"
-        android:hint="@string/btn_login"
+        android:hint="Entrar"
         android:textColorHint="@color/appPrimary"
 
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/container_password" />
+
+    <!--Botão de Login Gmail-->
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/sign_in_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/btn_register"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_register"
@@ -103,12 +117,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
+    <ProgressBar
+        android:id="@+id/progressBar_login"
+        style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
+        android:progressTint="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/btn_register"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_login"
+        android:visibility="invisible"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

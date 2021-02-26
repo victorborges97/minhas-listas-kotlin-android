@@ -10,7 +10,7 @@
     tools:context=".RegisterActivity">
 
 
-    <!--Nome-->
+
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/text_header"
         android:layout_width="wrap_content"
@@ -27,6 +27,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!--Nome-->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/container_nome"
         android:layout_width="match_parent"
@@ -40,7 +41,7 @@
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/input_text_nome"
+            android:id="@+id/input_text_nome_register"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/base_borderradius"
@@ -52,6 +53,7 @@
             android:textColor="@color/white"
             android:textColorHint="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
+
     <!--Email-->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/container_email"
@@ -66,7 +68,7 @@
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/input_text_email"
+            android:id="@+id/input_text_email_register"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="@font/montserrat"
@@ -74,9 +76,10 @@
             android:backgroundTint="@color/appBgTextInput"
             android:imeOptions="actionNext"
             android:importantForAutofill="no"
-            android:inputType="textEmailAddress"
+            android:inputType="textEmailSubject"
             android:textColor="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
+
     <!--Senha-->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/container_password"
@@ -91,7 +94,7 @@
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/input_text_password"
+            android:id="@+id/input_text_password_register"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/base_borderradius"
@@ -103,6 +106,7 @@
             android:inputType="textPassword"
             android:textColor="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
+
     <!--Confirma senha-->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/container_confirSenha"
@@ -132,7 +136,7 @@
 
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_register"
+        android:id="@+id/btn_newregister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -161,6 +165,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:progressTint="#FFFFFF"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/btn_voltar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_register" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
