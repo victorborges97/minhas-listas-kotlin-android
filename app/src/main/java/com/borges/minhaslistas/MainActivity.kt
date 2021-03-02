@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -14,8 +15,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.String
+import java.sql.Timestamp
+import java.text.DateFormat
+import java.util.*
+import kotlin.collections.HashMap
 
 
 class MainActivity : AppCompatActivity() {
@@ -25,6 +31,7 @@ class MainActivity : AppCompatActivity() {
     private var id: kotlin.String? = null
     private var email: kotlin.String? = null
     private var url_photo: kotlin.String? = null
+    private var TAG = "MAIN"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +43,38 @@ class MainActivity : AppCompatActivity() {
             .build()
         mAuth = FirebaseAuth.getInstance();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        var db = FirebaseFirestore.getInstance()
+        val c = Calendar.getInstance()
+        val data = c.time;
+        val brasil = Locale("pt", "BR")
+        val f2: DateFormat = DateFormat.getDateInstance(DateFormat.FULL, brasil)
+
+        // Create a new user with a first and last name
+        // Create a new user with a first and last name
+        val itens = hashMapOf(
+        "comprado" to false,
+        "nome" to "Caixa de Leite",
+        "preco" to 4.30,
+        "qt" to 2,
+        "total" to 2*4.30,
+        )
+
+        val user = hashMapOf(
+        "created" to f2.format(data),
+        "nomeDaLista" to "Mês Março",
+        "itens" to arrayListOf(
+                itens,
+                itens
+            ),
+        )
+
+        fab.setOnClickListener(View.OnClickListener {
+            val intent = Intent(applicationContext, AddActivity::class.java)
+            startActivity(intent)
+        })
+
+
     }
 
     override fun onStart() {
@@ -87,6 +126,14 @@ class MainActivity : AppCompatActivity() {
 
     fun signOut(item: MenuItem) {
         logout()
+    }
+
+    private fun createData(){
+//        db.collection("lists")
+//            .document("$id")
+//            .set(user)
+//            .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
+//            .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
     }
 
 //    .collection("iDIcdI76iIZ4iJloDM3n1vnX4Oo2")
