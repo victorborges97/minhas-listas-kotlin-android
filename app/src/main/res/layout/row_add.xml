@@ -1,54 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="4dp"
-        android:backgroundTint="#F37777"
-        android:contentDescription="EXCLUIR"
-        android:src="@drawable/ic_clear"
-        android:tint="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/nome"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_margin="4dp">
 
-    <TextView
-        android:id="@+id/nome"
-        android:layout_width="wrap_content"
-        android:layout_height="28dp"
-        android:layout_marginStart="40dp"
-        android:text="Leite"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/buttom_delete"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:backgroundTint="#F37777"
+            android:contentDescription="EXCLUIR"
+            android:src="@drawable/ic_clear"
+            android:layout_marginEnd="20dp"
+            android:tint="@color/white" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/quantidade"
-        android:layout_width="65dp"
-        android:layout_height="28dp"
-        android:layout_marginStart="90dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/campo_item_input"
-        android:hint="qtde"
-        android:inputType="number"
-        app:layout_constraintEnd_toStartOf="@+id/preco"
-        app:layout_constraintStart_toEndOf="@+id/nome"
-        app:layout_constraintTop_toTopOf="parent" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_view_name_item"
+            android:layout_width="wrap_content"
+            android:minWidth="180dp"
+            android:layout_height="28dp"
+            android:text="Leite"
+            android:textSize="18sp"
+            android:typeface="normal" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/preco"
-        android:layout_width="65dp"
-        android:layout_height="28dp"
-        android:layout_marginEnd="5dp"
-        android:background="@drawable/campo_item_input"
-        android:hint="00.00"
-        android:inputType="numberDecimal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/text_view_quantidade_item"
+            android:layout_width="65dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/campo_item_input"
+            android:hint="qtde"
+            android:inputType="number"
+            android:textAlignment="center" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/text_view_preco_item"
+            android:layout_width="65dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/campo_item_input"
+            android:hint="00.00"
+            android:inputType="numberDecimal"
+            android:textAlignment="center"
+            tools:ignore="RtlCompat" />
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -21,15 +21,26 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="RtlSymmetry" />
 
-    <ListView
-        android:id="@+id/add_listview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <!--RecicleView-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycle_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:padding="4dp"
         app:layout_constraintBottom_toTopOf="@+id/search"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nomeDaLista"
-        tools:ignore="MissingConstraints" />
+        tools:listitem="@layout/row_add"/>
+
+    <!--    <ListView-->
+    <!--        android:id="@+id/add_listview"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/search"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/nomeDaLista"-->
+    <!--        tools:ignore="MissingConstraints" />-->
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/search"

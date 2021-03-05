@@ -35,6 +35,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/input_text_email_login"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/base_borderradius"
