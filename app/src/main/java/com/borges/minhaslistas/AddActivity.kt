@@ -65,12 +65,6 @@ class AddActivity : AppCompatActivity() {
 //        }
 //    }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.main, menu)
-        return true
-    }
-
     @SuppressLint("RestrictedApi")
     private fun setBackgroundActionBar() {
         this.supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.appPrimary)))
