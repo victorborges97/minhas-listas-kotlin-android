@@ -17,11 +17,11 @@ class DataAdapter : RecyclerView.Adapter<DataAdapter.DataAdapterViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: DataAdapterViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        TODO("Not yet implemented TESTE")
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        TODO("Not yet implemented TESTE")
     }
 
     class DataAdapterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
