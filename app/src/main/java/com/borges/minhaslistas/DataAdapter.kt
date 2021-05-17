@@ -5,9 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.borges.minhaslistas.model.DataList
 import com.google.android.material.textfield.TextInputEditText
 
-class DataAdapter : RecyclerView.Adapter<DataAdapter.DataAdapterViewHolder>() {
+class DataAdapter(private val listData: ArrayList<DataList>) : RecyclerView.Adapter<DataAdapter.DataAdapterViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataAdapterViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.row_add,
@@ -17,17 +18,21 @@ class DataAdapter : RecyclerView.Adapter<DataAdapter.DataAdapterViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: DataAdapterViewHolder, position: Int) {
-        TODO("Not yet implemented TESTE")
+        val currentItem = listData[position]
+
+        holder.bind(currentItem)
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented TESTE")
+        return listData.size
     }
 
     class DataAdapterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val name: TextView = itemView.findViewById(R.id.text_view_name_item)
-        val quantidade: TextInputEditText = itemView.findViewById(R.id.text_view_quantidade_item)
-        val preco: TextInputEditText = itemView.findViewById(R.id.text_view_preco_item)
+
+        fun bind(currentItem: DataList) {
+
+        }
     }
 
 }

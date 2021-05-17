@@ -8,7 +8,11 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
+import com.borges.minhaslistas.model.DataList
+import com.borges.minhaslistas.model.Item
+import com.borges.minhaslistas.model.List
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -16,22 +20,29 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.String
+import java.sql.Array
 import java.sql.Timestamp
 import java.text.DateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mGoogleSignInClient: GoogleSignInClient
+    private lateinit var db: FirebaseFirestore
     private var nome: kotlin.String? = null
     private var id: kotlin.String? = null
     private var email: kotlin.String? = null
     private var url_photo: kotlin.String? = null
     private var TAG = "MAIN"
+
+    private lateinit var newItens: ArrayList<DataList>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        var db = FirebaseFirestore.getInstance()
+        db = FirebaseFirestore.getInstance()
         val c = Calendar.getInstance()
         val data = c.time;
         val brasil = Locale("pt", "BR")
@@ -73,6 +84,8 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(applicationContext, AddActivity::class.java)
             startActivity(intent)
         })
+
+        getListsData()
 
 
     }
@@ -136,7 +149,40 @@ class MainActivity : AppCompatActivity() {
 //            .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
     }
 
-//    .collection("iDIcdI76iIZ4iJloDM3n1vnX4Oo2")
-//    .orderBy("nomeDaLista", "asc")
+    private fun getListsData() {
+        newItens = arrayListOf<DataList>()
+
+        val listsRef = FirebaseFirestore.getInstance()
+
+        val docRef = listsRef.collection("lists")
+        docRef.addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                Log.w(TAG, "Listen failed.", e)
+                return@addSnapshotListener
+            }
+
+            val cities = ArrayList<DataList>()
+            for (doc in snapshot!!) {
+                var nome: kotlin.String = doc.data["nomeDaLista"] as kotlin.String
+                var created: kotlin.String = doc.data["created"] as kotlin.String
+                var itens: Item = doc.data["itens"] as Item
+
+                val user = hashMapOf(
+                    "created" to created,
+                    "nomeDaLista" to nome,
+                    "itens" to itens
+                )
+
+//                cities.add(user)
+
+                Log.d(TAG, "Current: ${user}")
+            }
+        }
+    }
 }
+
+
+
+
+
 
