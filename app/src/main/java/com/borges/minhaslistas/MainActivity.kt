@@ -155,29 +155,42 @@ class MainActivity : AppCompatActivity() {
         val listsRef = FirebaseFirestore.getInstance()
 
         val docRef = listsRef.collection("lists")
-        docRef.addSnapshotListener { snapshot, e ->
-            if (e != null) {
-                Log.w(TAG, "Listen failed.", e)
-                return@addSnapshotListener
-            }
 
-            val cities = ArrayList<DataList>()
-            for (doc in snapshot!!) {
-                var nome: kotlin.String = doc.data["nomeDaLista"] as kotlin.String
-                var created: kotlin.String = doc.data["created"] as kotlin.String
-                var itens: Item = doc.data["itens"] as Item
+        val allEntities = mutableListOf<DataList>()
 
-                val user = hashMapOf(
-                    "created" to created,
-                    "nomeDaLista" to nome,
-                    "itens" to itens
-                )
-
-//                cities.add(user)
-
-                Log.d(TAG, "Current: ${user}")
+        docRef.get().addOnSuccessListener { documents ->
+            documents.forEach {
+                it.toObject(DataList::class.java).let { entity ->
+                    allEntities.addAll(listOf(entity))
+                }
             }
         }
+
+        Log.d(TAG, allEntities.toString())
+
+//        docRef.addSnapshotListener { snapshot, e ->
+//            if (e != null) {
+//                Log.w(TAG, "Listen failed.", e)
+//                return@addSnapshotListener
+//            }
+//
+//            val cities = ArrayList<DataList>()
+//            for (doc in snapshot!!) {
+//                var nome: kotlin.String = doc.data["nomeDaLista"] as kotlin.String
+//                var created: kotlin.String = doc.data["created"] as kotlin.String
+//                var itens: Item = doc.data["itens"] as Item
+//
+//                val user = hashMapOf(
+//                    "created" to created,
+//                    "nomeDaLista" to nome,
+//                    "itens" to itens
+//                )
+//
+////                cities.add(user)
+//
+//                Log.d(TAG, "Current: ${user}")
+//            }
+//        }
     }
 }
 
