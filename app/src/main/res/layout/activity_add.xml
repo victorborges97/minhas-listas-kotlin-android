@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddActivity">
+    tools:context=".views.AddActivity">
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/nomeDaLista"
@@ -31,16 +31,6 @@
         app:layout_constraintBottom_toTopOf="@+id/search"
         app:layout_constraintTop_toBottomOf="@+id/nomeDaLista"
         tools:listitem="@layout/row_add"/>
-
-    <!--    <ListView-->
-    <!--        android:id="@+id/add_listview"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        app:layout_constraintBottom_toTopOf="@+id/search"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/nomeDaLista"-->
-    <!--        tools:ignore="MissingConstraints" />-->
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/search"

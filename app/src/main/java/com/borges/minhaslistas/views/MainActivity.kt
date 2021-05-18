@@ -1,4 +1,4 @@
-package com.borges.minhaslistas
+package com.borges.minhaslistas.views
 
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
@@ -8,11 +8,9 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
+import com.borges.minhaslistas.R
 import com.borges.minhaslistas.model.DataList
-import com.borges.minhaslistas.model.Item
-import com.borges.minhaslistas.model.List
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -20,17 +18,11 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreException
-import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.String
-import java.sql.Array
-import java.sql.Timestamp
 import java.text.DateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
-
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
@@ -52,6 +44,7 @@ class MainActivity : AppCompatActivity() {
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
+
         mAuth = FirebaseAuth.getInstance();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
@@ -61,7 +54,6 @@ class MainActivity : AppCompatActivity() {
         val brasil = Locale("pt", "BR")
         val f2: DateFormat = DateFormat.getDateInstance(DateFormat.FULL, brasil)
 
-        // Create a new user with a first and last name
         // Create a new user with a first and last name
         val itens = hashMapOf(
         "comprado" to false,
@@ -156,41 +148,15 @@ class MainActivity : AppCompatActivity() {
 
         val docRef = listsRef.collection("lists")
 
-        val allEntities = mutableListOf<DataList>()
-
         docRef.get().addOnSuccessListener { documents ->
             documents.forEach {
+
                 it.toObject(DataList::class.java).let { entity ->
-                    allEntities.addAll(listOf(entity))
+                    newItens.add(entity)
                 }
             }
+            Log.d(TAG, newItens.toString())
         }
-
-        Log.d(TAG, allEntities.toString())
-
-//        docRef.addSnapshotListener { snapshot, e ->
-//            if (e != null) {
-//                Log.w(TAG, "Listen failed.", e)
-//                return@addSnapshotListener
-//            }
-//
-//            val cities = ArrayList<DataList>()
-//            for (doc in snapshot!!) {
-//                var nome: kotlin.String = doc.data["nomeDaLista"] as kotlin.String
-//                var created: kotlin.String = doc.data["created"] as kotlin.String
-//                var itens: Item = doc.data["itens"] as Item
-//
-//                val user = hashMapOf(
-//                    "created" to created,
-//                    "nomeDaLista" to nome,
-//                    "itens" to itens
-//                )
-//
-////                cities.add(user)
-//
-//                Log.d(TAG, "Current: ${user}")
-//            }
-//        }
     }
 }
 

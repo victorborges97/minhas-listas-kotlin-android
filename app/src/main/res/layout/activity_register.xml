@@ -7,7 +7,7 @@
     android:background="@color/appPrimary"
     android:paddingLeft="35dp"
     android:paddingRight="35dp"
-    tools:context=".RegisterActivity">
+    tools:context=".views.RegisterActivity">
 
 
 

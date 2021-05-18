@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:background="@color/appPrimary"
+    android:layout_marginVertical="5dp"
+    android:padding="5dp">
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_view_name_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Testando minhas listas qual nome vai ficar grande pra caramba"
+            android:textSize="18sp"
+            android:layout_marginStart="10dp"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:typeface="normal" />
+
+</LinearLayout>
