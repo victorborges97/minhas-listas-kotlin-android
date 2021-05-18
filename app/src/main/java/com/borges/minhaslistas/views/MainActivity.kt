@@ -1,5 +1,6 @@
 package com.borges.minhaslistas.views
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -8,9 +9,13 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.borges.minhaslistas.R
+import com.borges.minhaslistas.model.DataItem
 import com.borges.minhaslistas.model.DataList
+import com.borges.minhaslistas.recycle.MainAdapter
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -22,19 +27,18 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.String
 import java.text.DateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var db: FirebaseFirestore
-    private var nome: kotlin.String? = null
-    private var id: kotlin.String? = null
-    private var email: kotlin.String? = null
+    private var nome: kotlin.String? = ""
+    private var id: kotlin.String? = ""
+    private var email: kotlin.String? = ""
     private var url_photo: kotlin.String? = null
     private var TAG = "MAIN"
 
-    private lateinit var newItens: ArrayList<DataList>
+    private lateinit var newItens: MutableList<DataList>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,55 +51,35 @@ class MainActivity : AppCompatActivity() {
 
         mAuth = FirebaseAuth.getInstance();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
         db = FirebaseFirestore.getInstance()
-        val c = Calendar.getInstance()
-        val data = c.time;
-        val brasil = Locale("pt", "BR")
-        val f2: DateFormat = DateFormat.getDateInstance(DateFormat.FULL, brasil)
-
-        // Create a new user with a first and last name
-        val itens = hashMapOf(
-        "comprado" to false,
-        "nome" to "Caixa de Leite",
-        "preco" to 4.30,
-        "qt" to 2,
-        "total" to 2*4.30,
-        )
-
-        val user = hashMapOf(
-        "created" to f2.format(data),
-        "nomeDaLista" to "Mês Março",
-        "itens" to arrayListOf(
-                itens,
-                itens
-            ),
-        )
 
         fab.setOnClickListener(View.OnClickListener {
             val intent = Intent(applicationContext, AddActivity::class.java)
             startActivity(intent)
+//            createData()
         })
 
-        getListsData()
-
-
+        recycle_main.layoutManager = LinearLayoutManager(this)
+        recycle_main.setHasFixedSize(true)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onStart() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser: FirebaseUser? = mAuth.getCurrentUser()
+        val currentUser: FirebaseUser? = mAuth.currentUser
 
-        this.nome = currentUser?.displayName.toString()
-        this.id = currentUser?.uid.toString()
-        this.email = currentUser?.email.toString()
-        this.url_photo = String.valueOf(currentUser?.photoUrl)
+        val nome = currentUser?.displayName.toString()
+        val id = currentUser?.uid.toString()
+        val email = currentUser?.email.toString()
+        val url_photo = String.valueOf(currentUser?.photoUrl)
 
-        Log.i("MAIN", currentUser?.displayName.toString())
+        if(id != null && id != "null"){
+            getListsData(id)
+        }
 
         if(nome != null && nome != "null") {
-            text_bem.text = "Seja bem vindo, "+nome
+            text_bem.text = "Seja bem vindo, $nome"
         } else {
             text_bem.text = "Seja bem vindo"
         }
@@ -134,29 +118,60 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun createData(){
-//        db.collection("lists")
-//            .document("$id")
-//            .set(user)
-//            .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
-//            .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
+        val currentUser: FirebaseUser? = mAuth.currentUser
+
+        val c = Calendar.getInstance()
+        val data = c.time;
+        val brasil = Locale("pt", "BR")
+        val f2: DateFormat = DateFormat.getDateInstance(DateFormat.FULL, brasil)
+
+        // Create a new user with a first and last name
+        val itens = arrayListOf<DataItem>()
+
+        itens.add(DataItem(comprado = false, nome = "Caixa de leite", preco = 4.30, qt = 2))
+        itens.add(DataItem(comprado = false, nome = "Mussarela", preco = 8.50, qt = 1))
+        itens.add(DataItem(comprado = false, nome = "Manteiga", preco = 5.30, qt = 1))
+
+        val user = hashMapOf(
+            "created" to f2.format(data),
+            "nomeDaLista" to "Mês de Junho",
+            "itens" to itens
+        )
+
+        db.collection(currentUser?.uid.toString())
+            .document()
+            .set(user)
+            .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
+            .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
     }
 
-    private fun getListsData() {
-        newItens = arrayListOf<DataList>()
+    private fun getListsData(id: kotlin.String) {
+        newItens = mutableListOf<DataList>()
+
+        val currentUser: FirebaseUser? = mAuth.currentUser
 
         val listsRef = FirebaseFirestore.getInstance()
+        val docRef = listsRef.collection(id)
+        docRef
+            .get()
+            .addOnSuccessListener { documents ->
+                if(documents.size() != 0){
+                    documents.forEach {
+                        it.toObject(DataList::class.java).let { entity ->
+                            entity.id = it.id
+                            newItens.add(entity)
+                        }
+                    }
+                    text_bem.visibility = View.INVISIBLE
+                    text_home.visibility = View.INVISIBLE
+                    text_facil.visibility = View.INVISIBLE
 
-        val docRef = listsRef.collection("lists")
-
-        docRef.get().addOnSuccessListener { documents ->
-            documents.forEach {
-
-                it.toObject(DataList::class.java).let { entity ->
-                    newItens.add(entity)
+                    recycle_main.adapter = MainAdapter(newItens)
                 }
             }
-            Log.d(TAG, newItens.toString())
-        }
+            .addOnFailureListener {
+                Toast.makeText(this, "Error ao carregar a lista: $it", Toast.LENGTH_SHORT).show()
+            }
     }
 }
 

@@ -11,7 +11,7 @@
 
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/text_view_name_item"
+            android:id="@+id/main_nomeDaLista"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="Testando minhas listas qual nome vai ficar grande pra caramba"
