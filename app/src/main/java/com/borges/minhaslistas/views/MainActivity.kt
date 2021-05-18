@@ -20,6 +20,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -37,6 +38,8 @@ class MainActivity : AppCompatActivity() {
     private var email: kotlin.String? = ""
     private var url_photo: kotlin.String? = null
     private var TAG = "MAIN"
+
+    private var idCreated: kotlin.String? = ""
 
     private lateinit var newItens: MutableList<DataList>
 
@@ -92,6 +95,13 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item?.itemId == R.id.menu_sair) {
+            signOut()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun setBackgroundActionBar() {
         this.supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.appPrimary)))
     }
@@ -113,7 +123,7 @@ class MainActivity : AppCompatActivity() {
         finish()
     }
 
-    fun signOut(item: MenuItem) {
+    fun signOut() {
         logout()
     }
 
@@ -123,32 +133,36 @@ class MainActivity : AppCompatActivity() {
         val c = Calendar.getInstance()
         val data = c.time;
         val brasil = Locale("pt", "BR")
-        val f2: DateFormat = DateFormat.getDateInstance(DateFormat.FULL, brasil)
+        val f2: DateFormat = DateFormat.getDateInstance(DateFormat.DATE_FIELD, brasil)
 
         // Create a new user with a first and last name
         val itens = arrayListOf<DataItem>()
 
-        itens.add(DataItem(comprado = false, nome = "Caixa de leite", preco = 4.30, qt = 2, total = 2*4.30))
-        itens.add(DataItem(comprado = false, nome = "Mussarela", preco = 8.50, qt = 1, total = 1*8.50))
-        itens.add(DataItem(comprado = false, nome = "Manteiga", preco = 5.30, qt = 1, total = 1*5.30))
+//        itens.add(DataItem(comprado = false, nome = "Caixa de leite", preco = 4.30, qt = 2, total = 2*4.30))
+//        itens.add(DataItem(comprado = false, nome = "Mussarela", preco = 8.50, qt = 1, total = 1*8.50))
+//        itens.add(DataItem(comprado = false, nome = "Manteiga", preco = 5.30, qt = 1, total = 1*5.30))
 
         val user = hashMapOf(
             "created" to f2.format(data),
-            "nomeDaLista" to "Mês de Junho",
+            "nomeDaLista" to "Mês de Maio",
             "itens" to itens
         )
 
+        //f2.format(data) -> data anterior ao Timestamp
+
         db.collection(currentUser?.uid.toString())
-            .document()
-            .set(user)
-            .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
-            .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
+            .add(user)
+            .addOnSuccessListener {
+                idCreated = it.id
+                Log.d(TAG, "DocumentSnapshot written with ID: ${it.id}")
+            }
+            .addOnFailureListener {
+                    e -> Log.w(TAG, "Error writing document", e)
+            }
     }
 
     private fun getListsData(id: kotlin.String) {
         newItens = mutableListOf<DataList>()
-
-        val currentUser: FirebaseUser? = mAuth.currentUser
 
         val listsRef = FirebaseFirestore.getInstance()
         val docRef = listsRef.collection(id)

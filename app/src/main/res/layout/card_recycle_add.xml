@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_marginVertical="4dp">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/buttom_delete"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="14dp"
+        android:backgroundTint="#00AAFF"
+        android:contentDescription="@string/excluir"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_view_name_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:textSize="19sp"
+        android:typeface="normal"
+        android:textColor="@color/textColorItemList"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/buttom_delete"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Caixa de Leite"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_view_quantidade_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:paddingVertical="3dp"
+        android:paddingHorizontal="8dp"
+        android:background="@drawable/campo_item_input"
+        android:inputType="number"
+        android:textColor="@color/textColorItemQtValor"
+        android:textSize="12sp"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/text_view_preco_item"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="qtde"/>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/text_view_preco_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="14dp"
+        android:paddingVertical="3dp"
+        android:paddingHorizontal="8dp"
+        android:background="@drawable/campo_item_input"
+        android:inputType="numberDecimal"
+        android:textColor="@color/textColorItemQtValor"
+        android:textSize="12sp"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="R$ 0.00" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

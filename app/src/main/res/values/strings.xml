@@ -12,4 +12,11 @@
     <string name="default_web_client_id">23352328487-c4cmt2cjnj9c14cuarv532pnfu1eoahv.apps.googleusercontent.com</string>
     <string name="Title_menu_main">Menu</string>
     <string name="adicionar_item">Adicionar item</string>
+    <string name="excluir">EXCLUIR</string>
+    <string name="total_carrinho">Total carrinho: R$</string>
+    <string name="nome_dialog">Nome:</string>
+    <string name="quantidade_dialog">Quantidade:</string>
+    <string name="valor_un_dialog">Valor UN:</string>
+    <string name="btn_dialog_cancelar">Cancelar</string>
+    <string name="btn_dialog_feito">Feito</string>
 </resources>

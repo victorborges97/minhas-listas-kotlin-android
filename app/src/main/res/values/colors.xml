@@ -20,4 +20,9 @@
     <color name="appBgTextInput">#0082C2</color>
     <color name="appTransparent">#000082C2</color>
 
+    <color name="textColorItemList">#5A5A5A</color>
+    <color name="textColorItemQtValor">#8D8D8D</color>
+    <color name="bgColorDialogFeito">#F1F1F1</color>
+    <color name="bgColorDialogCancelar">#B6B6B6</color>
+
 </resources>

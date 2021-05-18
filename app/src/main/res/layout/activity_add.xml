@@ -1,50 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.AddActivity">
 
-    <com.google.android.material.textfield.TextInputEditText
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/nomeDaLista"
         android:layout_width="match_parent"
-        android:layout_height="45sp"
-        android:layout_margin="10dp"
-        android:background="@drawable/campo_add"
-        android:hint="Nome da Lista ..."
-        android:imeOptions="actionSend"
-        android:inputType="text"
-        android:paddingStart="25dp"
+        android:layout_height="wrap_content"
+        android:paddingVertical="5dp"
+        android:background="@drawable/bg_campo_total"
+        android:hint="@string/total_carrinho"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/textColorItemQtValor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="RtlSymmetry" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!--RecicleView-->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycle_view"
+        android:id="@+id/recycle_view_add"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:clipToPadding="false"
-        android:padding="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/search"
+        android:padding="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nomeDaLista"
-        tools:listitem="@layout/row_add"/>
+        tools:listitem="@layout/card_recycle_add" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/search"
-        android:layout_width="match_parent"
-        android:layout_height="45sp"
-        android:layout_margin="10dp"
-        android:background="@drawable/campo_add"
-        android:hint="@string/adicionar_item"
-        android:imeOptions="actionSend"
-        android:inputType="text"
-        android:paddingStart="25dp"
+<!--    <com.google.android.material.textfield.TextInputEditText-->
+<!--        android:id="@+id/search"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="45sp"-->
+<!--        android:layout_margin="10dp"-->
+<!--        android:background="@drawable/campo_add"-->
+<!--        android:hint="@string/adicionar_item"-->
+<!--        android:imeOptions="actionSend"-->
+<!--        android:inputType="text"-->
+<!--        android:paddingStart="25dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        tools:ignore="RtlSymmetry" />-->
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:tint="@color/white"
+        android:elevation="2dp"
+        android:src="@drawable/ic_baseline_add_24"
+        android:backgroundTint="@color/appPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="RtlSymmetry" />
+        android:contentDescription="@string/listas_de_compra" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

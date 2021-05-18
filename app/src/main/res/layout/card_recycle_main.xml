@@ -1,24 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
-    android:background="@color/appPrimary"
-    android:layout_marginVertical="5dp"
-    android:padding="5dp">
+    android:layout_height="50dp"
+    android:layout_gravity="start"
+   >
 
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/main_nomeDaLista"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            android:textSize="18sp"
+            android:typeface="normal"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Testando minhas listas qual nome vai ficar grande pra caramba" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/main_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Testando minhas listas qual nome vai ficar grande pra caramba"
-            android:textSize="18sp"
-            android:layout_marginStart="10dp"
-            android:singleLine="true"
-            android:ellipsize="marquee"
-            android:typeface="normal" />
+            android:textSize="12sp"
+            android:typeface="normal"
+            android:layout_marginBottom="4dp"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/main_nomeDaLista"
+            tools:text="18/04/2021" />
 
-</LinearLayout>
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#8D8D8D"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"
+            android:orientation="horizontal" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

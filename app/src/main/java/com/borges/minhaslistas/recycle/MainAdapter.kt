@@ -1,5 +1,6 @@
 package com.borges.minhaslistas.recycle
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +22,7 @@ class MainAdapter(val listData: MutableList<DataList>) : RecyclerView.Adapter<Ma
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
         val currentItem = listData[position]
 
-        holder.bind(currentItem)
+        holder.bind(currentItem, position)
     }
 
     override fun getItemCount(): Int {
@@ -29,9 +30,11 @@ class MainAdapter(val listData: MutableList<DataList>) : RecyclerView.Adapter<Ma
     }
 
     inner class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(currentItem: DataList) {
+        @SuppressLint("SetTextI18n")
+        fun bind(currentItem: DataList, position: Int) {
             with(currentItem){
-                itemView.main_nomeDaLista.text = nomeDaLista
+                itemView.main_nomeDaLista.text = "${position+1}. $nomeDaLista"
+                itemView.main_data.text = if(created != "") created else ""
             }
         }
     }

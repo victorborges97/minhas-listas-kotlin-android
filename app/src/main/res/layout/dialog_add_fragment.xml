@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:minWidth="300dp"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="23dp"
+    android:paddingVertical="13dp">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_percent="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textview_nome_item_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nome_dialog"
+        android:textColor="@color/textColorItemQtValor"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edittext_nome_item_dialog"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingStart="8dp"
+        android:background="@drawable/campo_add"
+        android:paddingVertical="5dp"
+        android:textColor="@color/textColorItemQtValor"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textview_nome_item_dialog"
+        tools:ignore="RtlSymmetry" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textview_quanti_item_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/quantidade_dialog"
+        android:textColor="@color/textColorItemQtValor"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edittext_nome_item_dialog" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edittext_quanti_item_dialog"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/campo_add"
+        android:paddingVertical="5dp"
+        android:paddingStart="8dp"
+        android:layout_marginEnd="5dp"
+        android:inputType="number"
+        android:textColor="@color/textColorItemQtValor"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/textview_quanti_item_dialog"
+        app:layout_constraintTop_toBottomOf="@+id/textview_quanti_item_dialog"
+        tools:ignore="RtlSymmetry" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textview_valor_item_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/valor_un_dialog"
+        android:textColor="@color/textColorItemQtValor"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/textview_quanti_item_dialog"
+        app:layout_constraintStart_toStartOf="@+id/edittext_valor_item_dialog"
+        app:layout_constraintTop_toTopOf="@+id/textview_quanti_item_dialog" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edittext_valor_item_dialog"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/campo_add"
+        android:paddingVertical="5dp"
+        android:paddingStart="8dp"
+        android:inputType="numberDecimal"
+        android:layout_marginStart="5dp"
+        android:textColor="@color/textColorItemQtValor"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toBottomOf="@+id/textview_valor_item_dialog"
+        tools:ignore="RtlSymmetry" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_salvar"
+        android:layout_width="wrap_content"
+        android:layout_height="27dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_border_radius_dialog"
+        android:backgroundTint="@color/bgColorDialogFeito"
+        android:text="@string/btn_dialog_feito"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/appPrimary"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/edittext_valor_item_dialog"
+        app:layout_constraintTop_toBottomOf="@+id/edittext_valor_item_dialog" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_cancelar"
+        android:layout_width="wrap_content"
+        android:layout_height="27dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_border_radius_dialog"
+        android:backgroundTint="@color/bgColorDialogCancelar"
+        android:text="@string/btn_dialog_cancelar"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/edittext_quanti_item_dialog"
+        app:layout_constraintTop_toBottomOf="@+id/edittext_quanti_item_dialog" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
