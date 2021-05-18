@@ -128,9 +128,9 @@ class MainActivity : AppCompatActivity() {
         // Create a new user with a first and last name
         val itens = arrayListOf<DataItem>()
 
-        itens.add(DataItem(comprado = false, nome = "Caixa de leite", preco = 4.30, qt = 2))
-        itens.add(DataItem(comprado = false, nome = "Mussarela", preco = 8.50, qt = 1))
-        itens.add(DataItem(comprado = false, nome = "Manteiga", preco = 5.30, qt = 1))
+        itens.add(DataItem(comprado = false, nome = "Caixa de leite", preco = 4.30, qt = 2, total = 2*4.30))
+        itens.add(DataItem(comprado = false, nome = "Mussarela", preco = 8.50, qt = 1, total = 1*8.50))
+        itens.add(DataItem(comprado = false, nome = "Manteiga", preco = 5.30, qt = 1, total = 1*5.30))
 
         val user = hashMapOf(
             "created" to f2.format(data),
