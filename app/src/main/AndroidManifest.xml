@@ -11,7 +11,10 @@
         android:theme="@style/Theme.MinhasListas">
         <activity
             android:screenOrientation="portrait"
-            android:name=".views.AddActivity" />
+            android:name=".views.AddActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.MainActivity"/>
+        </activity>
         <activity
             android:screenOrientation="portrait"
             android:name=".views.RegisterActivity" />

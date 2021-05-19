@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="50dp"
+    android:id="@+id/card_add_container"
     android:layout_marginVertical="4dp">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -50,7 +51,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="qtde"/>
 
-    <com.google.android.material.textfield.TextInputEditText
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_view_preco_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

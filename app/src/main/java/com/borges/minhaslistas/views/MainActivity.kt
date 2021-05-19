@@ -11,10 +11,13 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.borges.minhaslistas.R
 import com.borges.minhaslistas.model.DataItem
 import com.borges.minhaslistas.model.DataList
+import com.borges.minhaslistas.model.List
 import com.borges.minhaslistas.recycle.MainAdapter
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -41,12 +44,13 @@ class MainActivity : AppCompatActivity() {
 
     private var idCreated: kotlin.String? = ""
 
-    private lateinit var newItens: MutableList<DataList>
+    private lateinit var newItens: MutableList<List>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setBackgroundActionBar()
+
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
@@ -58,15 +62,12 @@ class MainActivity : AppCompatActivity() {
 
         fab.setOnClickListener(View.OnClickListener {
             createData()
-            if(idCreated != ""){
-                val intent = Intent(applicationContext, AddActivity::class.java)
-                intent.putExtra("idCreated", idCreated)
-                startActivity(intent)
-            }
         })
 
         recycle_main.layoutManager = LinearLayoutManager(this)
         recycle_main.setHasFixedSize(true)
+
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -158,6 +159,9 @@ class MainActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 idCreated = it.id
                 Log.d(TAG, "DocumentSnapshot written with ID: ${it.id}")
+                val intent = Intent(applicationContext, AddActivity::class.java)
+                intent.putExtra("idCreated", it.id)
+                startActivity(intent)
             }
             .addOnFailureListener {
                     e -> Log.w(TAG, "Error writing document", e)
@@ -165,34 +169,77 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getListsData(id: kotlin.String) {
-        newItens = mutableListOf<DataList>()
+        newItens = mutableListOf<List>()
 
         val listsRef = FirebaseFirestore.getInstance()
         val docRef = listsRef.collection(id)
-        docRef
-            .get()
-            .addOnSuccessListener { documents ->
-                if(documents.size() != 0){
-                    documents.forEach {
-                        it.toObject(DataList::class.java).let { entity ->
-                            entity.id = it.id
+
+        docRef.addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                Log.w(TAG, "Listen failed.", e)
+                return@addSnapshotListener
+            }
+
+            if (snapshot != null && snapshot.documents.size != 0) {
+                //Limpo arquivos que estava antes da atualização em tempo real
+                newItens.clear()
+                recycle_main.adapter?.notifyDataSetChanged()
+
+                //Adiciono os itens a um array mutavel da class List
+                snapshot.documents.forEach {
+                    it.toObject(List::class.java).let { entity ->
+                        entity?.id = it.id
+                        if (entity != null) {
                             newItens.add(entity)
                         }
                     }
-                    text_bem.visibility = View.INVISIBLE
-                    text_home.visibility = View.INVISIBLE
-                    text_facil.visibility = View.INVISIBLE
-
-                    recycle_main.adapter = MainAdapter(newItens)
                 }
+
+                //Tiro os texto pois a lista não está vazia
+                text_bem.visibility = View.INVISIBLE
+                text_home.visibility = View.INVISIBLE
+                text_facil.visibility = View.INVISIBLE
+
+                //Mantando a Lista Mutavel para o Adapter
+                recycle_main.adapter = MainAdapter(newItens, applicationContext)
+                Log.d(TAG, "Current data: ${newItens.size}")
+            } else {
+                Log.d(TAG, "Current data: null")
             }
-            .addOnFailureListener {
-                Toast.makeText(this, "Error ao carregar a lista: $it", Toast.LENGTH_SHORT).show()
-            }
+        }
+    }
+
+    fun goToEdit(currentItem: DataItem) {
+//        val intent = Intent(applicationContext, AddActivity::class.java)
+//        intent.putExtra("idCreated", currentItem.getUid())
+//        ContextCompat.startActivity(intent)
     }
 }
 
-
+/*
+*  Função que eu estava usando, mais não era em tempo real
+//        docRef
+//            .get()
+//            .addOnSuccessListener { documents ->
+//                if(documents.size() != 0){
+//                    documents.forEach {
+//                        it.toObject(List::class.java).let { entity ->
+//                            entity.id = it.id
+//                            newItens.add(entity)
+//                        }
+//                    }
+//                    text_bem.visibility = View.INVISIBLE
+//                    text_home.visibility = View.INVISIBLE
+//                    text_facil.visibility = View.INVISIBLE
+//
+//                    recycle_main.adapter = MainAdapter(newItens)
+//                }
+//            }
+//            .addOnFailureListener {
+//                Toast.makeText(this, "Error ao carregar a lista: $it", Toast.LENGTH_SHORT).show()
+//            }
+*
+* */
 
 
 
