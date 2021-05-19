@@ -20,7 +20,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -28,6 +27,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.String
 import java.text.DateFormat
 import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
@@ -57,9 +57,12 @@ class MainActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
 
         fab.setOnClickListener(View.OnClickListener {
-            val intent = Intent(applicationContext, AddActivity::class.java)
-            startActivity(intent)
-//            createData()
+            createData()
+            if(idCreated != ""){
+                val intent = Intent(applicationContext, AddActivity::class.java)
+                intent.putExtra("idCreated", idCreated)
+                startActivity(intent)
+            }
         })
 
         recycle_main.layoutManager = LinearLayoutManager(this)
