@@ -9,7 +9,7 @@
     android:paddingVertical="33dp">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/dialog_add_list_textview_nome"
+        android:id="@+id/dialog_edit_list_textview_nome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/nome_dialog"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/dialog_add_list_edittext_nome"
+        android:id="@+id/dialog_edit_list_text_nome"
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:background="@drawable/campo_add"
@@ -31,11 +31,11 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_add_list_textview_nome"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_edit_list_textview_nome"
         tools:ignore="RtlSymmetry" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/dialog_add_list_btn_criar"
+        android:id="@+id/dialog_edit_list_btn_criar"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:layout_marginTop="26dp"
@@ -48,10 +48,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_add_list_edittext_nome" />
+        app:layout_constraintTop_toBottomOf="@+id/dialog_edit_list_text_nome" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/dialog_add_list_btn_cancelar"
+        android:id="@+id/dialog_edit_list_btn_cancelar"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:background="@drawable/bg_border_radius_dialog"
@@ -61,9 +61,9 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/dialog_add_list_btn_criar"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_edit_list_btn_criar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/dialog_add_list_btn_criar" />
+        app:layout_constraintTop_toTopOf="@+id/dialog_edit_list_btn_criar" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

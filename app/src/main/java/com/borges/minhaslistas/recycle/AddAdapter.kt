@@ -2,19 +2,27 @@ package com.borges.minhaslistas.recycle
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.borges.minhaslistas.R
 import com.borges.minhaslistas.model.DataItem
-import kotlinx.android.synthetic.main.activity_add.view.*
 import kotlinx.android.synthetic.main.card_recycle_add.view.*
 import java.text.NumberFormat
 
-class AddAdapter(val listData: MutableList<DataItem>, val context: Context) : RecyclerView.Adapter<AddAdapter.AddViewHolder>() {
+
+class AddAdapter(
+    val listData: MutableList<DataItem>,
+    val context: Context,
+    val dialog: DialogFragment
+) : RecyclerView.Adapter<AddAdapter.AddViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
             R.layout.card_recycle_add,
@@ -63,11 +71,19 @@ class AddAdapter(val listData: MutableList<DataItem>, val context: Context) : Re
 
         fun goToItem(currentItem: DataItem) {
             itemView.card_add_container.setOnClickListener {
-                Toast.makeText(itemView.context, "Card: ${currentItem.nome}", Toast.LENGTH_SHORT).show()
+
+                val ft = (itemView.context as AppCompatActivity).supportFragmentManager.beginTransaction()
+                val args = Bundle()
+
+                args.putParcelable("currentItem", currentItem)
+                dialog.arguments = args
+
+                dialog.show(ft, "DialogAddList")
             }
         }
     }
 
     fun Double.format(digits: Int) = "%.${digits}f".format(this)
 }
+
 

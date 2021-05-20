@@ -4,12 +4,16 @@ import android.annotation.SuppressLint
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.borges.minhaslistas.R
 import com.borges.minhaslistas.dialog.DialogAddItem
-import com.borges.minhaslistas.dialog.DialogAddList
+import com.borges.minhaslistas.dialog.DialogEditItem
 import com.borges.minhaslistas.model.DataItem
 import com.borges.minhaslistas.recycle.AddAdapter
 import com.google.firebase.auth.FirebaseAuth
@@ -25,18 +29,25 @@ class AddActivity : AppCompatActivity() {
     private lateinit var idItem: String
     private lateinit var newItens: MutableList<DataItem>
     private var total: Double = 0.00
+    private lateinit var dialog: DialogFragment
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add)
         setBackgroundActionBar()
 
+        dialog = DialogEditItem()
+
         val id = FirebaseAuth.getInstance().currentUser?.uid
         idItem = intent.extras?.getString("idItem").toString()
 
         fab_add.setOnClickListener {
-            val dialog = DialogAddItem()
-            dialog.show(supportFragmentManager, "DialogAddItem")
+            val dialog2 = DialogAddItem()
+            val args = Bundle()
+            args.putString("idList", idItem)
+            dialog2.arguments = args
+            dialog2.show(supportFragmentManager, "DialogAddItem")
         }
 
         recycle_view_add.layoutManager = LinearLayoutManager(this)
@@ -48,7 +59,6 @@ class AddActivity : AppCompatActivity() {
                 getListsData(id, it)
             }
         }
-
 
     }
 
@@ -62,13 +72,13 @@ class AddActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun getListsData(id: String, idItem: String) {
+    private fun getListsData(id: String, idList: String) {
         newItens = mutableListOf<DataItem>()
 
         val listsRef = FirebaseFirestore.getInstance()
         val docRef = listsRef
             .collection(id)
-            .document(idItem)
+            .document(idList)
             .collection("itens")
 
         docRef.addSnapshotListener { snapshot, e ->
@@ -86,6 +96,7 @@ class AddActivity : AppCompatActivity() {
                 snapshot.documents.forEach {
                     it.toObject(DataItem::class.java).let { entity ->
                         entity?.idItem = it.id
+                        entity?.idList = idList
                         if (entity != null) {
                             newItens.add(entity)
                         }
@@ -93,18 +104,21 @@ class AddActivity : AppCompatActivity() {
                 }
 
                 newItens.map {
-                    var qtf = it.qt?.toDouble()
-                    var valor = it.preco?.toDouble()
+                    if(it.comprado == true){
+                        var qtf = it.qt?.toDouble()
+                        var valor = it.preco?.toDouble()
 
-                    if(qtf != null && valor != null) {
-                        total += multiply(qtf, valor)
+                        if(qtf != null && valor != null) {
+                            total += multiply(qtf, valor)
+                        }
                     }
                 }
+
                 val z: NumberFormat = NumberFormat.getCurrencyInstance()
                 nomeDaLista.text = "Total do carrinho: ${z.format(total).toString()}"
 
                 //Mantando a Lista Mutavel para o Adapter
-                recycle_view_add.adapter = AddAdapter(newItens, applicationContext)
+                recycle_view_add.adapter = AddAdapter(newItens, applicationContext, dialog)
                 Log.d(TAG, "Current data: ${newItens.size}")
             } else {
                 Log.d(TAG, "Current data: null")
@@ -114,3 +128,4 @@ class AddActivity : AppCompatActivity() {
 
     fun multiply(x: Double, y: Double) = x * y
 }
+

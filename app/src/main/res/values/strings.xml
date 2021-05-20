@@ -22,4 +22,6 @@
     <string name="dialog_add_list_criar">Criar</string>
     <string name="dialog_add_list_cancelar">Cancelar</string>
     <string name="dialog_add_list_excluir">Excluir</string>
+    <string name="dialog_edit_item_btn_excluir">Excluir</string>
+    <string name="dialog_add_list_hint_nome">Insira o nome da sua lista...</string>
 </resources>

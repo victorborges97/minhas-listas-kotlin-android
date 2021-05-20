@@ -55,9 +55,9 @@ class MainAdapter(val listData: MutableList<DataList>, val contextMain: Context,
             itemView.card_main.setOnLongClickListener {
 
                 val ft = (itemView.context as AppCompatActivity).supportFragmentManager.beginTransaction()
-                dialog.show(ft, "DialogAddList")
+                dialog.show(ft, "DialogEditList")
 
-                return@setOnLongClickListener false
+                return@setOnLongClickListener true
             }
         }
 

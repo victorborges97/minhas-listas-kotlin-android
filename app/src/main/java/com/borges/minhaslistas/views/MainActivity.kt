@@ -9,19 +9,15 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.borges.minhaslistas.R
 import com.borges.minhaslistas.dialog.DialogAddList
-import com.borges.minhaslistas.model.DataItem
+import com.borges.minhaslistas.dialog.DialogEditList
 import com.borges.minhaslistas.model.DataList
-import com.borges.minhaslistas.model.List
 import com.borges.minhaslistas.recycle.MainAdapter
+import com.borges.minhaslistas.utils.Firebase
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -31,7 +27,6 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.String
-import java.text.DateFormat
 import java.util.*
 
 
@@ -53,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setBackgroundActionBar()
 
-        dialog = DialogAddList()
+        dialog = DialogEditList()
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -65,7 +60,9 @@ class MainActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
 
         fab.setOnClickListener(View.OnClickListener {
-            createData()
+            val dialog2 = DialogAddList()
+            val ft = supportFragmentManager.beginTransaction()
+            dialog2.show(ft, "DialogAddList")
         })
 
         recycle_main.layoutManager = LinearLayoutManager(this)
@@ -132,34 +129,6 @@ class MainActivity : AppCompatActivity() {
 
     fun signOut() {
         logout()
-    }
-
-    private fun createData(){
-        val currentUser: FirebaseUser? = mAuth.currentUser
-
-        val c = Calendar.getInstance()
-        val data = c.time;
-        val brasil = Locale("pt", "BR")
-        val f2: DateFormat = DateFormat.getDateInstance(DateFormat.DATE_FIELD, brasil)
-
-        val user = hashMapOf(
-            "created" to f2.format(data),
-            "nomeDaLista" to "Mês de Maio"
-        )
-
-        db.collection(currentUser?.uid.toString())
-            .add(user)
-            .addOnSuccessListener {
-                idCreated = it.id
-                Log.d(TAG, "DocumentSnapshot written with ID: ${it.id}")
-            }
-            .addOnFailureListener {
-                    e -> Log.w(TAG, "Error writing document", e)
-            }
-
-        val intent = Intent(applicationContext, AddActivity::class.java)
-        intent.putExtra("idItem", idCreated)
-        startActivity(intent)
     }
 
     private fun getListsData(id: kotlin.String) {

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:minWidth="300dp"
     android:layout_height="wrap_content"
+    android:minWidth="300dp"
     android:paddingHorizontal="23dp"
     android:paddingVertical="13dp">
 
@@ -19,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/dialog_add_item_viewtext_nome"
+        android:id="@+id/dialog_edit_item_textview_nome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/nome_dialog"
@@ -30,21 +29,21 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/dialog_add_item_edittext_nome"
+        android:id="@+id/dialog_edit_item_edittext_nome"
         android:layout_width="0dp"
         android:layout_height="45dp"
-        android:paddingStart="8dp"
         android:background="@drawable/campo_add"
         android:paddingVertical="5dp"
+        android:paddingStart="8dp"
+        android:inputType="text"
         android:textColor="@color/textColorItemQtValor"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_add_item_viewtext_nome"
-        tools:ignore="RtlSymmetry" />
+        app:layout_constraintTop_toBottomOf="@+id/dialog_edit_item_textview_nome" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/dialog_add_item_viewtext_quant"
+        android:id="@+id/dialog_edit_item_textview_quanti"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -53,54 +52,54 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_add_item_edittext_nome" />
+        app:layout_constraintTop_toBottomOf="@+id/dialog_edit_item_edittext_nome" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/dialog_add_item_edittext_quant"
+        android:id="@+id/dialog_edit_item_edittext_quanti"
         android:layout_width="0dp"
         android:layout_height="45dp"
+        android:layout_marginEnd="5dp"
         android:background="@drawable/campo_add"
+        android:inputType="number"
         android:paddingVertical="5dp"
         android:paddingStart="8dp"
-        android:layout_marginEnd="5dp"
-        android:inputType="number"
         android:textColor="@color/textColorItemQtValor"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintStart_toStartOf="@+id/dialog_add_item_viewtext_quant"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_add_item_viewtext_quant"
+        app:layout_constraintStart_toStartOf="@+id/dialog_edit_item_textview_quanti"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_edit_item_textview_quanti"
         tools:ignore="RtlSymmetry" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/dialog_add_item_viewtext_valor"
+        android:id="@+id/dialog_edit_item_textview_valor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/valor_un_dialog"
         android:textColor="@color/textColorItemQtValor"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/dialog_add_item_viewtext_quant"
-        app:layout_constraintStart_toStartOf="@+id/dialog_add_item_edittext_valor"
-        app:layout_constraintTop_toTopOf="@+id/dialog_add_item_viewtext_quant" />
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_edit_item_textview_quanti"
+        app:layout_constraintStart_toStartOf="@+id/dialog_edit_item_edittext_valor"
+        app:layout_constraintTop_toTopOf="@+id/dialog_edit_item_textview_quanti" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/dialog_add_item_edittext_valor"
+        android:id="@+id/dialog_edit_item_edittext_valor"
         android:layout_width="0dp"
         android:layout_height="45dp"
+        android:layout_marginStart="5dp"
         android:background="@drawable/campo_add"
+        android:inputType="numberDecimal"
         android:paddingVertical="5dp"
         android:paddingStart="8dp"
-        android:inputType="numberDecimal"
-        android:layout_marginStart="5dp"
         android:textColor="@color/textColorItemQtValor"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_add_item_viewtext_valor"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_edit_item_textview_valor"
         tools:ignore="RtlSymmetry" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/dialog_add_item_btn_salvar"
+        android:id="@+id/dialog_edit_item_btn_salvar"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:layout_marginTop="16dp"
@@ -111,25 +110,22 @@
         android:textAllCaps="false"
         android:textColor="@color/appPrimary"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/dialog_add_item_edittext_valor"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_add_item_edittext_valor" />
+        app:layout_constraintEnd_toEndOf="@+id/dialog_edit_item_edittext_valor"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_edit_item_edittext_valor" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/dialog_add_item_btn_cancelar"
+        android:id="@+id/dialog_edit_item_btn_cancelar"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/bg_border_radius_dialog"
         android:backgroundTint="@color/bgColorDialogCancelar"
-        android:text="@string/btn_dialog_cancelar"
+        android:text="@string/dialog_edit_item_btn_excluir"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/dialog_add_item_edittext_quant"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_add_item_edittext_quant" />
-
-
-
+        app:layout_constraintStart_toStartOf="@+id/dialog_edit_item_edittext_quanti"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_edit_item_edittext_quanti" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
