@@ -46,14 +46,6 @@ class DialogAddItem: DialogFragment() {
                 mNome?.error = "Nome é Requerido."
                 return@setOnClickListener
             }
-            if (mQuant?.text?.isEmpty() == true) {
-                mQuant?.error = "Password is Required."
-                return@setOnClickListener
-            }
-            if (mValor?.text?.isEmpty() == true) {
-                mValor?.error = "Password Must be >= 6 Characters"
-                return@setOnClickListener
-            }
             createdItem(mIdList)
         }
 
@@ -62,8 +54,8 @@ class DialogAddItem: DialogFragment() {
 
     private fun createdItem(idList: String) {
         val nome: String = mNome?.text.toString()
-        val quantInt: Int = mQuant?.text.toString().toInt()
-        val valorDouble: Double = mValor?.text.toString().toDouble()
+        val quantInt: Int = if(mQuant?.text?.isEmpty() == true) 0 else mQuant?.text.toString().toInt()
+        val valorDouble: Double = if(mValor?.text?.isEmpty() == true) 0.0 else mValor?.text.toString().toDouble()
 
 
         val qtMultiply = quantInt.toDouble()
