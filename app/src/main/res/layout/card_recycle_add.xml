@@ -38,6 +38,7 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_view_quantidade_item"
         android:layout_width="wrap_content"
+        android:minWidth="30dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:paddingVertical="3dp"
@@ -64,7 +65,7 @@
         android:inputType="numberDecimal"
         android:textColor="@color/textColorItemQtValor"
         android:textSize="12sp"
-        android:textAlignment="center"
+        android:textAlignment="textEnd"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

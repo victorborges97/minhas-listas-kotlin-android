@@ -2,6 +2,7 @@ package com.borges.minhaslistas.recycle
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,12 +10,16 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.borges.minhaslistas.R
 import com.borges.minhaslistas.model.DataItem
+import kotlinx.android.synthetic.main.activity_add.view.*
 import kotlinx.android.synthetic.main.card_recycle_add.view.*
+import java.text.NumberFormat
 
 class AddAdapter(val listData: MutableList<DataItem>, val context: Context) : RecyclerView.Adapter<AddAdapter.AddViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.card_recycle_add,
-            parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(
+            R.layout.card_recycle_add,
+            parent, false
+        )
         return AddViewHolder(itemView)
     }
 
@@ -31,21 +36,28 @@ class AddAdapter(val listData: MutableList<DataItem>, val context: Context) : Re
     }
 
     inner class AddViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun multiply(x: Double, y: Double) = x * y
+
         @SuppressLint("SetTextI18n")
         fun bind(currentItem: DataItem, position: Int) {
             with(currentItem){
                 var icon = if(comprado == true) R.drawable.ic_circle_true else R.drawable.ic_circle_false
+                val z: NumberFormat = NumberFormat.getCurrencyInstance()
 
                 itemView.text_view_name_item.text = nome
                 itemView.text_view_quantidade_item.text = qt.toString()
-                itemView.text_view_preco_item.text = preco?.format(2).toString()
+                itemView.text_view_preco_item.text = z.format(preco).toString()
                 itemView.buttom_delete.setBackgroundResource(icon)
             }
         }
 
         fun excluirItem(currentItem: DataItem, position: Int) {
             itemView.buttom_delete.setOnClickListener {
-                Toast.makeText(itemView.context, "Excluir Card: ${currentItem.nome}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    itemView.context,
+                    "Excluir Card: ${currentItem.nome}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 

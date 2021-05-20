@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:paddingVertical="5dp"
         android:background="@drawable/bg_campo_total"
-        android:hint="@string/total_carrinho"
+        android:text="@string/total_carrinho"
         android:textAlignment="center"
         android:textSize="18sp"
         android:textStyle="bold"

@@ -15,13 +15,16 @@ import com.borges.minhaslistas.recycle.AddAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_add.*
+import kotlinx.android.synthetic.main.activity_add.view.*
 import kotlinx.android.synthetic.main.activity_main.*
+import java.text.NumberFormat
 
 class AddActivity : AppCompatActivity() {
 
     private val TAG: String = "ADD"
     private lateinit var idItem: String
     private lateinit var newItens: MutableList<DataItem>
+    private var total: Double = 0.00
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +61,7 @@ class AddActivity : AppCompatActivity() {
     fun signOut() {
     }
 
+    @SuppressLint("SetTextI18n")
     private fun getListsData(id: String, idItem: String) {
         newItens = mutableListOf<DataItem>()
 
@@ -77,7 +81,7 @@ class AddActivity : AppCompatActivity() {
                 //Limpo arquivos que estava antes da atualização em tempo real
                 newItens.clear()
                 recycle_view_add.adapter?.notifyDataSetChanged()
-
+                total = 0.00
                 //Adiciono os itens a um array mutavel da class List
                 snapshot.documents.forEach {
                     it.toObject(DataItem::class.java).let { entity ->
@@ -88,6 +92,17 @@ class AddActivity : AppCompatActivity() {
                     }
                 }
 
+                newItens.map {
+                    var qtf = it.qt?.toDouble()
+                    var valor = it.preco?.toDouble()
+
+                    if(qtf != null && valor != null) {
+                        total += multiply(qtf, valor)
+                    }
+                }
+                val z: NumberFormat = NumberFormat.getCurrencyInstance()
+                nomeDaLista.text = "Total do carrinho: ${z.format(total).toString()}"
+
                 //Mantando a Lista Mutavel para o Adapter
                 recycle_view_add.adapter = AddAdapter(newItens, applicationContext)
                 Log.d(TAG, "Current data: ${newItens.size}")
@@ -96,4 +111,6 @@ class AddActivity : AppCompatActivity() {
             }
         }
     }
+
+    fun multiply(x: Double, y: Double) = x * y
 }
