@@ -35,21 +35,15 @@ class DialogAddList: DialogFragment() {
                 return@setOnClickListener
             }
             createData(mNome?.text?.toString())
+            dialog?.dismiss()
         }
 
         return rootView
     }
 
     private fun createData(nomeDaLista: kotlin.String?){
-
         val fb = Firebase()
-        val result = fb.createList(nomeDaLista)
-
-        Log.i("DIALOG", result.toString())
-
-//        val intent = Intent(applicationContext, AddActivity::class.java)
-//        intent.putExtra("idItem", idCreated)
-//        startActivity(intent)
+        fb.createList(nomeDaLista)
     }
 
 
