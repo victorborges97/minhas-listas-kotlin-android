@@ -1,6 +1,7 @@
 package com.borges.minhaslistas.recycle
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,7 @@ import com.borges.minhaslistas.R
 import com.borges.minhaslistas.model.DataItem
 import kotlinx.android.synthetic.main.card_recycle_add.view.*
 
-class AddAdapter(val listData: ArrayList<DataItem>) : RecyclerView.Adapter<AddAdapter.AddViewHolder>() {
+class AddAdapter(val listData: MutableList<DataItem>, val context: Context) : RecyclerView.Adapter<AddAdapter.AddViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.card_recycle_add,
             parent, false)
@@ -33,9 +34,12 @@ class AddAdapter(val listData: ArrayList<DataItem>) : RecyclerView.Adapter<AddAd
         @SuppressLint("SetTextI18n")
         fun bind(currentItem: DataItem, position: Int) {
             with(currentItem){
+                var icon = if(comprado == true) R.drawable.ic_circle_true else R.drawable.ic_circle_false
+
                 itemView.text_view_name_item.text = nome
                 itemView.text_view_quantidade_item.text = qt.toString()
-                itemView.text_view_preco_item.text = preco.toString()
+                itemView.text_view_preco_item.text = preco?.format(2).toString()
+                itemView.buttom_delete.setBackgroundResource(icon)
             }
         }
 
@@ -51,4 +55,7 @@ class AddAdapter(val listData: ArrayList<DataItem>) : RecyclerView.Adapter<AddAd
             }
         }
     }
+
+    fun Double.format(digits: Int) = "%.${digits}f".format(this)
 }
+

@@ -19,4 +19,7 @@
     <string name="valor_un_dialog">Valor UN:</string>
     <string name="btn_dialog_cancelar">Cancelar</string>
     <string name="btn_dialog_feito">Feito</string>
+    <string name="dialog_add_list_criar">Criar</string>
+    <string name="dialog_add_list_cancelar">Cancelar</string>
+    <string name="dialog_add_list_excluir">Excluir</string>
 </resources>

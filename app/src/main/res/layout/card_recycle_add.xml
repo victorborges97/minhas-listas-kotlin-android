@@ -8,11 +8,12 @@
     android:id="@+id/card_add_container"
     android:layout_marginVertical="4dp">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <ImageButton
         android:id="@+id/buttom_delete"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="14dp"
+        android:background="@drawable/ic_circle_false"
         android:backgroundTint="#00AAFF"
         android:contentDescription="@string/excluir"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -54,6 +55,7 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_view_preco_item"
         android:layout_width="wrap_content"
+        android:minWidth="80dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="14dp"
         android:paddingVertical="3dp"
@@ -66,6 +68,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="R$ 0.00" />
+        tools:text="R$ 000.00" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

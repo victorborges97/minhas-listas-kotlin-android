@@ -9,12 +9,15 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.borges.minhaslistas.R
+import com.borges.minhaslistas.dialog.DialogAddList
 import com.borges.minhaslistas.model.DataItem
 import com.borges.minhaslistas.model.DataList
 import com.borges.minhaslistas.model.List
@@ -41,15 +44,16 @@ class MainActivity : AppCompatActivity() {
     private var email: kotlin.String? = ""
     private var url_photo: kotlin.String? = null
     private var TAG = "MAIN"
-
+    private lateinit var dialog: DialogFragment
     private var idCreated: kotlin.String? = ""
-
-    private lateinit var newItens: MutableList<List>
+    private lateinit var newList: MutableList<DataList>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setBackgroundActionBar()
+
+        dialog = DialogAddList()
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -66,7 +70,6 @@ class MainActivity : AppCompatActivity() {
 
         recycle_main.layoutManager = LinearLayoutManager(this)
         recycle_main.setHasFixedSize(true)
-
 
     }
 
@@ -139,37 +142,28 @@ class MainActivity : AppCompatActivity() {
         val brasil = Locale("pt", "BR")
         val f2: DateFormat = DateFormat.getDateInstance(DateFormat.DATE_FIELD, brasil)
 
-        // Create a new user with a first and last name
-        val itens = arrayListOf<DataItem>()
-
-//        itens.add(DataItem(comprado = false, nome = "Caixa de leite", preco = 4.30, qt = 2, total = 2*4.30))
-//        itens.add(DataItem(comprado = false, nome = "Mussarela", preco = 8.50, qt = 1, total = 1*8.50))
-//        itens.add(DataItem(comprado = false, nome = "Manteiga", preco = 5.30, qt = 1, total = 1*5.30))
-
         val user = hashMapOf(
             "created" to f2.format(data),
-            "nomeDaLista" to "Mês de Maio",
-            "itens" to itens
+            "nomeDaLista" to "Mês de Maio"
         )
-
-        //f2.format(data) -> data anterior ao Timestamp
 
         db.collection(currentUser?.uid.toString())
             .add(user)
             .addOnSuccessListener {
                 idCreated = it.id
                 Log.d(TAG, "DocumentSnapshot written with ID: ${it.id}")
-                val intent = Intent(applicationContext, AddActivity::class.java)
-                intent.putExtra("idCreated", it.id)
-                startActivity(intent)
             }
             .addOnFailureListener {
                     e -> Log.w(TAG, "Error writing document", e)
             }
+
+        val intent = Intent(applicationContext, AddActivity::class.java)
+        intent.putExtra("idItem", idCreated)
+        startActivity(intent)
     }
 
     private fun getListsData(id: kotlin.String) {
-        newItens = mutableListOf<List>()
+        newList = mutableListOf<DataList>()
 
         val listsRef = FirebaseFirestore.getInstance()
         val docRef = listsRef.collection(id)
@@ -182,15 +176,15 @@ class MainActivity : AppCompatActivity() {
 
             if (snapshot != null && snapshot.documents.size != 0) {
                 //Limpo arquivos que estava antes da atualização em tempo real
-                newItens.clear()
+                newList.clear()
                 recycle_main.adapter?.notifyDataSetChanged()
 
                 //Adiciono os itens a um array mutavel da class List
                 snapshot.documents.forEach {
-                    it.toObject(List::class.java).let { entity ->
-                        entity?.id = it.id
+                    it.toObject(DataList::class.java).let { entity ->
+                        entity?.idList = it.id
                         if (entity != null) {
-                            newItens.add(entity)
+                            newList.add(entity)
                         }
                     }
                 }
@@ -201,45 +195,15 @@ class MainActivity : AppCompatActivity() {
                 text_facil.visibility = View.INVISIBLE
 
                 //Mantando a Lista Mutavel para o Adapter
-                recycle_main.adapter = MainAdapter(newItens, applicationContext)
-                Log.d(TAG, "Current data: ${newItens.size}")
+                recycle_main.adapter = MainAdapter(newList, applicationContext, dialog)
+                Log.d(TAG, "Current data: ${newList.size}")
             } else {
                 Log.d(TAG, "Current data: null")
             }
         }
     }
 
-    fun goToEdit(currentItem: DataItem) {
-//        val intent = Intent(applicationContext, AddActivity::class.java)
-//        intent.putExtra("idCreated", currentItem.getUid())
-//        ContextCompat.startActivity(intent)
-    }
 }
-
-/*
-*  Função que eu estava usando, mais não era em tempo real
-//        docRef
-//            .get()
-//            .addOnSuccessListener { documents ->
-//                if(documents.size() != 0){
-//                    documents.forEach {
-//                        it.toObject(List::class.java).let { entity ->
-//                            entity.id = it.id
-//                            newItens.add(entity)
-//                        }
-//                    }
-//                    text_bem.visibility = View.INVISIBLE
-//                    text_home.visibility = View.INVISIBLE
-//                    text_facil.visibility = View.INVISIBLE
-//
-//                    recycle_main.adapter = MainAdapter(newItens)
-//                }
-//            }
-//            .addOnFailureListener {
-//                Toast.makeText(this, "Error ao carregar a lista: $it", Toast.LENGTH_SHORT).show()
-//            }
-*
-* */
 
 
 

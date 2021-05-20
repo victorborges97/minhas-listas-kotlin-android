@@ -5,13 +5,12 @@ class List() {
     var id: String? = null
     var nomeDaLista: String? = null
     var created: String? = null
-    var itens: ArrayList<DataItem>? = null
 
-    fun List(id: String, nomeDaLista: String, created: String, itens: ArrayList<DataItem>) {
+
+    fun List(id: String, nomeDaLista: String, created: String) {
         this.id = id
         this.nomeDaLista = nomeDaLista
         this.created = created
-        this.itens = itens
     }
 
     fun getUid(): String? {
@@ -26,15 +25,11 @@ class List() {
         return this.nomeDaLista
     }
 
-    fun getListItens(): ArrayList<DataItem>? {
-        return this.itens
-    }
 
     override fun toString(): String {
         return "\n\nID: ${this.id}" +
                 "\nNOME: ${this.nomeDaLista}" +
-                "\nDATA CRIADA: ${this.created}" +
-                "\nITENS: ${this.itens}"
+                "\nDATA CRIADA: ${this.created}"
     }
 
 }

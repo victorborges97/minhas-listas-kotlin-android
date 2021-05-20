@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.borges.minhaslistas.R
 
-class DialogAddFragment: DialogFragment() {
+class DialogAddItem: DialogFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -15,7 +15,7 @@ class DialogAddFragment: DialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        return inflater.inflate(R.layout.dialog_add_fragment, container, false)
+        return inflater.inflate(R.layout.dialog_add_item, container, false)
     }
 
 }

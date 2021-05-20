@@ -1,9 +1,8 @@
 package com.borges.minhaslistas.model
 
 data class DataList (
-    var id: String? = null,
+    var idList: String? = null,
     val nomeDaLista: String? = null,
-    val created: String? = null,
-    val itens: ArrayList<DataItem>? = null
+    val created: String? = null
 )
 

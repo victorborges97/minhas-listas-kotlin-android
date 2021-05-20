@@ -1,9 +1,10 @@
 package com.borges.minhaslistas.model
 
 data class DataItem (
-    val preco: Double? = 0.0,
-    val total: Double? = 0.0,
-    val qt: Int? = 0,
-    val nome: String? = null,
-    val comprado: Boolean? = false
+    var idItem: String? = null,
+    var comprado: Boolean? = false,
+    var nome: String? = null,
+    var preco: Double? = 0.0,
+    var qt: Int? = 0,
+    var total: Double? = 0.0
 )

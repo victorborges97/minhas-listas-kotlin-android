@@ -1,23 +1,26 @@
 package com.borges.minhaslistas.recycle
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.borges.minhaslistas.R
+import com.borges.minhaslistas.dialog.DialogAddItem
+import com.borges.minhaslistas.dialog.DialogAddList
 import com.borges.minhaslistas.model.DataList
-import com.borges.minhaslistas.model.List
 import com.borges.minhaslistas.views.AddActivity
-import com.borges.minhaslistas.views.MainActivity
+import kotlinx.android.synthetic.main.activity_add.*
 import kotlinx.android.synthetic.main.card_recycle_main.view.*
 
-class MainAdapter(val listData: MutableList<List>, val contextMain: Context) : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
+class MainAdapter(val listData: MutableList<DataList>, val contextMain: Context, var dialog: DialogFragment) : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.card_recycle_main,
@@ -41,29 +44,29 @@ class MainAdapter(val listData: MutableList<List>, val contextMain: Context) : R
     inner class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
 
-        fun bind(currentItem: List, position: Int) {
+        fun bind(currentItem: DataList, position: Int) {
             with(currentItem){
-                itemView.main_nomeDaLista.text = "${position+1}. ${getNome()}"
-                itemView.main_data.text = if(getCreatedData() != "") getCreatedData() else ""
+                itemView.main_nomeDaLista.text = "${position+1}. ${nomeDaLista}"
+                itemView.main_data.text = if(created != "") created else ""
             }
         }
 
-        fun excluir(currentItem: List, position: Int) {
+        fun excluir(currentItem: DataList, position: Int) {
             itemView.card_main.setOnLongClickListener {
-                Toast.makeText(itemView.context, "Excluir Card: ${currentItem.getUid()}", Toast.LENGTH_SHORT).show()
+
+                val ft = (itemView.context as AppCompatActivity).supportFragmentManager.beginTransaction()
+                dialog.show(ft, "DialogAddList")
+
                 return@setOnLongClickListener false
             }
         }
 
-        fun goToItem(currentItem: List) {
+        fun goToItem(currentItem: DataList) {
             with(itemView){
                 card_main.setOnClickListener {
-
                     val intent = Intent(context, AddActivity::class.java)
-                    intent.putExtra("idCreated", currentItem.getUid())
+                    intent.putExtra("idItem", currentItem.idList)
                     context.startActivity(intent)
-
-                    Toast.makeText(itemView.context, "Card: ${currentItem.getUid()}", Toast.LENGTH_SHORT).show()
                 }
             }
         }

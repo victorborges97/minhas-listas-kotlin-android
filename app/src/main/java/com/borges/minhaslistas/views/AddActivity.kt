@@ -5,18 +5,23 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.borges.minhaslistas.R
-import com.borges.minhaslistas.dialog.DialogAddFragment
-import com.borges.minhaslistas.model.List
+import com.borges.minhaslistas.dialog.DialogAddItem
+import com.borges.minhaslistas.dialog.DialogAddList
+import com.borges.minhaslistas.model.DataItem
+import com.borges.minhaslistas.recycle.AddAdapter
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_add.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 class AddActivity : AppCompatActivity() {
 
     private val TAG: String = "ADD"
-    private var idCreated: String? = null
-    private lateinit var newItens: List
+    private lateinit var idItem: String
+    private lateinit var newItens: MutableList<DataItem>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,15 +29,10 @@ class AddActivity : AppCompatActivity() {
         setBackgroundActionBar()
 
         val id = FirebaseAuth.getInstance().currentUser?.uid
-        val extras = intent.extras
-        if (extras != null) {
-            idCreated = extras.getParcelable("idCreated")
-        }
-
-        idCreated?.let { Log.i(TAG, it) }
+        idItem = intent.extras?.getString("idItem").toString()
 
         fab_add.setOnClickListener {
-            val dialog = DialogAddFragment()
+            val dialog = DialogAddItem()
             dialog.show(supportFragmentManager, "DialogAddItem")
         }
 
@@ -40,9 +40,11 @@ class AddActivity : AppCompatActivity() {
         recycle_view_add.setHasFixedSize(true)
 
 
-//        if(id != null && idCreated != null){
-//            getItemList(id, idCreated)
-//        }
+        if(id != null){
+            idItem.let {
+                getListsData(id, it)
+            }
+        }
 
 
     }
@@ -56,7 +58,42 @@ class AddActivity : AppCompatActivity() {
     fun signOut() {
     }
 
-    private fun getItemList(id: String, idCreated: String?) {
+    private fun getListsData(id: String, idItem: String) {
+        newItens = mutableListOf<DataItem>()
 
+        val listsRef = FirebaseFirestore.getInstance()
+        val docRef = listsRef
+            .collection(id)
+            .document(idItem)
+            .collection("itens")
+
+        docRef.addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                Log.w(TAG, "Listen failed.", e)
+                return@addSnapshotListener
+            }
+
+            if (snapshot != null && snapshot.documents.size != 0) {
+                //Limpo arquivos que estava antes da atualização em tempo real
+                newItens.clear()
+                recycle_view_add.adapter?.notifyDataSetChanged()
+
+                //Adiciono os itens a um array mutavel da class List
+                snapshot.documents.forEach {
+                    it.toObject(DataItem::class.java).let { entity ->
+                        entity?.idItem = it.id
+                        if (entity != null) {
+                            newItens.add(entity)
+                        }
+                    }
+                }
+
+                //Mantando a Lista Mutavel para o Adapter
+                recycle_view_add.adapter = AddAdapter(newItens, applicationContext)
+                Log.d(TAG, "Current data: ${newItens.size}")
+            } else {
+                Log.d(TAG, "Current data: null")
+            }
+        }
     }
 }
