@@ -1,4 +1,4 @@
-package com.borges.minhaslistas.dialog
+package com.borges.minhaslistas.dialogs
 
 import android.os.Bundle
 import android.view.LayoutInflater

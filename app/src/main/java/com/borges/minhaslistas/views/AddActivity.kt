@@ -4,24 +4,21 @@ import android.annotation.SuppressLint
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.EditText
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.borges.minhaslistas.R
-import com.borges.minhaslistas.dialog.DialogAddItem
-import com.borges.minhaslistas.dialog.DialogEditItem
-import com.borges.minhaslistas.model.DataItem
-import com.borges.minhaslistas.recycle.AddAdapter
+import com.borges.minhaslistas.dialogs.DialogAddItem
+import com.borges.minhaslistas.dialogs.DialogEditItem
+import com.borges.minhaslistas.models.DataItem
+import com.borges.minhaslistas.adapters.AddAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_add.*
 import kotlinx.android.synthetic.main.activity_add.view.*
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.NumberFormat
+import java.util.*
 
 class AddActivity : AppCompatActivity() {
 
@@ -65,7 +62,7 @@ class AddActivity : AppCompatActivity() {
     @SuppressLint("RestrictedApi")
     private fun setBackgroundActionBar() {
         this.supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.appPrimary)))
-        this.supportActionBar?.title = "Nova Lista"
+        this.supportActionBar?.title = "Meus Produtos"
     }
 
     fun signOut() {
@@ -113,8 +110,8 @@ class AddActivity : AppCompatActivity() {
                         }
                     }
                 }
-
-                val z: NumberFormat = NumberFormat.getCurrencyInstance()
+                val meuLocal = Locale("pt", "BR")
+                val z: NumberFormat = NumberFormat.getCurrencyInstance(meuLocal)
                 nomeDaLista.text = "Total do carrinho: ${z.format(total).toString()}"
 
                 //Mantando a Lista Mutavel para o Adapter

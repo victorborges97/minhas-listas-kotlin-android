@@ -13,11 +13,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.borges.minhaslistas.R
-import com.borges.minhaslistas.dialog.DialogAddList
-import com.borges.minhaslistas.dialog.DialogEditList
-import com.borges.minhaslistas.model.DataList
-import com.borges.minhaslistas.recycle.MainAdapter
-import com.borges.minhaslistas.utils.Firebase
+import com.borges.minhaslistas.dialogs.DialogAddList
+import com.borges.minhaslistas.dialogs.DialogEditList
+import com.borges.minhaslistas.models.DataList
+import com.borges.minhaslistas.adapters.MainAdapter
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -81,9 +80,7 @@ class MainActivity : AppCompatActivity() {
         val email = currentUser?.email.toString()
         val url_photo = String.valueOf(currentUser?.photoUrl)
 
-        if(id != null && id != "null"){
-            getListsData(id)
-        }
+        getListsData(currentUser?.uid.toString())
 
         if(nome != null && nome != "null") {
             text_bem.text = "Seja bem vindo, $nome"

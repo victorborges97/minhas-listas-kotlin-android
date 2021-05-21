@@ -19,15 +19,28 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/dialog_add_item_textview_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_add_item_title"
+        android:textColor="@color/appPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/dialog_add_item_viewtext_nome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/nome_dialog"
         android:textColor="@color/textColorItemQtValor"
         android:textSize="16sp"
+        android:layout_marginTop="16dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/dialog_add_item_textview_title" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/dialog_add_item_edittext_nome"
@@ -121,7 +134,7 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/bg_border_radius_dialog"
         android:backgroundTint="@color/bgColorDialogCancelar"
-        android:text="@string/btn_dialog_cancelar"
+        android:text="@string/dialog_add_item_btn_cancelar"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/white"

@@ -1,20 +1,17 @@
-package com.borges.minhaslistas.recycle
+package com.borges.minhaslistas.adapters
 
 import android.annotation.SuppressLint
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.borges.minhaslistas.R
-import com.borges.minhaslistas.dialog.DialogAddItem
-import com.borges.minhaslistas.dialog.DialogAddList
-import com.borges.minhaslistas.model.DataList
+import com.borges.minhaslistas.models.DataList
 import com.borges.minhaslistas.views.AddActivity
 import kotlinx.android.synthetic.main.activity_add.*
 import kotlinx.android.synthetic.main.card_recycle_main.view.*
@@ -46,7 +43,8 @@ class MainAdapter(val listData: MutableList<DataList>, val contextMain: Context,
 
         fun bind(currentItem: DataList, position: Int) {
             with(currentItem){
-                itemView.main_nomeDaLista.text = "${position+1}. ${nomeDaLista}"
+                itemView.card_main_number.text = "${position + 1}. "
+                itemView.main_nomeDaLista.text = "$nomeDaLista"
                 itemView.main_data.text = if(created != "") created else ""
             }
         }
@@ -55,6 +53,10 @@ class MainAdapter(val listData: MutableList<DataList>, val contextMain: Context,
             itemView.card_main.setOnLongClickListener {
 
                 val ft = (itemView.context as AppCompatActivity).supportFragmentManager.beginTransaction()
+                val args = Bundle()
+
+                args.putParcelable("currentItem", currentItem)
+                dialog.arguments = args
                 dialog.show(ft, "DialogEditList")
 
                 return@setOnLongClickListener true

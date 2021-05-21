@@ -118,9 +118,13 @@ class LoginActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if(requestCode == RC_SIGN_IN){
-            var task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            var account = task.getResult(ApiException::class.java)
-            firebaseAuthWithGoogle(account)
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                val account = task.getResult(ApiException::class.java)
+                firebaseAuthWithGoogle(account)
+            } catch (e: ApiException) {
+                Log.w("LOGIN", "Google sign in failed", e)
+            }
         }
     }
 
@@ -132,7 +136,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun signInGoogle() {
-        var signInIntent = googleSignClient?.signInIntent
+        val signInIntent = googleSignClient?.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 

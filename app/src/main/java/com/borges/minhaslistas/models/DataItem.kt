@@ -1,6 +1,5 @@
-package com.borges.minhaslistas.model
+package com.borges.minhaslistas.models
 
-import android.os.Parcel
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 

@@ -17,11 +17,16 @@
     <string name="nome_dialog">Nome:</string>
     <string name="quantidade_dialog">Quantidade:</string>
     <string name="valor_un_dialog">Valor UN:</string>
-    <string name="btn_dialog_cancelar">Cancelar</string>
+    <string name="dialog_add_item_btn_cancelar">Cancelar</string>
     <string name="btn_dialog_feito">Feito</string>
     <string name="dialog_add_list_criar">Criar</string>
-    <string name="dialog_add_list_cancelar">Cancelar</string>
-    <string name="dialog_add_list_excluir">Excluir</string>
+    <string name="dialog_add_list_btn_cancelar">Cancelar</string>
+    <string name="dialog_edit_list_btn_excluir">Excluir</string>
     <string name="dialog_edit_item_btn_excluir">Excluir</string>
     <string name="dialog_add_list_hint_nome">Insira o nome da sua lista...</string>
+    <string name="dialog_edit_list_salvar">Salvar</string>
+    <string name="dialog_add_item_title">Adicionar Novo Item</string>
+    <string name="dialog_add_list_title">Adicionar Nova Lista</string>
+    <string name="dialog_edit_list_title">Alterar Lista</string>
+    <string name="dialog_edit_item_title">Alterar Item</string>
 </resources>

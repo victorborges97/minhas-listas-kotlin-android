@@ -1,4 +1,4 @@
-package com.borges.minhaslistas.dialog
+package com.borges.minhaslistas.dialogs
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import com.borges.minhaslistas.R
-import com.borges.minhaslistas.model.DataItem
+import com.borges.minhaslistas.models.DataItem
 import com.borges.minhaslistas.utils.Firebase
 import kotlinx.android.synthetic.main.dialog_edit_item.view.*
 
@@ -47,6 +47,8 @@ class DialogEditItem: DialogFragment() {
         mValor = rootView.findViewById(R.id.dialog_edit_item_edittext_valor)
 
         rootView.dialog_edit_item_btn_cancelar.setOnClickListener {
+            val fb = Firebase()
+            fb.excluirItemList(mNote.idList.toString(), mNote.idItem.toString())
             dialog?.dismiss()
         }
 
@@ -66,12 +68,6 @@ class DialogEditItem: DialogFragment() {
             updateUserListItem()
         }
         return rootView
-    }
-
-    private fun setInitialProperties() {
-        mNome.setText(mNote.nome)
-        mValor.setText(mNote.preco.toString())
-        mQuant.setText(mNote.qt.toString())
     }
 
     private fun updateUserListItem() {

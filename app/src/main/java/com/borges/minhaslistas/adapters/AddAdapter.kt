@@ -1,21 +1,21 @@
-package com.borges.minhaslistas.recycle
+package com.borges.minhaslistas.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Paint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.borges.minhaslistas.R
-import com.borges.minhaslistas.model.DataItem
+import com.borges.minhaslistas.models.DataItem
+import com.borges.minhaslistas.utils.Firebase
 import kotlinx.android.synthetic.main.card_recycle_add.view.*
 import java.text.NumberFormat
+import java.util.*
 
 
 class AddAdapter(
@@ -34,7 +34,7 @@ class AddAdapter(
     override fun onBindViewHolder(holder: AddViewHolder, position: Int) {
         val currentItem = listData[position]
 
-        holder.excluirItem(currentItem, position)
+        holder.mudarComprado(currentItem, position)
         holder.goToItem(currentItem)
         holder.bind(currentItem, position)
     }
@@ -49,24 +49,45 @@ class AddAdapter(
         @SuppressLint("SetTextI18n")
         fun bind(currentItem: DataItem, position: Int) {
             with(currentItem){
-                var icon = if(comprado == true) R.drawable.ic_circle_true else R.drawable.ic_circle_false
-                val z: NumberFormat = NumberFormat.getCurrencyInstance()
+                val meuLocal = Locale("pt", "BR")
+                val icon = if(comprado == true) R.drawable.ic_circle_true else R.drawable.ic_circle_false
+                val taxado = if(comprado == true) Paint.STRIKE_THRU_TEXT_FLAG else itemView.text_view_name_item.paintFlags
+                val z: NumberFormat = NumberFormat.getCurrencyInstance(meuLocal)
 
                 itemView.text_view_name_item.text = nome
+                itemView.text_view_name_item.paintFlags = taxado
                 itemView.text_view_quantidade_item.text = qt.toString()
                 itemView.text_view_preco_item.text = z.format(preco).toString()
-                itemView.buttom_delete.setBackgroundResource(icon)
+                itemView.buttom_delete2.setBackgroundResource(icon)
             }
         }
 
-        fun excluirItem(currentItem: DataItem, position: Int) {
-            itemView.buttom_delete.setOnClickListener {
-                Toast.makeText(
-                    itemView.context,
-                    "Excluir Card: ${currentItem.nome}",
-                    Toast.LENGTH_SHORT
-                ).show()
+        fun mudarComprado(currentItem: DataItem?, position: Int) {
+            val fb = Firebase()
+            with(currentItem){
+                itemView.buttom_delete.setOnClickListener {
+                    this?.idList?.let { it1 ->
+                        this.idItem?.let { it2 ->
+                            this.comprado?.let { it3 ->
+                                fb.updateItemListComprado(it1, it2, it3)
+                            }
+                        }
+                    }
+
+                }
+
+                itemView.buttom_delete2.setOnClickListener {
+                    this?.idList?.let { it1 ->
+                        this.idItem?.let { it2 ->
+                            this.comprado?.let { it3 ->
+                                fb.updateItemListComprado(it1, it2, it3)
+                            }
+                        }
+                    }
+
+                }
             }
+
         }
 
         fun goToItem(currentItem: DataItem) {
