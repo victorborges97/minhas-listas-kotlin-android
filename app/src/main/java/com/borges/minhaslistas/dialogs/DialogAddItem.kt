@@ -38,7 +38,7 @@ class DialogAddItem: DialogFragment() {
         mValor = rootView.findViewById(R.id.dialog_add_item_edittext_valor)
 
         rootView.dialog_add_item_btn_cancelar.setOnClickListener {
-            dismiss()
+            dialog?.dismiss()
         }
 
         rootView.dialog_add_item_btn_salvar.setOnClickListener {
@@ -63,7 +63,7 @@ class DialogAddItem: DialogFragment() {
 
         val fire = Firebase()
         fire.createItemList(nome, quantInt, valorDouble, multiply, idList)
-        dismiss()
+        dialog?.dismiss()
     }
 
     fun multiply(x: Double, y: Double) = x * y

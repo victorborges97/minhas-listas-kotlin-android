@@ -9,6 +9,7 @@ import androidx.fragment.app.DialogFragment
 import com.borges.minhaslistas.R
 import com.borges.minhaslistas.models.DataItem
 import com.borges.minhaslistas.utils.Firebase
+import kotlinx.android.synthetic.main.activity_add.*
 import kotlinx.android.synthetic.main.dialog_edit_item.view.*
 
 
@@ -55,14 +56,6 @@ class DialogEditItem: DialogFragment() {
         rootView.dialog_edit_item_btn_salvar.setOnClickListener {
             if (mNome?.text?.isEmpty() == true) {
                 mNome?.error = "Nome é Requerido."
-                return@setOnClickListener
-            }
-            if (mQuant?.text?.isEmpty() == true) {
-                mQuant?.error = "Password is Required."
-                return@setOnClickListener
-            }
-            if (mValor?.text?.isEmpty() == true) {
-                mValor?.error = "Password Must be >= 6 Characters"
                 return@setOnClickListener
             }
             updateUserListItem()
