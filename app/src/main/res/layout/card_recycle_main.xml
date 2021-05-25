@@ -18,7 +18,7 @@
             android:layout_marginStart="14dp"
             android:textSize="18sp"
             android:typeface="normal"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/card_main_textview_mercado"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="1. " />
@@ -32,11 +32,26 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:typeface="normal"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/card_main_textview_mercado"
             app:layout_constraintEnd_toEndOf="@+id/main_data"
             app:layout_constraintStart_toEndOf="@+id/card_main_number"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Testando minhas listas qual nome vai ficar grande pra caramba" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/card_main_textview_mercado"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/textColorItemList"
+            android:textSize="12sp"
+            android:typeface="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/main_nomeDaLista"
+            app:layout_constraintEnd_toStartOf="@+id/main_data"
+            app:layout_constraintStart_toEndOf="@+id/card_main_number"
+            tools:text="Mercado: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/main_data"

@@ -8,12 +8,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.borges.minhaslistas.R
+import com.borges.minhaslistas.adapters.AddAdapter
 import com.borges.minhaslistas.dialogs.DialogAddItem
 import com.borges.minhaslistas.dialogs.DialogEditItem
 import com.borges.minhaslistas.models.DataItem
-import com.borges.minhaslistas.adapters.AddAdapter
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.activity_add.*
 import kotlinx.android.synthetic.main.activity_add.view.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -33,11 +35,8 @@ class AddActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add)
         setBackgroundActionBar()
-
-        dialog = DialogEditItem()
-
-        val id = FirebaseAuth.getInstance().currentUser?.uid
         idItem = intent.extras?.getString("idItem").toString()
+        dialog = DialogEditItem()
 
         fab_add.setOnClickListener {
             val dialog2 = DialogAddItem()
@@ -50,13 +49,14 @@ class AddActivity : AppCompatActivity() {
         recycle_view_add.layoutManager = LinearLayoutManager(this)
         recycle_view_add.setHasFixedSize(true)
 
+    }
 
+    override fun onResume() {
+        super.onResume()
+        val id = FirebaseAuth.getInstance().currentUser?.uid
         if(id != null){
-            idItem.let {
-                getListsData(id, it)
-            }
+            getListsData(id, idItem)
         }
-
     }
 
     @SuppressLint("RestrictedApi")
@@ -77,52 +77,98 @@ class AddActivity : AppCompatActivity() {
             .collection(id)
             .document(idList)
             .collection("itens")
+            .orderBy("nome", Query.Direction.ASCENDING)
 
         docRef.addSnapshotListener { snapshot, e ->
             if (e != null) {
-                Log.w(TAG, "Listen failed.", e)
+                Log.w(TAG, "Error ao carregar a lista. Error: ", e)
                 return@addSnapshotListener
             }
 
-            if (snapshot != null && snapshot.documents.size != 0) {
-                //Limpo arquivos que estava antes da atualização em tempo real
-                newItens.clear()
-                recycle_view_add.adapter?.notifyDataSetChanged()
-                total = 0.00
-                //Adiciono os itens a um array mutavel da class List
-                snapshot.documents.forEach {
-                    it.toObject(DataItem::class.java).let { entity ->
-                        entity?.idItem = it.id
-                        entity?.idList = idList
-                        if (entity != null) {
+            if(snapshot?.isEmpty == true) {
+                Log.w(TAG, "Lista Vazia")
+                return@addSnapshotListener
+            }
+
+            for (dc in snapshot!!.documentChanges) {
+                when (dc.type) {
+                    DocumentChange.Type.ADDED -> {
+                        dc.document.toObject(DataItem::class.java).let { entity ->
+                            entity.idItem = dc.document.id
+                            entity.idList = idList
+                            Log.d(TAG, "New item: $entity")
                             newItens.add(entity)
+                            posGetItem()
+                            recycle_view_add.adapter?.notifyDataSetChanged()
+                        }
+
+                    }
+                    DocumentChange.Type.MODIFIED -> {
+                        dc.document.toObject(DataItem::class.java).let { entity ->
+                            entity.idItem = dc.document.id
+                            entity.idList = idList
+                            val idxItem = findIndex(newItens, dc.document.id)
+                            newItens[idxItem] = entity
+                            Log.d(TAG,
+                                "\nModified item: " +
+                                    "\n${newItens[idxItem]}")
+
+                            posGetItem()
+                            recycle_view_add.adapter?.notifyItemChanged(idxItem, null)
+                        }
+                    }
+                    DocumentChange.Type.REMOVED -> {
+                        dc.document.toObject(DataItem::class.java).let { entity ->
+                            val idxItem = findIndex(newItens, dc.document.id)
+                            entity.idItem = dc.document.id
+                            entity.idList = idList
+                            Log.d(TAG, "Removed item: $entity")
+                            newItens.removeAt(idxItem)
+                            posGetItem()
+                            recycle_view_add.adapter?.notifyDataSetChanged()
                         }
                     }
                 }
-
-                newItens.map {
-                    if(it.comprado == true){
-                        var qtf = it.qt?.toDouble()
-                        var valor = it.preco?.toDouble()
-
-                        if(qtf != null && valor != null) {
-                            total += multiply(qtf, valor)
-                        }
-                    }
-                }
-                val meuLocal = Locale("pt", "BR")
-                val z: NumberFormat = NumberFormat.getCurrencyInstance(meuLocal)
-                nomeDaLista.text = "Total do carrinho: ${z.format(total).toString()}"
-
-                //Mantando a Lista Mutavel para o Adapter
-                recycle_view_add.adapter = AddAdapter(newItens, applicationContext, dialog)
-                Log.d(TAG, "Current data: ${newItens.size}")
-            } else {
-                Log.d(TAG, "Current data: null")
             }
         }
     }
 
-    fun multiply(x: Double, y: Double) = x * y
+    @SuppressLint("SetTextI18n")
+    private fun posGetItem() {
+        total = 0.00
+        newItens.map {
+            if (it.comprado == true) {
+                val qtf = it.qt?.toDouble()
+                val valor = it.preco?.toDouble()
+
+                if (qtf != null && valor != null) {
+                    total += multiply(qtf, valor)
+                }
+            }
+        }
+        val meuLocal = Locale("pt", "BR")
+        val z: NumberFormat = NumberFormat.getCurrencyInstance(meuLocal)
+        nomeDaLista.text = "Total do carrinho: ${z.format(total).toString()}"
+
+        //Mantando a Lista Mutavel para o Adapter
+        recycle_view_add.adapter = AddAdapter(newItens, applicationContext, dialog)
+    }
+
+    private fun findIndex(arr: MutableList<DataItem>?, t: String): Int {
+        // if array is Null
+        if (arr == null) {
+            return -1
+        }
+        // traverse in the array
+        var idx = -1
+        for (i in arr.indices) {
+            if (arr[i].idItem == t) {
+                idx = i
+            }
+        }
+        return idx
+    }
+
+    private fun multiply(x: Double, y: Double) = x * y
 }
 

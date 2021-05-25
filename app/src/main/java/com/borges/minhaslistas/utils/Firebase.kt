@@ -1,9 +1,11 @@
 package com.borges.minhaslistas.utils
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import java.text.DateFormat
 import java.util.*
 
 class Firebase {
@@ -64,7 +66,7 @@ class Firebase {
         val item = hashMapOf<String, Any>()
 
         item["comprado"] = comprado
-        item["nome"] = nome
+        item["nome"] = nome.toLowerCase(Locale.ROOT)
         item["preco"] = valorDouble
         item["qt"] = quantInt
         item["total"] = multiply
@@ -93,9 +95,10 @@ class Firebase {
             .addOnFailureListener { e -> Log.w("DELETE_FIREBASE_ITEM", "Error deleting document", e) }
     }
 
-    fun updateList(idList: String, nomeDaLista: String) {
+    fun updateList(idList: String, nomeDaLista: String, mercado: String) {
         val item = hashMapOf<String, Any>()
         item["nomeDaLista"] = nomeDaLista
+        item["nomeDoMercado"] = mercado
 
         db.collection(mAuth.currentUser?.uid.toString())
             .document(idList)
@@ -110,16 +113,13 @@ class Firebase {
             }
     }
 
-    fun createList(nomeDaLista: String?) {
-
-        val data = Calendar.getInstance().time
-        val brasil = Locale("pt", "BR")
-        val f2: DateFormat = DateFormat.getDateInstance(DateFormat.DATE_FIELD, brasil)
+    fun createList(nomeDaLista: String?, mercado: String?) {
 
         val item = hashMapOf<String, Any>()
 
-        item["created"] = f2.format(data)
         item["nomeDaLista"] = nomeDaLista.toString()
+        item["nomeDoMercado"] = mercado.toString()
+        item["timestamp"] = Timestamp.now()
 
         Log.i("NOTIFY_CREATE_FIREBASE", "CRIANDO NEWLIST")
         db.collection(mAuth.currentUser?.uid.toString())
@@ -136,11 +136,14 @@ class Firebase {
 
     }
 
-    fun excluirList(idList: String) {
+    fun excluirList(idList: String, context: Context) {
         db.collection(mAuth.currentUser?.uid.toString())
             .document(idList)
             .delete()
-            .addOnSuccessListener { Log.d("DELETE_FIREBASE_LISTA", "DocumentSnapshot successfully deleted!") }
+            .addOnSuccessListener {
+                Toast.makeText(context, "Lista excluida com sucesso!", Toast.LENGTH_LONG).show()
+                Log.d("DELETE_FIREBASE_LISTA", "DocumentSnapshot successfully deleted!")
+            }
             .addOnFailureListener { e -> Log.w("DELETE_FIREBASE_LISTA", "Error deleting document", e) }
     }
 

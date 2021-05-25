@@ -12,7 +12,8 @@ import kotlinx.android.synthetic.main.dialog_add_list.view.*
 
 class DialogAddList: DialogFragment() {
 
-    private  var mNome: EditText? = null
+    private var mNome: EditText? = null
+    private var mMercado: EditText? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,7 +23,7 @@ class DialogAddList: DialogFragment() {
         val rootView: View = inflater.inflate(R.layout.dialog_add_list, container, false)
 
         mNome = rootView.findViewById(R.id.dialog_add_list_edittext_nome)
-
+        mMercado = rootView.findViewById(R.id.dialog_add_list_edittext_mercado)
 
         rootView.dialog_add_list_btn_cancelar.setOnClickListener {
             dialog?.dismiss()
@@ -33,16 +34,16 @@ class DialogAddList: DialogFragment() {
                 mNome?.error = "Nome é Requerido."
                 return@setOnClickListener
             }
-            createData(mNome?.text?.toString())
+            createData(mNome?.text?.toString(), mMercado?.text?.toString())
             dialog?.dismiss()
         }
 
         return rootView
     }
 
-    private fun createData(nomeDaLista: kotlin.String?){
+    private fun createData(nomeDaLista: String?, mercado: String?){
         val fb = Firebase()
-        fb.createList(nomeDaLista)
+        fb.createList(nomeDaLista, mercado)
     }
 
 

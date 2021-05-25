@@ -13,8 +13,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.borges.minhaslistas.R
 import com.borges.minhaslistas.models.DataList
 import com.borges.minhaslistas.views.AddActivity
+import com.google.firebase.Timestamp
 import kotlinx.android.synthetic.main.activity_add.*
 import kotlinx.android.synthetic.main.card_recycle_main.view.*
+import java.util.*
 
 class MainAdapter(val listData: MutableList<DataList>, val contextMain: Context, var dialog: DialogFragment) : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
 
@@ -38,14 +40,25 @@ class MainAdapter(val listData: MutableList<DataList>, val contextMain: Context,
         return listData.size
     }
 
+    fun getShortDate(ts:Timestamp?):String{
+        if(ts == null) return ""
+        //Get instance of calendar
+        val calendar = Calendar.getInstance(Locale.getDefault())
+        //get current date from ts
+        calendar.timeInMillis = ts.toDate().time
+        //return formatted date
+        return android.text.format.DateFormat.format("dd/MM/yyyy", calendar).toString()
+    }
+
     inner class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
 
         fun bind(currentItem: DataList, position: Int) {
             with(currentItem){
                 itemView.card_main_number.text = "${position + 1}. "
-                itemView.main_nomeDaLista.text = "$nomeDaLista"
-                itemView.main_data.text = if(created != "") created else ""
+                itemView.main_nomeDaLista.text = if(nomeDaLista != null && nomeDaLista != "") "$nomeDaLista" else "Lista sem nome"
+                itemView.main_data.text = if(timestamp != null) getShortDate(timestamp) else ""
+                itemView.card_main_textview_mercado.text = if(nomeDoMercado != null && nomeDoMercado != "") "Mercado: $nomeDoMercado" else "Mercado: "
             }
         }
 

@@ -23,7 +23,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.String
 import java.util.*
@@ -74,19 +76,21 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser: FirebaseUser? = mAuth.currentUser
-
         val nome = currentUser?.displayName.toString()
-        val id = currentUser?.uid.toString()
-        val email = currentUser?.email.toString()
-        val url_photo = String.valueOf(currentUser?.photoUrl)
-
-        getListsData(currentUser?.uid.toString())
 
         if(nome != null && nome != "null") {
             text_bem.text = "Seja bem vindo, $nome"
         } else {
             text_bem.text = "Seja bem vindo"
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val currentUser: FirebaseUser? = mAuth.currentUser
+
+        getListsData(currentUser?.uid.toString())
 
     }
 
@@ -132,7 +136,7 @@ class MainActivity : AppCompatActivity() {
         newList = mutableListOf<DataList>()
 
         val listsRef = FirebaseFirestore.getInstance()
-        val docRef = listsRef.collection(id)
+        val docRef = listsRef.collection(id).orderBy("timestamp", Query.Direction.DESCENDING)
 
         docRef.addSnapshotListener { snapshot, e ->
             if (e != null) {
@@ -155,6 +159,8 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
+                Log.i("TESTE", newList.toString())
+
                 //Tiro os texto pois a lista não está vazia
                 text_bem.visibility = View.INVISIBLE
                 text_home.visibility = View.INVISIBLE
@@ -170,6 +176,8 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
+
+
 
 
 

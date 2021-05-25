@@ -16,15 +16,15 @@ class DialogEditList: DialogFragment() {
 
     lateinit var mNote: DataList
     lateinit var mNome: EditText
+    lateinit var mMercado: EditText
 
     override fun onStart() {
         super.onStart()
-
         if(mNome.text.toString() != mNote.nomeDaLista.toString()) {
             //Preenchendo os campos
             mNome.setText(mNote.nomeDaLista)
+            mMercado.setText(mNote.nomeDoMercado)
         }
-
     }
 
     override fun onCreateView(
@@ -39,10 +39,11 @@ class DialogEditList: DialogFragment() {
 
         //Buscando os campos no layout
         mNome = rootView.findViewById(R.id.dialog_edit_list_edittext_nome)
+        mMercado = rootView.findViewById(R.id.dialog_edit_list_edittext_mercado)
 
         rootView.dialog_edit_list_btn_cancelar.setOnClickListener {
-            var fb = Firebase()
-            fb.excluirList(mNote.idList.toString())
+            val fb = Firebase()
+            fb.excluirList(mNote.idList.toString(), rootView.context)
             dialog?.dismiss()
         }
 
@@ -58,10 +59,11 @@ class DialogEditList: DialogFragment() {
         return rootView
     }
 
-    fun updateList() {
+    private fun updateList() {
         val fb = Firebase()
         val nome: String = mNome.text.toString()
-        fb.updateList(mNote.idList.toString(), nome)
+        val mercado: String = mMercado.text.toString()
+        fb.updateList(mNote.idList.toString(), nome, mercado)
     }
 
 

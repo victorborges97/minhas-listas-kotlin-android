@@ -47,6 +47,33 @@
         app:layout_constraintTop_toBottomOf="@+id/dialog_edit_list_textview_nome"
         tools:ignore="RtlSymmetry" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/dialog_edit_list_textview_mercado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_add_list_textview_mercado"
+        android:textColor="@color/textColorItemQtValor"
+        android:layout_marginTop="16dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_edit_list_edittext_nome" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/dialog_edit_list_edittext_mercado"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:background="@drawable/campo_add"
+        android:hint="@string/dialog_add_list_hint_nome"
+        android:paddingVertical="0dp"
+        android:paddingStart="16dp"
+        android:textColor="@color/textColorItemQtValor"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_edit_list_textview_mercado"
+        tools:ignore="RtlSymmetry" />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/dialog_edit_list_btn_salvar"
         android:layout_width="wrap_content"
@@ -61,7 +88,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_edit_list_edittext_nome" />
+        app:layout_constraintTop_toBottomOf="@+id/dialog_edit_list_edittext_mercado" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/dialog_edit_list_btn_cancelar"
