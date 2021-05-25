@@ -26,8 +26,8 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import kotlinx.android.synthetic.main.activity_add.*
 import kotlinx.android.synthetic.main.activity_main.*
-import java.lang.String
 import java.util.*
 
 
@@ -143,42 +143,118 @@ class MainActivity : AppCompatActivity() {
                 Log.w(TAG, "Listen failed.", e)
                 return@addSnapshotListener
             }
-
-            if (snapshot != null && snapshot.documents.size != 0) {
-                //Limpo arquivos que estava antes da atualização em tempo real
+            if(snapshot?.isEmpty == true) {
                 newList.clear()
                 recycle_main.adapter?.notifyDataSetChanged()
-
-                //Adiciono os itens a um array mutavel da class List
-                snapshot.documents.forEach {
-                    it.toObject(DataList::class.java).let { entity ->
-                        entity?.idList = it.id
-                        if (entity != null) {
+                recycle_main.visibility = View.GONE;
+                setTextVisible()
+                Log.w(TAG, "Lista Vazia")
+                return@addSnapshotListener
+            }
+            setTextInvisible()
+            val recyclerViewState = recycle_main.layoutManager?.onSaveInstanceState()
+            for (dc in snapshot!!.documentChanges) {
+                when (dc.type) {
+                    DocumentChange.Type.ADDED -> {
+                        dc.document.toObject(DataList::class.java).let { entity ->
+                            entity.idList = dc.document.id
+                            Log.d(TAG, "New item: $entity")
                             newList.add(entity)
+                            posGetLists()
+                            recycle_main.adapter?.notifyDataSetChanged()
+                            recycle_main.layoutManager?.onRestoreInstanceState(recyclerViewState)
+                        }
+
+                    }
+                    DocumentChange.Type.MODIFIED -> {
+                        dc.document.toObject(DataList::class.java).let { entity ->
+                            entity.idList = dc.document.id
+                            val idxItem = findIndex(newList, dc.document.id)
+                            newList[idxItem] = entity
+                            Log.d(TAG,
+                                "\nModified item: " +
+                                        "\n${newList[idxItem]}")
+
+                            posGetLists()
+                            recycle_main.adapter?.notifyItemChanged(idxItem, null)
+                            recycle_main.layoutManager?.onRestoreInstanceState(recyclerViewState)
+                        }
+                    }
+                    DocumentChange.Type.REMOVED -> {
+                        dc.document.toObject(DataList::class.java).let { entity ->
+                            val idxItem = findIndex(newList, dc.document.id)
+                            entity.idList = dc.document.id
+                            Log.d(TAG, "Removed item: $entity")
+                            newList.removeAt(idxItem)
+                            posGetLists()
+                            recycle_main.adapter?.notifyDataSetChanged()
+                            recycle_main.layoutManager?.onRestoreInstanceState(recyclerViewState)
                         }
                     }
                 }
-
-                Log.i("TESTE", newList.toString())
-
-                //Tiro os texto pois a lista não está vazia
-                text_bem.visibility = View.INVISIBLE
-                text_home.visibility = View.INVISIBLE
-                text_facil.visibility = View.INVISIBLE
-
-                //Mantando a Lista Mutavel para o Adapter
-                recycle_main.adapter = MainAdapter(newList, applicationContext, dialog)
-                Log.d(TAG, "Current data: ${newList.size}")
-            } else {
-                Log.d(TAG, "Current data: null")
             }
         }
     }
 
+    private fun setTextInvisible() {
+        //Tiro os texto pois a lista não está vazia
+        recycle_main.visibility = View.VISIBLE;
+        text_bem.visibility = View.INVISIBLE
+        text_home.visibility = View.INVISIBLE
+        text_facil.visibility = View.INVISIBLE
+    }
+
+    private fun setTextVisible() {
+        //Tiro os texto pois a lista não está vazia
+        text_bem.visibility = View.VISIBLE
+        text_home.visibility = View.VISIBLE
+        text_facil.visibility = View.VISIBLE
+    }
+
+    private fun posGetLists() {
+        //Mantando a Lista Mutavel para o Adapter
+        recycle_main.adapter = MainAdapter(newList, applicationContext, dialog)
+        Log.d(TAG, "Current data: ${newList.size}")
+    }
+
+    private fun findIndex(arr: MutableList<DataList>?, t: kotlin.String): Int {
+        // if array is Null
+        if (arr == null) {
+            return -1
+        }
+        // traverse in the array
+        var idx = -1
+        for (i in arr.indices) {
+            if (arr[i].idList == t) {
+                idx = i
+            }
+        }
+        return idx
+    }
 }
 
-
-
+//
+//if (snapshot != null && snapshot.documents.size != 0) {
+//    //Limpo arquivos que estava antes da atualização em tempo real
+//    newList.clear()
+//
+//    //Adiciono os itens a um array mutavel da class List
+//    snapshot.documents.forEach {
+//        it.toObject(DataList::class.java).let { entity ->
+//            entity?.idList = it.id
+//            if (entity != null) {
+//                newList.add(entity)
+//            }
+//        }
+//    }
+//
+//    posGetLists()
+//
+//    recycle_main.adapter?.notifyDataSetChanged()
+//    recycle_main.layoutManager?.onRestoreInstanceState(recyclerViewState)
+//} else {
+//    Log.d(TAG, "Current data: null")
+//}
 
 
 

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -86,9 +87,15 @@ class AddActivity : AppCompatActivity() {
             }
 
             if(snapshot?.isEmpty == true) {
+                newItens.clear()
+                recycle_view_add.adapter?.notifyDataSetChanged()
+                recycle_view_add.visibility = View.GONE;
                 Log.w(TAG, "Lista Vazia")
                 return@addSnapshotListener
             }
+
+            recycle_view_add.visibility = View.VISIBLE
+            val recyclerViewState = recycle_view_add.layoutManager?.onSaveInstanceState()
 
             for (dc in snapshot!!.documentChanges) {
                 when (dc.type) {
@@ -100,6 +107,7 @@ class AddActivity : AppCompatActivity() {
                             newItens.add(entity)
                             posGetItem()
                             recycle_view_add.adapter?.notifyDataSetChanged()
+                            recycle_view_add.layoutManager?.onRestoreInstanceState(recyclerViewState)
                         }
 
                     }
@@ -115,6 +123,7 @@ class AddActivity : AppCompatActivity() {
 
                             posGetItem()
                             recycle_view_add.adapter?.notifyItemChanged(idxItem, null)
+                            recycle_view_add.layoutManager?.onRestoreInstanceState(recyclerViewState)
                         }
                     }
                     DocumentChange.Type.REMOVED -> {
@@ -126,6 +135,7 @@ class AddActivity : AppCompatActivity() {
                             newItens.removeAt(idxItem)
                             posGetItem()
                             recycle_view_add.adapter?.notifyDataSetChanged()
+                            recycle_view_add.layoutManager?.onRestoreInstanceState(recyclerViewState)
                         }
                     }
                 }
