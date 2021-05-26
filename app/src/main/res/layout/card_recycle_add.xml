@@ -35,7 +35,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_view_name_item"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
         android:ellipsize="marquee"
@@ -44,18 +44,19 @@
         android:textSize="19sp"
         android:typeface="normal"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/text_view_quantidade_item"
         app:layout_constraintStart_toEndOf="@+id/buttom_delete"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Caixa de Leite" />
+        tools:text="Caixa de Leite vamos ver até onde vai" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_view_quantidade_item"
         android:layout_width="wrap_content"
         android:minWidth="30dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="10dp"
         android:paddingVertical="3dp"
-        android:paddingHorizontal="8dp"
+        android:paddingHorizontal="5dp"
         android:background="@drawable/campo_item_input"
         android:inputType="number"
         android:textColor="@color/textColorItemQtValor"
@@ -73,7 +74,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="14dp"
         android:paddingVertical="3dp"
-        android:paddingHorizontal="8dp"
+        android:paddingHorizontal="5dp"
         android:background="@drawable/campo_item_input"
         android:inputType="numberDecimal"
         android:textColor="@color/textColorItemQtValor"
