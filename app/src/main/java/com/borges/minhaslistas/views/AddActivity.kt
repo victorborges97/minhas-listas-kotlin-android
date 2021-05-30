@@ -78,7 +78,7 @@ class AddActivity : AppCompatActivity() {
             .collection(id)
             .document(idList)
             .collection("itens")
-            .orderBy("nome", Query.Direction.ASCENDING)
+//            .orderBy("nome", Query.Direction.ASCENDING)
 
         docRef.addSnapshotListener { snapshot, e ->
             if (e != null) {
@@ -117,9 +117,7 @@ class AddActivity : AppCompatActivity() {
                             entity.idList = idList
                             val idxItem = findIndex(newItens, dc.document.id)
                             newItens[idxItem] = entity
-                            Log.d(TAG,
-                                "\nModified item: " +
-                                    "\n${newItens[idxItem]}")
+                            Log.d(TAG, "Modified item: ${newItens[idxItem]}")
 
                             posGetItem()
                             recycle_view_add.adapter?.notifyItemChanged(idxItem, null)
@@ -160,7 +158,7 @@ class AddActivity : AppCompatActivity() {
         val z: NumberFormat = NumberFormat.getCurrencyInstance(meuLocal)
         nomeDaLista.text = "Total do carrinho: ${z.format(total).toString()}"
 
-        //Mantando a Lista Mutavel para o Adapter
+        //Mandando a Lista Mutavel para o Adapter
         recycle_view_add.adapter = AddAdapter(newItens, applicationContext, dialog)
     }
 

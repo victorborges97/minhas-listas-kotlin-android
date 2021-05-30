@@ -9,8 +9,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 
 class Firebase {
-    val db = FirebaseFirestore.getInstance()
-    val mAuth = FirebaseAuth.getInstance();
+    private val db = FirebaseFirestore.getInstance()
+    private val mAuth = FirebaseAuth.getInstance()
 
     fun updateItemListComprado(idList: String, idItem: String, comprado: Boolean ) {
 

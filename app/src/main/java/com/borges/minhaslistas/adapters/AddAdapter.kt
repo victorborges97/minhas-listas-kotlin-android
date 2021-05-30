@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +25,10 @@ class AddAdapter(
     val context: Context,
     val dialog: DialogFragment
 ) : RecyclerView.Adapter<AddAdapter.AddViewHolder>() {
+
+    private val meuLocal = Locale("pt", "BR")
+    private val z: NumberFormat = NumberFormat.getCurrencyInstance(meuLocal)
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
             R.layout.card_recycle_add,
@@ -44,21 +50,21 @@ class AddAdapter(
     }
 
     inner class AddViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun multiply(x: Double, y: Double) = x * y
 
-        @SuppressLint("SetTextI18n")
         fun bind(currentItem: DataItem, position: Int) {
             with(currentItem){
-                val meuLocal = Locale("pt", "BR")
-                val icon = if(comprado == true) R.drawable.ic_circle_true else R.drawable.ic_circle_false
-                val taxado = if(comprado == true) Paint.STRIKE_THRU_TEXT_FLAG else itemView.text_view_name_item.paintFlags
-                val z: NumberFormat = NumberFormat.getCurrencyInstance(meuLocal)
 
                 itemView.text_view_name_item.text = nome
-                itemView.text_view_name_item.paintFlags = taxado
                 itemView.text_view_quantidade_item.text = qt.toString()
-                itemView.text_view_preco_item.text = z.format(preco).toString()
-                itemView.buttom_delete2.setBackgroundResource(icon)
+                itemView.text_view_preco_item.text = preco?.format()
+
+                if(comprado == true) {
+                    itemView.text_view_name_item.toggleStrikeThrough(true)
+                    itemView.buttom_delete2.toggleStrikeThrough(true)
+                } else {
+                    itemView.text_view_name_item.toggleStrikeThrough(false)
+                    itemView.buttom_delete2.toggleStrikeThrough(false)
+                }
             }
         }
 
@@ -104,7 +110,23 @@ class AddAdapter(
         }
     }
 
-    fun Double.format(digits: Int) = "%.${digits}f".format(this)
+    fun Double.format(): String = z.format(this)
+
+    fun TextView.toggleStrikeThrough(on: Boolean) {
+        if(on) {
+            this.paintFlags = this.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+        } else {
+            this.paintFlags = this.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+        }
+    }
+
+    fun ImageButton.toggleStrikeThrough(on: Boolean) {
+        if(on) {
+            this.setBackgroundResource(R.drawable.ic_circle_true)
+        } else {
+            this.setBackgroundResource(R.drawable.ic_circle_false)
+        }
+    }
 }
 
 
