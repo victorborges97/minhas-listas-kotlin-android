@@ -3,10 +3,12 @@ package com.borges.minhaslistas.adapters
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Paint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
@@ -18,8 +20,11 @@ import kotlinx.android.synthetic.main.activity_add.*
 import kotlinx.android.synthetic.main.card_recycle_main.view.*
 import java.util.*
 
-class MainAdapter(val listData: MutableList<DataList>, val contextMain: Context, var dialog: DialogFragment) : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
-
+class MainAdapter(
+    private val listData: MutableList<DataList>,
+    val contextMain: Context,
+    var dialog: DialogFragment)
+    : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.card_recycle_main,
@@ -40,16 +45,6 @@ class MainAdapter(val listData: MutableList<DataList>, val contextMain: Context,
         return listData.size
     }
 
-    fun getShortDate(ts:Timestamp?):String{
-        if(ts == null) return ""
-        //Get instance of calendar
-        val calendar = Calendar.getInstance(Locale.getDefault())
-        //get current date from ts
-        calendar.timeInMillis = ts.toDate().time
-        //return formatted date
-        return android.text.format.DateFormat.format("dd/MM/yyyy", calendar).toString()
-    }
-
     inner class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
 
@@ -57,7 +52,7 @@ class MainAdapter(val listData: MutableList<DataList>, val contextMain: Context,
             with(currentItem){
                 itemView.card_main_number.text = "${position + 1}. "
                 itemView.main_nomeDaLista.text = if(nomeDaLista != null && nomeDaLista != "") "$nomeDaLista" else "Lista sem nome"
-                itemView.main_data.text = if(timestamp != null) getShortDate(timestamp) else ""
+                itemView.main_data.getShortDate(timestamp)
                 itemView.card_main_textview_mercado.text = if(nomeDoMercado != null && nomeDoMercado != "") "Mercado: $nomeDoMercado" else "Mercado: "
             }
         }
@@ -87,6 +82,14 @@ class MainAdapter(val listData: MutableList<DataList>, val contextMain: Context,
         }
     }
 
-}
+    fun TextView.getShortDate(ts: Timestamp?) {
+        if(ts != null) {
+            val calendar = Calendar.getInstance(Locale.getDefault())
+            calendar.timeInMillis = ts.toDate().time
+            this.text = android.text.format.DateFormat.format("dd/MM/yyyy", calendar).toString()
+        } else {
+            this.text = ""
+        }
+    }
 
-// https://www.youtube.com/watch?v=afl_i6uvvU0
+}

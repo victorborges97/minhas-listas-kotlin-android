@@ -1,6 +1,5 @@
 package com.borges.minhaslistas.adapters
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Paint
 import android.os.Bundle
@@ -21,9 +20,9 @@ import java.util.*
 
 
 class AddAdapter(
-    val listData: MutableList<DataItem>,
+    private val listData: MutableList<DataItem>,
     val context: Context,
-    val dialog: DialogFragment
+    private val dialog: DialogFragment
 ) : RecyclerView.Adapter<AddAdapter.AddViewHolder>() {
 
     private val meuLocal = Locale("pt", "BR")

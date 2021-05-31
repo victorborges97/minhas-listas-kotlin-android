@@ -16,7 +16,6 @@ import com.borges.minhaslistas.models.DataItem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.activity_add.*
 import kotlinx.android.synthetic.main.activity_add.view.*
 import kotlinx.android.synthetic.main.activity_main.*
