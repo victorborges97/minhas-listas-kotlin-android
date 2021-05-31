@@ -24,6 +24,7 @@
     <color name="appPrimaryBg">#F1F1F1</color>
     <color name="appPrimaryBgDialog">#FFFFFF</color>
     <color name="bgCardMain">#FFF</color>
+    <color name="bgInputRegister">#FFFFFF</color>
 
     <!--  Cor padrão textos app -->
     <color name="appText">#5A5A5A</color>

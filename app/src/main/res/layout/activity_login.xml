@@ -56,8 +56,8 @@
                 android:imeOptions="actionNext"
                 android:importantForAutofill="no"
                 android:inputType="textEmailAddress"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:textColor="@color/textColorItemQtValor"
+                android:textColorHint="@color/appPrimary" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!--Senha-->
@@ -87,7 +87,8 @@
                 android:imeOptions="actionDone"
                 android:importantForAutofill="no"
                 android:inputType="textPassword"
-                android:textColor="@color/white" />
+                android:textColorHint="@color/appPrimary"
+                android:textColor="@color/textColorItemQtValor" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!--Botão de Login E-mail e Senha-->
@@ -97,7 +98,7 @@
             android:layout_height="45dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/base_borderradius"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="@color/bgInputRegister"
             android:fontFamily="@font/montserrat"
             android:hint="Entrar"
             android:textColorHint="@color/appPrimary"
