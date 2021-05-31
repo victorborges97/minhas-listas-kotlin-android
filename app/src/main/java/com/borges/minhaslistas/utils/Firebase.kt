@@ -3,14 +3,18 @@ package com.borges.minhaslistas.utils
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import com.borges.minhaslistas.models.DataItem
+import com.borges.minhaslistas.models.DataList
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
+import kotlin.collections.ArrayList
 
 class Firebase {
     private val db = FirebaseFirestore.getInstance()
     private val mAuth = FirebaseAuth.getInstance()
+    private val TAG = "FIREBASE_CLASSE"
 
     fun updateItemListComprado(idList: String, idItem: String, comprado: Boolean ) {
 
@@ -70,6 +74,7 @@ class Firebase {
         item["preco"] = valorDouble
         item["qt"] = quantInt
         item["total"] = multiply
+        item["timestamp"] = Timestamp.now()
 
         db.collection(mAuth.currentUser?.uid.toString())
             .document(idList)
@@ -146,5 +151,45 @@ class Firebase {
             }
             .addOnFailureListener { e -> Log.w("DELETE_FIREBASE_LISTA", "Error deleting document", e) }
     }
+
+    fun dupliqueList(idList: String, nomeNovo: String, mercadoNovo: String) {
+
+        val list = hashMapOf<String, Any>()
+
+        list["nomeDaLista"] = nomeNovo.toString()
+        list["nomeDoMercado"] = mercadoNovo.toString()
+        list["timestamp"] = Timestamp.now()
+
+        //Criar a lista nova e salvo o id
+        db.collection(mAuth.currentUser?.uid.toString())
+            .add(list)
+            .addOnSuccessListener {
+                Log.d("CREATE_NEW_LIST", "OnSuccess Created id: ${it.id}")
+
+                //Pegar os itens da lista atual e criar os itens novos com preços zerados
+                db.collection(mAuth.currentUser?.uid.toString())
+                    .document(idList)
+                    .collection("itens")
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        Log.w("CREATE_NEW_LIST/ITEM", "Criando os Itens")
+                        for (document in documents) {
+                            createItemList(document.get("nome").toString(), 0, 0.00, 0.00, it.id)
+                        }
+                        Log.w("CREATE_NEW_LIST/ITEM", "Criado os Itens")
+                    }
+                    .addOnFailureListener {
+                        Log.w("CREATE_NEW_LIST/ITEM", "OnFailure CreateItem: ", it)
+                        return@addOnFailureListener
+                    }
+
+            }
+            .addOnFailureListener { e ->
+                Log.w("CREATE_NEW_LIST", "OnFailure Update: ", e)
+                return@addOnFailureListener
+            }
+
+    }
+
 
 }

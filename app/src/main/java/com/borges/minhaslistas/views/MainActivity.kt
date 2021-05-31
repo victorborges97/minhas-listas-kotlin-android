@@ -5,18 +5,16 @@ import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.borges.minhaslistas.R
+import com.borges.minhaslistas.adapters.MainAdapter
 import com.borges.minhaslistas.dialogs.DialogAddList
+import com.borges.minhaslistas.dialogs.DialogDuplicList
 import com.borges.minhaslistas.dialogs.DialogEditList
 import com.borges.minhaslistas.models.DataList
-import com.borges.minhaslistas.adapters.MainAdapter
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -35,13 +33,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var db: FirebaseFirestore
-    private var nome: kotlin.String? = ""
-    private var id: kotlin.String? = ""
-    private var email: kotlin.String? = ""
-    private var url_photo: kotlin.String? = null
+    private var nome: String? = ""
+    private var id: String? = ""
+    private var email: String? = ""
+    private var url_photo: String? = null
     private var TAG = "MAIN"
     private lateinit var dialog: DialogFragment
-    private var idCreated: kotlin.String? = ""
+    private lateinit var dialog3: DialogFragment
+    private var idCreated: String? = ""
     private lateinit var newList: MutableList<DataList>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         setBackgroundActionBar()
 
         dialog = DialogEditList()
+        dialog3 = DialogDuplicList()
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -60,11 +60,11 @@ class MainActivity : AppCompatActivity() {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         db = FirebaseFirestore.getInstance()
 
-        fab.setOnClickListener(View.OnClickListener {
+        fab.setOnClickListener{
             val dialog2 = DialogAddList()
             val ft = supportFragmentManager.beginTransaction()
             dialog2.show(ft, "DialogAddList")
-        })
+        }
 
         recycle_main.layoutManager = LinearLayoutManager(this)
         recycle_main.setHasFixedSize(true)
@@ -132,7 +132,7 @@ class MainActivity : AppCompatActivity() {
         logout()
     }
 
-    private fun getListsData(id: kotlin.String) {
+    private fun getListsData(id: String) {
         newList = mutableListOf<DataList>()
 
         val listsRef = FirebaseFirestore.getInstance()
@@ -164,7 +164,6 @@ class MainActivity : AppCompatActivity() {
                             recycle_main.adapter?.notifyDataSetChanged()
                             recycle_main.layoutManager?.onRestoreInstanceState(recyclerViewState)
                         }
-
                     }
                     DocumentChange.Type.MODIFIED -> {
                         dc.document.toObject(DataList::class.java).let { entity ->
@@ -213,11 +212,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun posGetLists() {
         //Mantando a Lista Mutavel para o Adapter
-        recycle_main.adapter = MainAdapter(newList, applicationContext, dialog)
+        recycle_main.adapter = MainAdapter(newList, applicationContext, dialog, dialog3)
         Log.d(TAG, "Current data: ${newList.size}")
     }
 
-    private fun findIndex(arr: MutableList<DataList>?, t: kotlin.String): Int {
+    private fun findIndex(arr: MutableList<DataList>?, t: String): Int {
         // if array is Null
         if (arr == null) {
             return -1
@@ -232,29 +231,6 @@ class MainActivity : AppCompatActivity() {
         return idx
     }
 }
-
-//
-//if (snapshot != null && snapshot.documents.size != 0) {
-//    //Limpo arquivos que estava antes da atualização em tempo real
-//    newList.clear()
-//
-//    //Adiciono os itens a um array mutavel da class List
-//    snapshot.documents.forEach {
-//        it.toObject(DataList::class.java).let { entity ->
-//            entity?.idList = it.id
-//            if (entity != null) {
-//                newList.add(entity)
-//            }
-//        }
-//    }
-//
-//    posGetLists()
-//
-//    recycle_main.adapter?.notifyDataSetChanged()
-//    recycle_main.layoutManager?.onRestoreInstanceState(recyclerViewState)
-//} else {
-//    Log.d(TAG, "Current data: null")
-//}
 
 
 

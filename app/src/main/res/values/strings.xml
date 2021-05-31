@@ -30,4 +30,8 @@
     <string name="dialog_edit_list_title">Alterar Lista</string>
     <string name="dialog_edit_item_title">Alterar Item</string>
     <string name="dialog_add_list_textview_mercado">Mercado</string>
+    <string name="dialog_duplic_list_title">Duplicando Lista</string>
+    <string name="dialog_duplic_list_hint_nome">Novo nome da lista</string>
+    <string name="dialog_duplic_list_hint_mercado">Novo nome do mercado</string>
+    <string name="dialog_duplica_list_btn_cancelar">Cancelar</string>
 </resources>

@@ -15,10 +15,10 @@
             android:id="@+id/card_main_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
+            android:layout_marginStart="12dp"
             android:textSize="18sp"
             android:typeface="normal"
-            app:layout_constraintBottom_toTopOf="@+id/card_main_textview_mercado"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="1. " />
@@ -27,6 +27,7 @@
             android:id="@+id/main_nomeDaLista"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:textSize="18sp"
@@ -42,29 +43,38 @@
             android:id="@+id/card_main_textview_mercado"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:textColor="@color/textColorItemList"
             android:textSize="12sp"
             android:typeface="normal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_nomeDaLista"
             app:layout_constraintEnd_toStartOf="@+id/main_data"
             app:layout_constraintStart_toEndOf="@+id/card_main_number"
+            app:layout_constraintTop_toBottomOf="@+id/main_nomeDaLista"
             tools:text="Mercado: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/main_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="14dp"
-            android:layout_marginBottom="4dp"
             android:textColor="@color/appPrimary"
             android:textSize="12sp"
             android:typeface="normal"
+            app:layout_constraintBottom_toBottomOf="@+id/card_main_textview_mercado"
+            app:layout_constraintEnd_toStartOf="@+id/card_main_menu_list"
+            app:layout_constraintTop_toTopOf="@+id/card_main_textview_mercado"
+            tools:text="18/04/2021" />
+
+        <ImageButton
+            android:id="@+id/card_main_menu_list"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/appTransparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_nomeDaLista"
-            tools:text="18/04/2021" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_menu_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

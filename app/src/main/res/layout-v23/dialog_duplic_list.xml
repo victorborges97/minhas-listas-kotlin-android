@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minWidth="300dp"
+    android:paddingHorizontal="23dp"
+    android:paddingVertical="33dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/dialog_duplic_list_textview_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_duplic_list_title"
+        android:textColor="@color/appPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/dialog_duplic_list_textview_nome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nome_dialog"
+        android:textColor="@color/textColorItemQtValor"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_duplic_list_textview_title" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/dialog_duplic_list_edittext_nome"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:background="@drawable/campo_add"
+        android:paddingVertical="0dp"
+        android:paddingStart="16dp"
+        android:hint="@string/dialog_duplic_list_hint_nome"
+        android:textColor="@color/textColorItemQtValor"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_duplic_list_textview_nome"
+        tools:ignore="RtlSymmetry" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/dialog_duplic_list_textview_mercado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_add_list_textview_mercado"
+        android:textColor="@color/textColorItemQtValor"
+        android:layout_marginTop="16dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_duplic_list_edittext_nome" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/dialog_duplic_list_edittext_mercado"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:background="@drawable/campo_add"
+        android:hint="@string/dialog_duplic_list_hint_mercado"
+        android:paddingVertical="0dp"
+        android:paddingStart="16dp"
+        android:textColor="@color/textColorItemQtValor"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_duplic_list_textview_mercado"
+        tools:ignore="RtlSymmetry" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/dialog_duplic_list_btn_salvar"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_border_radius_dialog"
+        android:backgroundTint="@color/bgColorDialogFeito"
+        android:text="@string/dialog_edit_list_salvar"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/appPrimary"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_duplic_list_edittext_mercado" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/dialog_duplic_list_btn_cancelar"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_border_radius_dialog"
+        android:backgroundTint="@color/bgColorDialogCancelar"
+        android:text="@string/dialog_duplica_list_btn_cancelar"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_duplic_list_btn_salvar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/dialog_duplic_list_btn_salvar" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

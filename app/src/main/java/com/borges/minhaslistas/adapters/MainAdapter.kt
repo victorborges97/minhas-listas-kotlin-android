@@ -3,16 +3,17 @@ package com.borges.minhaslistas.adapters
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.graphics.Paint
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.PopupMenu
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.borges.minhaslistas.R
+import com.borges.minhaslistas.dialogs.DialogDuplicList
+import com.borges.minhaslistas.dialogs.DialogEditList
 import com.borges.minhaslistas.models.DataList
 import com.borges.minhaslistas.views.AddActivity
 import com.google.firebase.Timestamp
@@ -20,10 +21,13 @@ import kotlinx.android.synthetic.main.activity_add.*
 import kotlinx.android.synthetic.main.card_recycle_main.view.*
 import java.util.*
 
+
 class MainAdapter(
     private val listData: MutableList<DataList>,
     val contextMain: Context,
-    var dialog: DialogFragment)
+    var dialog: DialogFragment,
+    var dialog3: DialogFragment
+    )
     : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
@@ -36,8 +40,6 @@ class MainAdapter(
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
         val currentItem = listData[position]
 
-        holder.excluir(currentItem, position)
-        holder.goToItem(currentItem)
         holder.bind(currentItem, position)
     }
 
@@ -54,31 +56,42 @@ class MainAdapter(
                 itemView.main_nomeDaLista.text = if(nomeDaLista != null && nomeDaLista != "") "$nomeDaLista" else "Lista sem nome"
                 itemView.main_data.getShortDate(timestamp)
                 itemView.card_main_textview_mercado.text = if(nomeDoMercado != null && nomeDoMercado != "") "Mercado: $nomeDoMercado" else "Mercado: "
+
+                itemView.card_main_menu_list.setOnClickListener{
+                    showPopupMenu(itemView.card_main_menu_list, position)
+                }
+
+                itemView.card_main.setOnLongClickListener {
+                    excluir(currentItem, itemView)
+                    return@setOnLongClickListener true
+                }
+
+                itemView.card_main.setOnClickListener {
+                    goToItem(currentItem, itemView.context)
+                }
+
             }
         }
 
-        fun excluir(currentItem: DataList, position: Int) {
-            itemView.card_main.setOnLongClickListener {
-
-                val ft = (itemView.context as AppCompatActivity).supportFragmentManager.beginTransaction()
-                val args = Bundle()
-
-                args.putParcelable("currentItem", currentItem)
-                dialog.arguments = args
-                dialog.show(ft, "DialogEditList")
-
-                return@setOnLongClickListener true
-            }
-        }
-
-        fun goToItem(currentItem: DataList) {
-            with(itemView){
-                card_main.setOnClickListener {
-                    val intent = Intent(context, AddActivity::class.java)
-                    intent.putExtra("idItem", currentItem.idList)
-                    context.startActivity(intent)
+        fun showPopupMenu(view: View, position: Int) {
+            // inflate menu
+            val popup = PopupMenu(view.context, view)
+            val inflater: MenuInflater = popup.menuInflater
+            inflater.inflate(R.menu.menu_list, popup.menu)
+            popup.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.menu_list_duplic -> {
+                        duplicarDialog(listData[position], itemView)
+                        true
+                    }
+                    R.id.menu_list_edit -> {
+                        excluir(listData[position], itemView)
+                        true
+                    }
+                    else -> false
                 }
             }
+            popup.show()
         }
     }
 
@@ -90,6 +103,30 @@ class MainAdapter(
         } else {
             this.text = ""
         }
+    }
+
+    private fun excluir(currentItem: DataList, itemView: View) {
+        val ft = (itemView.context as AppCompatActivity).supportFragmentManager.beginTransaction()
+        val args = Bundle()
+
+        args.putParcelable("currentItem", currentItem)
+        dialog.arguments = args
+        dialog.show(ft, "DialogEditList")
+    }
+
+    private fun duplicarDialog(currentItem: DataList, itemView: View) {
+        val ft = (itemView.context as AppCompatActivity).supportFragmentManager.beginTransaction()
+        val args = Bundle()
+
+        args.putParcelable("currentItem", currentItem)
+        dialog3.arguments = args
+        dialog3.show(ft, "DialogDuplicList")
+    }
+
+    private fun goToItem(currentItem: DataList, context: Context) {
+        val intent = Intent(context, AddActivity::class.java)
+        intent.putExtra("idItem", currentItem.idList)
+        context.startActivity(intent)
     }
 
 }
