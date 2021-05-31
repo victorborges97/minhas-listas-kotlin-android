@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:background="@color/white"
+    android:background="@color/bgCardMain"
     android:id="@+id/card_add_container"
     android:layout_marginBottom="5dp">
 
@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:paddingVertical="10dp"
         android:paddingHorizontal="5dp"
-        android:layout_marginStart="14dp"
+        android:layout_marginStart="8dp"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/text_view_name_item"
@@ -26,7 +26,7 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:background="@drawable/ic_circle_false"
-            android:backgroundTint="#00AAFF"
+            android:backgroundTint="@color/iconColorItem"
             android:contentDescription="@string/excluir"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,10 +37,10 @@
         android:id="@+id/text_view_name_item"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
+        android:layout_marginStart="8dp"
         android:ellipsize="marquee"
         android:singleLine="true"
-        android:textColor="@color/textColorItemList"
+        android:textColor="@color/appText"
         android:textSize="19sp"
         android:typeface="normal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -86,14 +86,3 @@
         tools:text="R$ 000.00" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--<LinearLayout-->
-<!--android:id="@+id/linearLayout"-->
-<!--android:layout_width="match_parent"-->
-<!--android:layout_height="2dp"-->
-<!--android:background="#8D8D8D"-->
-<!--app:layout_constraintBottom_toBottomOf="parent"-->
-<!--app:layout_constraintEnd_toEndOf="parent"-->
-<!--app:layout_constraintStart_toStartOf="parent"-->
-<!--app:layout_constraintTop_toBottomOf="parent"-->
-<!--android:orientation="horizontal" />-->

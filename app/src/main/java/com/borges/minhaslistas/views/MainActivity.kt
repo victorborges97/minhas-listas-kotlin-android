@@ -6,6 +6,8 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -101,10 +103,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item?.itemId == R.id.menu_sair) {
-            signOut()
+        return when (item.itemId) {
+            R.id.menu_sair -> {
+                signOut()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun setBackgroundActionBar() {
@@ -136,7 +141,9 @@ class MainActivity : AppCompatActivity() {
         newList = mutableListOf<DataList>()
 
         val listsRef = FirebaseFirestore.getInstance()
-        val docRef = listsRef.collection(id).orderBy("timestamp", Query.Direction.DESCENDING)
+        val docRef = listsRef
+            .collection(id)
+            .orderBy("timestamp", Query.Direction.ASCENDING)
 
         docRef.addSnapshotListener { snapshot, e ->
             if (e != null) {
@@ -159,7 +166,7 @@ class MainActivity : AppCompatActivity() {
                         dc.document.toObject(DataList::class.java).let { entity ->
                             entity.idList = dc.document.id
                             Log.d(TAG, "New item: $entity")
-                            newList.add(entity)
+                            newList.add(0, entity)
                             posGetLists()
                             recycle_main.adapter?.notifyDataSetChanged()
                             recycle_main.layoutManager?.onRestoreInstanceState(recyclerViewState)

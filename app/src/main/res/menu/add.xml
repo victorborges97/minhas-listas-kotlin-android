@@ -10,6 +10,5 @@
         android:iconTint="@color/white"
         android:orderInCategory="100"
         app:showAsAction="always"
-        android:title="@string/Title_menu_main"
-        android:onClick="signOut"/>
+        android:title="@string/Title_menu_main" />
 </menu>

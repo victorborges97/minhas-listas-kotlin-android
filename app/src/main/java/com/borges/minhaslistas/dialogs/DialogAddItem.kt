@@ -8,6 +8,7 @@ import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import com.borges.minhaslistas.R
 import com.borges.minhaslistas.utils.Firebase
+import com.google.firebase.Timestamp
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.dialog_add_item.view.*
 import kotlinx.android.synthetic.main.dialog_add_list.view.*
@@ -62,7 +63,7 @@ class DialogAddItem: DialogFragment() {
         val multiply = multiply(qtMultiply, valorDouble)
 
         val fire = Firebase()
-        fire.createItemList(nome, quantInt, valorDouble, multiply, idList)
+        fire.createItemList(nome, quantInt, valorDouble, multiply, idList, Timestamp.now())
         dialog?.dismiss()
     }
 

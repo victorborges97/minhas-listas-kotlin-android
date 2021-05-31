@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--   cor para a barra de aplicativos e outros elementos primários da IU -->
-    <color name="colorPrimary">#FFF</color>
+    <color name="colorPrimary">#33333d</color>
     <!--  Cor padrão toolbar -->
-    <color name="appPrimary">#00AAFF</color>
+    <color name="appPrimary">#33333d</color>
     <!--   uma variante mais escura da cor primária, usada para a barra
         de status (no Android 5.0+) e barras de aplicativos contextuais -->
-    <color name="colorPrimaryDark">#232523</color>
+    <color name="colorPrimaryDark">#27272f</color>
 
     <!--   uma cor secundária para controles como caixas de seleção e campos de texto -->
     <color name="colorAccent">#00AAFF</color>
@@ -14,25 +14,27 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-
     <!--  Cor padrão texto toolbar -->
     <color name="appPrimaryText">#FFF</color>
 
 
 
+
     <!--  Cor padrão backgroud app -->
-    <color name="appPrimaryBg">#F1F1F1</color>
-    <color name="appPrimaryBgDialog">#FFFFFF</color>
-    <color name="bgCardMain">#FFF</color>
+    <color name="appPrimaryBg">#33333d</color>
+    <color name="appPrimaryBgDialog">#33333d</color>
+    <color name="bgCardMain">#373740</color>
+    <color name="bgInputRegister">#FFFFFF</color>
 
     <!--  Cor padrão textos app -->
-    <color name="appText">#5A5A5A</color>
-    <color name="appTextSub">#8D8D8D</color>
-    <color name="textColorItemQtValor">#8D8D8D</color>
-    <color name="textInputRegister">#FFF</color>
+    <color name="appText">#FFFFFF</color>
+    <color name="appTextSub">#ADADB1</color>
+    <color name="textColorItemQtValor">#505050</color>
+    <color name="textInputRegister">#33333d</color>
 
     <!-- Cor padrão icon app -->
-    <color name="iconColorItem">#00AAFF</color>
+    <color name="iconColorItem">#FFF</color>
+
 
 
     <color name="appTransparent">#000082C2</color>
@@ -40,5 +42,4 @@
 
     <color name="bgColorDialogFeito">#F1F1F1</color>
     <color name="bgColorDialogCancelar">#B6B6B6</color>
-
 </resources>

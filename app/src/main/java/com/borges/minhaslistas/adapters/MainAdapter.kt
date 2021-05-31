@@ -8,12 +8,11 @@ import android.view.*
 import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.borges.minhaslistas.R
-import com.borges.minhaslistas.dialogs.DialogDuplicList
-import com.borges.minhaslistas.dialogs.DialogEditList
 import com.borges.minhaslistas.models.DataList
 import com.borges.minhaslistas.views.AddActivity
 import com.google.firebase.Timestamp
@@ -27,12 +26,14 @@ class MainAdapter(
     val contextMain: Context,
     var dialog: DialogFragment,
     var dialog3: DialogFragment
-    )
+)
     : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.card_recycle_main,
-        parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(
+            R.layout.card_recycle_main,
+            parent, false
+        )
 
         return MainViewHolder(itemView)
     }
@@ -128,5 +129,6 @@ class MainAdapter(
         intent.putExtra("idItem", currentItem.idList)
         context.startActivity(intent)
     }
+
 
 }

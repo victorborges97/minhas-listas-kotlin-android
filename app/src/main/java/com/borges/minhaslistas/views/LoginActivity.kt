@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView.OnEditorActionListener
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.borges.minhaslistas.R
@@ -46,47 +48,66 @@ class LoginActivity : AppCompatActivity() {
         })
 
         btn_login.setOnClickListener(View.OnClickListener {
-            val mEmail = input_text_email_login.text.toString().trim()
-            val mPassword = input_text_password_login.text.toString().trim()
-
-            if (mEmail.isEmpty()) {
-                input_text_email_login.error = "Email is Required."
-                return@OnClickListener
-            }
-            if (mPassword.isEmpty()) {
-                input_text_password_login.error = "Password is Required."
-                return@OnClickListener
-            }
-            if (mPassword.length < 6) {
-                input_text_password_login.error = "Password Must be >= 6 Characters"
-                return@OnClickListener
-            }
-
-            blocksFields(true)
-            progressBar_login.visibility = View.VISIBLE
-            sign_in_button.visibility = View.INVISIBLE
-            btn_login.hint = "Entrando..."
-
-            mAuth.signInWithEmailAndPassword(mEmail, mPassword).addOnCompleteListener(
-                OnCompleteListener<AuthResult?> { task ->
-                    if (task.isSuccessful) {
-                        Log.i("LOGIN", "Logged in Successfully.")
-                        gotoProfile()
-                    } else {
-                        btn_login.hint = "Entrar"
-                        blocksFields(false)
-                        progressBar_login.visibility = View.INVISIBLE
-                        sign_in_button.visibility = View.VISIBLE
-                        Log.w("LOGIN",
-                            "Error ! " + Objects.requireNonNull(task.exception?.message).toString())
-                        Toast.makeText(this, "Error ! " + Objects.requireNonNull(task.exception?.message).toString(), Toast.LENGTH_LONG).show()
-                    }
-                })
+            loginEmail()
         })
 
         sign_in_button.setOnClickListener(View.OnClickListener {
             signInGoogle()
         })
+
+        input_text_password_login.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+            var handled = false
+            if (EditorInfo.IME_ACTION_DONE == actionId || EditorInfo.IME_ACTION_UNSPECIFIED == actionId) {
+                loginEmail()
+                handled = true
+            }
+            handled
+        })
+    }
+
+    private fun loginEmail() {
+        val mEmail = input_text_email_login.text.toString().trim()
+        val mPassword = input_text_password_login.text.toString().trim()
+
+        if (mEmail.isEmpty()) {
+            input_text_email_login.error = "Email is Required."
+            return
+        }
+        if (mPassword.isEmpty()) {
+            input_text_password_login.error = "Password is Required."
+            return
+        }
+        if (mPassword.length < 6) {
+            input_text_password_login.error = "Password Must be >= 6 Characters"
+            return
+        }
+
+        blocksFields(true)
+        progressBar_login.visibility = View.VISIBLE
+        sign_in_button.visibility = View.INVISIBLE
+        btn_login.hint = "Entrando..."
+
+        mAuth.signInWithEmailAndPassword(mEmail, mPassword).addOnCompleteListener(
+            OnCompleteListener<AuthResult?> { task ->
+                if (task.isSuccessful) {
+                    Log.i("LOGIN", "Logged in Successfully.")
+                    gotoProfile()
+                } else {
+                    btn_login.hint = "Entrar"
+                    blocksFields(false)
+                    progressBar_login.visibility = View.INVISIBLE
+                    sign_in_button.visibility = View.VISIBLE
+                    Log.w(
+                        "LOGIN",
+                        "Error ! " + Objects.requireNonNull(task.exception?.message).toString()
+                    )
+                    Toast.makeText(
+                        this,
+                        "Error ! " + Objects.requireNonNull(task.exception?.message).toString(),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            })
     }
 
     override fun onStart() {

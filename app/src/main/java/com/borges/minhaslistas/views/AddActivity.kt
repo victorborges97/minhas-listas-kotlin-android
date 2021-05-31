@@ -16,6 +16,7 @@ import com.borges.minhaslistas.models.DataItem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.activity_add.*
 import kotlinx.android.synthetic.main.activity_add.view.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -29,7 +30,6 @@ class AddActivity : AppCompatActivity() {
     private lateinit var newItens: MutableList<DataItem>
     private var total: Double = 0.00
     private lateinit var dialog: DialogFragment
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,9 +65,6 @@ class AddActivity : AppCompatActivity() {
         this.supportActionBar?.title = "Meus Produtos"
     }
 
-    fun signOut() {
-    }
-
     @SuppressLint("SetTextI18n")
     private fun getListsData(id: String, idList: String) {
         newItens = mutableListOf<DataItem>()
@@ -77,7 +74,7 @@ class AddActivity : AppCompatActivity() {
             .collection(id)
             .document(idList)
             .collection("itens")
-//            .orderBy("nome", Query.Direction.ASCENDING)
+            .orderBy("timestamp", Query.Direction.ASCENDING)
 
         docRef.addSnapshotListener { snapshot, e ->
             if (e != null) {
@@ -102,8 +99,7 @@ class AddActivity : AppCompatActivity() {
                         dc.document.toObject(DataItem::class.java).let { entity ->
                             entity.idItem = dc.document.id
                             entity.idList = idList
-                            Log.d(TAG, "New item: $entity")
-                            newItens.add(entity)
+                            newItens.add(0 , entity)
                             posGetItem()
                             recycle_view_add.adapter?.notifyDataSetChanged()
                             recycle_view_add.layoutManager?.onRestoreInstanceState(recyclerViewState)
@@ -116,8 +112,6 @@ class AddActivity : AppCompatActivity() {
                             entity.idList = idList
                             val idxItem = findIndex(newItens, dc.document.id)
                             newItens[idxItem] = entity
-                            Log.d(TAG, "Modified item: ${newItens[idxItem]}")
-
                             posGetItem()
                             recycle_view_add.adapter?.notifyItemChanged(idxItem, null)
                             recycle_view_add.layoutManager?.onRestoreInstanceState(recyclerViewState)
@@ -128,7 +122,6 @@ class AddActivity : AppCompatActivity() {
                             val idxItem = findIndex(newItens, dc.document.id)
                             entity.idItem = dc.document.id
                             entity.idList = idList
-                            Log.d(TAG, "Removed item: $entity")
                             newItens.removeAt(idxItem)
                             posGetItem()
                             recycle_view_add.adapter?.notifyDataSetChanged()
@@ -153,6 +146,10 @@ class AddActivity : AppCompatActivity() {
                 }
             }
         }
+        Collections.sort(newItens, Comparator<DataItem> { lhs, rhs ->
+            lhs.comprado!!.compareTo(rhs.comprado!!);
+        })
+
         val meuLocal = Locale("pt", "BR")
         val z: NumberFormat = NumberFormat.getCurrencyInstance(meuLocal)
         nomeDaLista.text = "Total do carrinho: ${z.format(total).toString()}"

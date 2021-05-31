@@ -3,13 +3,10 @@ package com.borges.minhaslistas.utils
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
-import com.borges.minhaslistas.models.DataItem
-import com.borges.minhaslistas.models.DataList
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
-import kotlin.collections.ArrayList
 
 class Firebase {
     private val db = FirebaseFirestore.getInstance()
@@ -63,7 +60,14 @@ class Firebase {
 
     }
 
-    fun createItemList(nome: String, quantInt: Int, valorDouble: Double, multiply: Double, idList: String) {
+    fun createItemList(
+        nome: String,
+        quantInt: Int,
+        valorDouble: Double,
+        multiply: Double,
+        idList: String,
+        now: Timestamp
+    ) {
 
         val comprado = false
 
@@ -74,7 +78,7 @@ class Firebase {
         item["preco"] = valorDouble
         item["qt"] = quantInt
         item["total"] = multiply
-        item["timestamp"] = Timestamp.now()
+        item["timestamp"] = now
 
         db.collection(mAuth.currentUser?.uid.toString())
             .document(idList)
@@ -137,8 +141,6 @@ class Firebase {
                     e -> Log.w("CREATE_FIREBASE", "OnFailure Update: ", e)
                 return@addOnFailureListener
             }
-
-
     }
 
     fun excluirList(idList: String, context: Context) {
@@ -174,7 +176,14 @@ class Firebase {
                     .addOnSuccessListener { documents ->
                         Log.w("CREATE_NEW_LIST/ITEM", "Criando os Itens")
                         for (document in documents) {
-                            createItemList(document.get("nome").toString(), 0, 0.00, 0.00, it.id)
+                            createItemList(
+                                document.get("nome").toString(),
+                                0,
+                                0.00,
+                                0.00,
+                                it.id,
+                                document.get("timestamp") as Timestamp
+                            )
                         }
                         Log.w("CREATE_NEW_LIST/ITEM", "Criado os Itens")
                     }

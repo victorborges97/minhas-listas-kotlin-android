@@ -34,4 +34,6 @@
     <string name="dialog_duplic_list_hint_nome">Novo nome da lista</string>
     <string name="dialog_duplic_list_hint_mercado">Novo nome do mercado</string>
     <string name="dialog_duplica_list_btn_cancelar">Cancelar</string>
+    <string name="menu_listitem_duplicar">Duplicar</string>
+    <string name="menu_listitem_editar">Editar</string>
 </resources>
