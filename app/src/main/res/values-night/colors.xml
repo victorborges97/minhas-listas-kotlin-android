@@ -25,12 +25,15 @@
     <color name="appPrimaryBgDialog">#33333d</color>
     <color name="bgCardMain">#373740</color>
     <color name="bgInputRegister">#FFFFFF</color>
+    <color name="bgBtnRegister_Login">#27272f</color>
+    <color name="bgBtnNewRegister_login">#27272f</color>
 
     <!--  Cor padrão textos app -->
     <color name="appText">#FFFFFF</color>
     <color name="appTextSub">#ADADB1</color>
     <color name="textColorItemQtValor">#505050</color>
     <color name="textInputRegister">#33333d</color>
+    <color name="textBtnRegister_Login">#FFFFFF</color>
 
     <!-- Cor padrão icon app -->
     <color name="iconColorItem">#FFF</color>

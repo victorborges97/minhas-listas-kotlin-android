@@ -6,7 +6,7 @@
     <color name="appPrimary">#00AAFF</color>
     <!--   uma variante mais escura da cor primária, usada para a barra
         de status (no Android 5.0+) e barras de aplicativos contextuais -->
-    <color name="colorPrimaryDark">#232523</color>
+    <color name="colorPrimaryDark">#00AAFF</color>
 
     <!--   uma cor secundária para controles como caixas de seleção e campos de texto -->
     <color name="colorAccent">#00AAFF</color>
@@ -25,12 +25,15 @@
     <color name="appPrimaryBgDialog">#FFFFFF</color>
     <color name="bgCardMain">#FFF</color>
     <color name="bgInputRegister">#FFFFFF</color>
+    <color name="bgBtnRegister_Login">#FFFFFF</color>
+    <color name="bgBtnNewRegister_login">#006598</color>
 
     <!--  Cor padrão textos app -->
     <color name="appText">#5A5A5A</color>
     <color name="appTextSub">#8D8D8D</color>
     <color name="textColorItemQtValor">#8D8D8D</color>
     <color name="textInputRegister">#FFF</color>
+    <color name="textBtnRegister_Login">#00AAFF</color>
 
     <!-- Cor padrão icon app -->
     <color name="iconColorItem">#00AAFF</color>
