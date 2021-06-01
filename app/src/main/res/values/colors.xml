@@ -24,7 +24,7 @@
     <color name="appPrimaryBg">#F1F1F1</color>
     <color name="appPrimaryBgDialog">#FFFFFF</color>
     <color name="bgCardMain">#FFF</color>
-    <color name="bgInputRegister">#FFFFFF</color>
+    <color name="bgInputRegister">#0082C2</color>
     <color name="bgBtnRegister_Login">#FFFFFF</color>
     <color name="bgBtnNewRegister_login">#006598</color>
 
