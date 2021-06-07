@@ -57,7 +57,7 @@
                 android:imeOptions="actionNext"
                 android:importantForAutofill="no"
                 android:inputType="textEmailAddress"
-                android:textColor="@color/textColorItemQtValor" />
+                android:textColor="@color/textColorInputLogin" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!--Senha-->
@@ -71,6 +71,7 @@
             app:boxStrokeWidthFocused="0dp"
             android:hint="@string/text_senha"
             app:endIconMode="password_toggle"
+            app:endIconTint="@color/colorIconPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/btn_login"
@@ -88,7 +89,7 @@
                 android:importantForAutofill="no"
                 android:inputType="textPassword"
                 android:textColorHint="@color/appPrimary"
-                android:textColor="@color/textColorItemQtValor" />
+                android:textColor="@color/textColorInputLogin" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!--Botão de Login E-mail e Senha-->
@@ -107,45 +108,44 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/container_password" />
 
-        <!--Botão de Login Gmail-->
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/sign_in_button"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btn_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/montserrat"
+            android:hint="@string/n_o_tem_conta_inscreva_se_agora"
+            android:textColorHint="@color/white"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_register"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/base_borderradius_transparent"
-        android:fontFamily="@font/montserrat"
-        android:hint="@string/n_o_tem_conta_inscreva_se_agora"
-        android:textColorHint="@color/bgBtnNewRegister_login"
-        android:textStyle="bold"
-        app:backgroundTint="@color/bgBtnNewRegister_login"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/content_login" />
 
     <ProgressBar
         android:id="@+id/progressBar_login"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:progressTint="@color/white"
-        android:layout_margin="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_register"
+        android:progressTint="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/sign_in_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/content_login"
         android:visibility="invisible"/>
+
+    <!--Botão de Login Gmail-->
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/sign_in_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar_login" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

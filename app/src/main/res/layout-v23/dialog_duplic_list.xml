@@ -100,7 +100,7 @@
         android:text="@string/dialog_duplica_list_btn_cancelar"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:textColor="@color/appText"
+        android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_duplic_list_btn_salvar"
         app:layout_constraintStart_toStartOf="parent"

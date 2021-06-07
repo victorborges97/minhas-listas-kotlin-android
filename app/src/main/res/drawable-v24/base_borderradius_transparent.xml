@@ -4,7 +4,7 @@
         android:radius="10dp"
         />
     <solid
-        android:color="@color/appTransparent"
+        android:color="@color/bgBtnNewRegister_login"
         />
     <stroke
         android:width="0.5dp"

@@ -42,8 +42,8 @@ class DialogEditList: DialogFragment() {
         mMercado = rootView.findViewById(R.id.dialog_edit_list_edittext_mercado)
 
         rootView.dialog_edit_list_btn_cancelar.setOnClickListener {
-            val fb = Firebase()
-            fb.excluirList(mNote.idList.toString(), rootView.context)
+//            val fb = Firebase()
+//            fb.excluirList(mNote.idList.toString(), rootView.context)
             dialog?.dismiss()
         }
 

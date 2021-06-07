@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.MinhasListas" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
 
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/appText</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:actionBarStyle">@style/MyActionBar</item>

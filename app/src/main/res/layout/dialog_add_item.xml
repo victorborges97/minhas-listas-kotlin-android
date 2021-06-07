@@ -138,7 +138,7 @@
         android:text="@string/dialog_add_item_btn_cancelar"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:textColor="@color/appText"
+        android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/dialog_add_item_edittext_quant"
         app:layout_constraintTop_toBottomOf="@+id/dialog_add_item_edittext_quant" />

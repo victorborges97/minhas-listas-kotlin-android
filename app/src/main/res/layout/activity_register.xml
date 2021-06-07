@@ -60,8 +60,8 @@
                 android:imeOptions="actionNext"
                 android:importantForAutofill="no"
                 android:inputType="text"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:textColor="@color/textColorInputLogin"
+                android:textColorHint="@color/appPrimary" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!--Email-->
@@ -89,7 +89,8 @@
                 android:imeOptions="actionNext"
                 android:importantForAutofill="no"
                 android:inputType="textEmailSubject"
-                android:textColor="@color/white" />
+                android:textColor="@color/textColorInputLogin"
+                android:textColorHint="@color/appPrimary" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!--Senha-->
@@ -102,6 +103,7 @@
             app:boxStrokeWidthFocused="0dp"
             android:textColorHint="@color/appPrimary"
             app:endIconMode="password_toggle"
+            app:endIconTint="@color/colorIconPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/container_email"
@@ -118,7 +120,8 @@
                 android:imeOptions="actionNext"
                 android:importantForAutofill="no"
                 android:inputType="textPassword"
-                android:textColor="@color/white" />
+                android:textColor="@color/textColorInputLogin"
+                android:textColorHint="@color/appPrimary" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!--Confirma senha-->
@@ -131,6 +134,7 @@
             app:boxStrokeWidthFocused="0dp"
             android:textColorHint="@color/appPrimary"
             app:endIconMode="password_toggle"
+            app:endIconTint="@color/colorIconPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/container_password"
@@ -147,7 +151,9 @@
                 android:imeOptions="actionNext"
                 android:importantForAutofill="no"
                 android:inputType="textPassword"
-                android:textColor="@color/white" />
+
+                android:textColor="@color/textColorInputLogin"
+                android:textColorHint="@color/appPrimary" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -168,17 +174,15 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.button.MaterialButton
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/btn_voltar"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/base_borderradius_transparent"
+        android:layout_marginTop="15dp"
         android:fontFamily="@font/montserrat"
-        android:hint="Já tem conta? Volte aqui!"
-        android:textColorHint="@color/bgBtnNewRegister_login"
+        android:hint="@string/n_o_tem_conta_inscreva_se_agora"
+        android:textColorHint="@color/white"
         android:textStyle="bold"
-        app:backgroundTint="@color/bgBtnNewRegister_login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

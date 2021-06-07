@@ -21,7 +21,7 @@
     <string name="btn_dialog_feito">Feito</string>
     <string name="dialog_add_list_criar">Criar</string>
     <string name="dialog_add_list_btn_cancelar">Cancelar</string>
-    <string name="dialog_edit_list_btn_excluir">Excluir</string>
+    <string name="dialog_edit_list_btn_excluir">Cancelar</string>
     <string name="dialog_edit_item_btn_excluir">Excluir</string>
     <string name="dialog_add_list_hint_nome">Insira o nome da sua lista...</string>
     <string name="dialog_edit_list_salvar">Salvar</string>
@@ -36,4 +36,5 @@
     <string name="dialog_duplica_list_btn_cancelar">Cancelar</string>
     <string name="menu_listitem_duplicar">Duplicar</string>
     <string name="menu_listitem_editar">Editar</string>
+    <string name="menu_listitem_excluir">Excluir</string>
 </resources>

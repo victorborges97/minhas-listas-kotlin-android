@@ -14,6 +14,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.borges.minhaslistas.R
 import com.borges.minhaslistas.models.DataList
+import com.borges.minhaslistas.utils.Firebase
 import com.borges.minhaslistas.views.AddActivity
 import com.google.firebase.Timestamp
 import kotlinx.android.synthetic.main.activity_add.*
@@ -63,7 +64,7 @@ class MainAdapter(
                 }
 
                 itemView.card_main.setOnLongClickListener {
-                    excluir(currentItem, itemView)
+                    editarDialog(currentItem, itemView)
                     return@setOnLongClickListener true
                 }
 
@@ -86,7 +87,11 @@ class MainAdapter(
                         true
                     }
                     R.id.menu_list_edit -> {
-                        excluir(listData[position], itemView)
+                        editarDialog(listData[position], itemView)
+                        true
+                    }
+                    R.id.menu_list_excluir -> {
+                        modelExcluir(listData[position], itemView.context)
                         true
                     }
                     else -> false
@@ -106,7 +111,7 @@ class MainAdapter(
         }
     }
 
-    private fun excluir(currentItem: DataList, itemView: View) {
+    private fun editarDialog(currentItem: DataList, itemView: View) {
         val ft = (itemView.context as AppCompatActivity).supportFragmentManager.beginTransaction()
         val args = Bundle()
 
@@ -130,5 +135,18 @@ class MainAdapter(
         context.startActivity(intent)
     }
 
+    private fun modelExcluir(currentItem: DataList, contextMain: Context) {
+        //Cria o gerador do AlertDialog
+        val builder = AlertDialog.Builder(contextMain)
+        builder.setTitle("Tem certeza que quer excluir essa lista ?")
+        builder.setPositiveButton("Sim") { _, _ ->
+            Firebase().excluirList(currentItem.idList.toString(), contextMain)
+        }
+        builder.setNegativeButton("Não") { _, _ ->
+            return@setNegativeButton
+        }
+        val alerta: AlertDialog = builder.create()
+        alerta.show()
+    }
 
 }

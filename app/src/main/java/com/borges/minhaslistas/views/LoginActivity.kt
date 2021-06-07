@@ -26,8 +26,8 @@ import java.util.*
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
-    var googleSignClient : GoogleSignInClient? = null
-    val RC_SIGN_IN = 1000
+    private var googleSignClient : GoogleSignInClient? = null
+    private val RC_SIGN_IN = 1000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,27 +42,27 @@ class LoginActivity : AppCompatActivity() {
             .build()
         googleSignClient = GoogleSignIn.getClient(this, gso)
 
-        btn_register.setOnClickListener(View.OnClickListener {
+        btn_register.setOnClickListener{
             val intent = Intent(applicationContext, RegisterActivity::class.java)
             startActivity(intent)
-        })
+        }
 
-        btn_login.setOnClickListener(View.OnClickListener {
+        btn_login.setOnClickListener{
             loginEmail()
-        })
+        }
 
-        sign_in_button.setOnClickListener(View.OnClickListener {
+        sign_in_button.setOnClickListener{
             signInGoogle()
-        })
+        }
 
-        input_text_password_login.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+        input_text_password_login.setOnEditorActionListener{ v, actionId, event ->
             var handled = false
             if (EditorInfo.IME_ACTION_DONE == actionId || EditorInfo.IME_ACTION_UNSPECIFIED == actionId) {
                 loginEmail()
                 handled = true
             }
             handled
-        })
+        }
     }
 
     private fun loginEmail() {
@@ -151,7 +151,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun updateUI(currentUser: FirebaseUser?) {
         if(currentUser != null){
-            Log.i("LOGIN", currentUser.getEmail().toString());
+            Log.i("LOGIN", currentUser.email.toString());
             gotoProfile();
         }
     }

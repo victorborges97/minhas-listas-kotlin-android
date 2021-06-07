@@ -26,17 +26,19 @@
     <color name="bgCardMain">#FFF</color>
     <color name="bgInputRegister">#0082C2</color>
     <color name="bgBtnRegister_Login">#FFFFFF</color>
-    <color name="bgBtnNewRegister_login">#006598</color>
+    <color name="bgBtnNewRegister_login">#00006598</color>
 
     <!--  Cor padrão textos app -->
     <color name="appText">#5A5A5A</color>
     <color name="appTextSub">#8D8D8D</color>
     <color name="textColorItemQtValor">#8D8D8D</color>
+    <color name="textColorInputLogin">#FFFFFF</color>
     <color name="textInputRegister">#FFF</color>
     <color name="textBtnRegister_Login">#00AAFF</color>
 
     <!-- Cor padrão icon app -->
     <color name="iconColorItem">#00AAFF</color>
+    <color name="colorIconPassword">#B0333333</color>
 
 
     <color name="appTransparent">#000082C2</color>

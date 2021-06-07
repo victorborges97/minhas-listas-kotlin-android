@@ -100,7 +100,7 @@
         android:text="@string/dialog_edit_list_btn_excluir"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:textColor="@color/appText"
+        android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_edit_list_btn_salvar"
         app:layout_constraintStart_toStartOf="parent"
