@@ -13,10 +13,9 @@ import com.borges.minhaslistas.adapters.AddAdapter
 import com.borges.minhaslistas.dialogs.DialogAddItem
 import com.borges.minhaslistas.dialogs.DialogEditItem
 import com.borges.minhaslistas.models.DataItem
-import com.google.firebase.auth.FirebaseAuth
+import com.borges.minhaslistas.repository.FirestoreRepository
+import com.borges.minhaslistas.utils.Utils
 import com.google.firebase.firestore.DocumentChange
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.activity_add.*
 import kotlinx.android.synthetic.main.activity_add.view.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -53,87 +52,75 @@ class AddActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val id = FirebaseAuth.getInstance().currentUser?.uid
-        if(id != null){
-            getListsData(id, idItem)
-        }
+        getListsData(idItem)
     }
 
-    @SuppressLint("RestrictedApi")
     private fun setBackgroundActionBar() {
         this.supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.appPrimary)))
         this.supportActionBar?.title = "Meus Produtos"
     }
 
-    @SuppressLint("SetTextI18n")
-    private fun getListsData(id: String, idList: String) {
+    private fun getListsData(idList: String) {
         newItens = mutableListOf<DataItem>()
 
-        val listsRef = FirebaseFirestore.getInstance()
-        val docRef = listsRef
-            .collection(id)
-            .document(idList)
-            .collection("itens")
-            .orderBy("timestamp", Query.Direction.ASCENDING)
+        FirestoreRepository().getListsItem(idList)
+            .addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    Log.w(TAG, "Error ao carregar a lista. Error: ", e)
+                    return@addSnapshotListener
+                }
 
-        docRef.addSnapshotListener { snapshot, e ->
-            if (e != null) {
-                Log.w(TAG, "Error ao carregar a lista. Error: ", e)
-                return@addSnapshotListener
-            }
+                if(snapshot?.isEmpty == true) {
+                    newItens.clear()
+                    recycle_view_add.adapter?.notifyDataSetChanged()
+                    recycle_view_add.visibility = View.GONE;
+                    Log.w(TAG, "Lista Vazia")
+                    return@addSnapshotListener
+                }
 
-            if(snapshot?.isEmpty == true) {
-                newItens.clear()
-                recycle_view_add.adapter?.notifyDataSetChanged()
-                recycle_view_add.visibility = View.GONE;
-                Log.w(TAG, "Lista Vazia")
-                return@addSnapshotListener
-            }
+                recycle_view_add.visibility = View.VISIBLE
+                val recyclerViewState = recycle_view_add.layoutManager?.onSaveInstanceState()
 
-            recycle_view_add.visibility = View.VISIBLE
-            val recyclerViewState = recycle_view_add.layoutManager?.onSaveInstanceState()
+                for (dc in snapshot!!.documentChanges) {
+                    when (dc.type) {
+                        DocumentChange.Type.ADDED -> {
+                            dc.document.toObject(DataItem::class.java).let { entity ->
+                                entity.idItem = dc.document.id
+                                entity.idList = idList
+                                newItens.add(0 , entity)
+                                posGetItem()
+                                recycle_view_add.adapter?.notifyDataSetChanged()
+                                recycle_view_add.layoutManager?.onRestoreInstanceState(recyclerViewState)
+                            }
 
-            for (dc in snapshot!!.documentChanges) {
-                when (dc.type) {
-                    DocumentChange.Type.ADDED -> {
-                        dc.document.toObject(DataItem::class.java).let { entity ->
-                            entity.idItem = dc.document.id
-                            entity.idList = idList
-                            newItens.add(0 , entity)
-                            posGetItem()
-                            recycle_view_add.adapter?.notifyDataSetChanged()
-                            recycle_view_add.layoutManager?.onRestoreInstanceState(recyclerViewState)
                         }
-
-                    }
-                    DocumentChange.Type.MODIFIED -> {
-                        dc.document.toObject(DataItem::class.java).let { entity ->
-                            entity.idItem = dc.document.id
-                            entity.idList = idList
-                            val idxItem = findIndex(newItens, dc.document.id)
-                            newItens[idxItem] = entity
-                            posGetItem()
-                            recycle_view_add.adapter?.notifyItemChanged(idxItem, null)
-                            recycle_view_add.layoutManager?.onRestoreInstanceState(recyclerViewState)
+                        DocumentChange.Type.MODIFIED -> {
+                            dc.document.toObject(DataItem::class.java).let { entity ->
+                                entity.idItem = dc.document.id
+                                entity.idList = idList
+                                val idxItem = findIndex(newItens, dc.document.id)
+                                newItens[idxItem] = entity
+                                posGetItem()
+                                recycle_view_add.adapter?.notifyItemChanged(idxItem, null)
+                                recycle_view_add.layoutManager?.onRestoreInstanceState(recyclerViewState)
+                            }
                         }
-                    }
-                    DocumentChange.Type.REMOVED -> {
-                        dc.document.toObject(DataItem::class.java).let { entity ->
-                            val idxItem = findIndex(newItens, dc.document.id)
-                            entity.idItem = dc.document.id
-                            entity.idList = idList
-                            newItens.removeAt(idxItem)
-                            posGetItem()
-                            recycle_view_add.adapter?.notifyDataSetChanged()
-                            recycle_view_add.layoutManager?.onRestoreInstanceState(recyclerViewState)
+                        DocumentChange.Type.REMOVED -> {
+                            dc.document.toObject(DataItem::class.java).let { entity ->
+                                val idxItem = findIndex(newItens, dc.document.id)
+                                entity.idItem = dc.document.id
+                                entity.idList = idList
+                                newItens.removeAt(idxItem)
+                                posGetItem()
+                                recycle_view_add.adapter?.notifyDataSetChanged()
+                                recycle_view_add.layoutManager?.onRestoreInstanceState(recyclerViewState)
+                            }
                         }
                     }
                 }
             }
-        }
     }
 
-    @SuppressLint("SetTextI18n")
     private fun posGetItem() {
         total = 0.00
         newItens.map {
@@ -142,7 +129,7 @@ class AddActivity : AppCompatActivity() {
                 val valor = it.preco?.toDouble()
 
                 if (qtf != null && valor != null) {
-                    total += multiply(qtf, valor)
+                    total += Utils.multiply(qtf, valor)
                 }
             }
         }
@@ -150,9 +137,7 @@ class AddActivity : AppCompatActivity() {
             lhs.comprado!!.compareTo(rhs.comprado!!);
         })
 
-        val meuLocal = Locale("pt", "BR")
-        val z: NumberFormat = NumberFormat.getCurrencyInstance(meuLocal)
-        nomeDaLista.text = "Total do carrinho: ${z.format(total).toString()}"
+        nomeDaLista.text = templateTotalCarrinho(total)
 
         //Mandando a Lista Mutavel para o Adapter
         recycle_view_add.adapter = AddAdapter(newItens, applicationContext, dialog)
@@ -173,6 +158,10 @@ class AddActivity : AppCompatActivity() {
         return idx
     }
 
-    private fun multiply(x: Double, y: Double) = x * y
+    private fun templateTotalCarrinho(total: Double): String {
+        val meuLocal = Locale("pt", "BR")
+        val z: NumberFormat = NumberFormat.getCurrencyInstance(meuLocal)
+        return "Total do carrinho: ${z.format(total)}"
+    }
 }
 

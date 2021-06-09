@@ -13,7 +13,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.borges.minhaslistas.R
 import com.borges.minhaslistas.models.DataItem
-import com.borges.minhaslistas.utils.FirestoreRepository
+import com.borges.minhaslistas.repository.FirestoreRepository
 import kotlinx.android.synthetic.main.card_recycle_add.view.*
 import java.text.NumberFormat
 import java.util.*

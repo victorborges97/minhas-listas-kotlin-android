@@ -58,7 +58,7 @@
         android:paddingVertical="3dp"
         android:paddingHorizontal="5dp"
         android:background="@drawable/campo_item_input"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:textColor="@color/textColorItemQtValor"
         android:textSize="12sp"
         android:textAlignment="center"

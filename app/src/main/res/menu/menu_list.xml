@@ -11,4 +11,7 @@
     <item
         android:id="@+id/menu_list_excluir"
         android:title="@string/menu_listitem_excluir" />
+    <item
+        android:id="@+id/menu_list_shared"
+        android:title="Compartilhar" />
 </menu>

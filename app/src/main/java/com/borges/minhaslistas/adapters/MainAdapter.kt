@@ -12,10 +12,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.borges.minhaslistas.R
+import com.borges.minhaslistas.models.DataItem
 import com.borges.minhaslistas.models.DataList
-import com.borges.minhaslistas.utils.FirestoreRepository
+import com.borges.minhaslistas.repository.FirestoreRepository
+import com.borges.minhaslistas.utils.Utils
 import com.borges.minhaslistas.views.AddActivity
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_add.*
 import kotlinx.android.synthetic.main.card_recycle_main.view.*
 import java.util.*
@@ -93,6 +96,10 @@ class MainAdapter(
                         modelExcluir(listData[position], itemView.context)
                         true
                     }
+                    R.id.menu_list_shared -> {
+                        shared(listData[position], itemView.context)
+                        true
+                    }
                     else -> false
                 }
             }
@@ -148,4 +155,39 @@ class MainAdapter(
         alerta.show()
     }
 
+    private fun shared(currentItem: DataList, c: Context) {
+        FirestoreRepository()
+            .getListShared(FirebaseAuth.getInstance().currentUser?.uid.toString(), currentItem.idList.toString())
+            .addOnSuccessListener { itemList ->
+                val newList = mutableListOf<DataItem>()
+                for (dc in itemList!!.documentChanges) {
+                    dc.document.toObject(DataItem::class.java).let { entity ->
+                        newList.add(entity)
+                    }
+                }
+
+                var total = 0.00
+                newList.map {
+                    if (it.comprado == true) {
+                        val qtf = it.qt?.toDouble()
+                        val valor = it.preco?.toDouble()
+
+                        if (qtf != null && valor != null) {
+                            total += Utils.multiply(qtf, valor)
+                        }
+                    }
+                }
+                Collections.sort(newList, Comparator<DataItem> { lhs, rhs ->
+                    lhs.comprado!!.compareTo(rhs.comprado!!);
+                })
+                var itens: String = ""
+                for(i in newList) {
+                    itens += Utils.templateItens(i)
+                }
+                val mensagem: String = Utils.templateShared(currentItem, itens, total)
+
+                Utils.sendShared(c, mensagem)
+
+            }
+    }
 }

@@ -41,6 +41,7 @@
             app:boxStrokeWidthFocused="0dp"
             android:hint="@string/text_email"
             android:textColorHint="@color/appPrimary"
+            app:hintTextColor="@color/textColorInputLogin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/logo"
@@ -57,6 +58,7 @@
                 android:imeOptions="actionNext"
                 android:importantForAutofill="no"
                 android:inputType="textEmailAddress"
+                android:textColorHint="@color/textColorInputLogin"
                 android:textColor="@color/textColorInputLogin" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -66,10 +68,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:textColorHint="@color/appPrimary"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
             android:hint="@string/text_senha"
+            android:textColorHint="@color/appPrimary"
+            app:hintTextColor="@color/textColorInputLogin"
             app:endIconMode="password_toggle"
             app:endIconTint="@color/colorIconPassword"
             app:layout_constraintEnd_toEndOf="parent"

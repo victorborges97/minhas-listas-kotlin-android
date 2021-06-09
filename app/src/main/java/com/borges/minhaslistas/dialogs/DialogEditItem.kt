@@ -8,7 +8,7 @@ import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import com.borges.minhaslistas.R
 import com.borges.minhaslistas.models.DataItem
-import com.borges.minhaslistas.utils.FirestoreRepository
+import com.borges.minhaslistas.repository.FirestoreRepository
 import kotlinx.android.synthetic.main.activity_add.*
 import kotlinx.android.synthetic.main.dialog_edit_item.view.*
 

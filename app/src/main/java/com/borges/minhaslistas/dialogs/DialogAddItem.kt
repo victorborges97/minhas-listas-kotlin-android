@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import com.borges.minhaslistas.R
-import com.borges.minhaslistas.utils.FirestoreRepository
+import com.borges.minhaslistas.repository.FirestoreRepository
 import com.google.firebase.Timestamp
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.dialog_add_item.view.*
