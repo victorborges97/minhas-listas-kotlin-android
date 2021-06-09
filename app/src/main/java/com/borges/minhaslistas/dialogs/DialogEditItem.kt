@@ -8,7 +8,7 @@ import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import com.borges.minhaslistas.R
 import com.borges.minhaslistas.models.DataItem
-import com.borges.minhaslistas.utils.Firebase
+import com.borges.minhaslistas.utils.FirestoreRepository
 import kotlinx.android.synthetic.main.activity_add.*
 import kotlinx.android.synthetic.main.dialog_edit_item.view.*
 
@@ -48,7 +48,7 @@ class DialogEditItem: DialogFragment() {
         mValor = rootView.findViewById(R.id.dialog_edit_item_edittext_valor)
 
         rootView.dialog_edit_item_btn_cancelar.setOnClickListener {
-            val fb = Firebase()
+            val fb = FirestoreRepository()
             fb.excluirItemList(mNote.idList.toString(), mNote.idItem.toString())
             dialog?.dismiss()
         }
@@ -71,7 +71,7 @@ class DialogEditItem: DialogFragment() {
         val qtMultiply = quantInt.toDouble()
         val multiply = multiply(qtMultiply, valorDouble)
 
-        val fire = Firebase()
+        val fire = FirestoreRepository()
         fire.updateItemList(
             nome,
             quantInt,

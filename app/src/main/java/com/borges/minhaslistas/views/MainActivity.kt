@@ -6,8 +6,6 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +15,7 @@ import com.borges.minhaslistas.dialogs.DialogAddList
 import com.borges.minhaslistas.dialogs.DialogDuplicList
 import com.borges.minhaslistas.dialogs.DialogEditList
 import com.borges.minhaslistas.models.DataList
+import com.borges.minhaslistas.utils.FirestoreRepository
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -42,14 +41,14 @@ class MainActivity : AppCompatActivity() {
     private var TAG = "MAIN"
     private lateinit var dialog: DialogFragment
     private lateinit var dialog3: DialogFragment
-    private var idCreated: String? = ""
     private lateinit var newList: MutableList<DataList>
+    private lateinit var firestoreRepository: FirestoreRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setBackgroundActionBar()
-
+        firestoreRepository = FirestoreRepository()
         dialog = DialogEditList()
         dialog3 = DialogDuplicList()
 
@@ -218,17 +217,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun posGetLists() {
-        //Mantando a Lista Mutavel para o Adapter
+        //Mandando a Lista Mutavel para o Adapter
         recycle_main.adapter = MainAdapter(newList, applicationContext, dialog, dialog3)
         Log.d(TAG, "Current data: ${newList.size}")
     }
 
     private fun findIndex(arr: MutableList<DataList>?, t: String): Int {
-        // if array is Null
         if (arr == null) {
             return -1
         }
-        // traverse in the array
         var idx = -1
         for (i in arr.indices) {
             if (arr[i].idList == t) {

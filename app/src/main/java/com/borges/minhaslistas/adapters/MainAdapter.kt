@@ -7,14 +7,13 @@ import android.os.Bundle
 import android.view.*
 import android.widget.PopupMenu
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.borges.minhaslistas.R
 import com.borges.minhaslistas.models.DataList
-import com.borges.minhaslistas.utils.Firebase
+import com.borges.minhaslistas.utils.FirestoreRepository
 import com.borges.minhaslistas.views.AddActivity
 import com.google.firebase.Timestamp
 import kotlinx.android.synthetic.main.activity_add.*
@@ -140,7 +139,7 @@ class MainAdapter(
         val builder = AlertDialog.Builder(contextMain)
         builder.setTitle("Tem certeza que quer excluir essa lista ?")
         builder.setPositiveButton("Sim") { _, _ ->
-            Firebase().excluirList(currentItem.idList.toString(), contextMain)
+            FirestoreRepository().excluirList(currentItem.idList.toString(), contextMain)
         }
         builder.setNegativeButton("Não") { _, _ ->
             return@setNegativeButton

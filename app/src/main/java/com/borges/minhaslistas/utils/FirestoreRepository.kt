@@ -3,12 +3,16 @@ package com.borges.minhaslistas.utils
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import com.borges.minhaslistas.models.DataList
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
+import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
-class Firebase {
+class FirestoreRepository {
     private val db = FirebaseFirestore.getInstance()
     private val mAuth = FirebaseAuth.getInstance()
     private val TAG = "FIREBASE_CLASSE"
@@ -60,14 +64,7 @@ class Firebase {
 
     }
 
-    fun createItemList(
-        nome: String,
-        quantInt: Int,
-        valorDouble: Double,
-        multiply: Double,
-        idList: String,
-        now: Timestamp
-    ) {
+    fun createItemList(nome: String, quantInt: Int, valorDouble: Double, multiply: Double, idList: String, now: Timestamp) {
 
         val comprado = false
 
@@ -131,6 +128,7 @@ class Firebase {
         item["timestamp"] = Timestamp.now()
 
         Log.i("NOTIFY_CREATE_FIREBASE", "CRIANDO NEWLIST")
+
         db.collection(mAuth.currentUser?.uid.toString())
             .add(item)
             .addOnSuccessListener {
@@ -199,6 +197,5 @@ class Firebase {
             }
 
     }
-
 
 }

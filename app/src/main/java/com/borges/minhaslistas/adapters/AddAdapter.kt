@@ -13,7 +13,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.borges.minhaslistas.R
 import com.borges.minhaslistas.models.DataItem
-import com.borges.minhaslistas.utils.Firebase
+import com.borges.minhaslistas.utils.FirestoreRepository
 import kotlinx.android.synthetic.main.card_recycle_add.view.*
 import java.text.NumberFormat
 import java.util.*
@@ -68,7 +68,7 @@ class AddAdapter(
         }
 
         fun mudarComprado(currentItem: DataItem?, position: Int) {
-            val fb = Firebase()
+            val fb = FirestoreRepository()
             with(currentItem){
                 itemView.buttom_delete.setOnClickListener {
                     this?.idList?.let { it1 ->

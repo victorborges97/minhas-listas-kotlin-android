@@ -8,7 +8,7 @@ import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import com.borges.minhaslistas.R
 import com.borges.minhaslistas.models.DataList
-import com.borges.minhaslistas.utils.Firebase
+import com.borges.minhaslistas.utils.FirestoreRepository
 import kotlinx.android.synthetic.main.dialog_duplic_list.view.*
 
 
@@ -58,7 +58,7 @@ class DialogDuplicList: DialogFragment() {
     }
 
     private fun duplicList() {
-        val fb = Firebase()
+        val fb = FirestoreRepository()
         val nome: String = mNome.text.toString()
         val mercado: String = mMercado.text.toString()
         fb.dupliqueList(mNote.idList.toString(), nome, mercado)

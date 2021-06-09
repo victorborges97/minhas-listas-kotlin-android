@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import com.borges.minhaslistas.R
-import com.borges.minhaslistas.utils.Firebase
+import com.borges.minhaslistas.utils.FirestoreRepository
 import kotlinx.android.synthetic.main.dialog_add_list.view.*
 
 class DialogAddList: DialogFragment() {
@@ -42,7 +42,7 @@ class DialogAddList: DialogFragment() {
     }
 
     private fun createData(nomeDaLista: String?, mercado: String?){
-        val fb = Firebase()
+        val fb = FirestoreRepository()
         fb.createList(nomeDaLista, mercado)
     }
 
