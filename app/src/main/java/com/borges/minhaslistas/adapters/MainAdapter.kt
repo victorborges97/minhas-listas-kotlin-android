@@ -143,10 +143,11 @@ class MainAdapter(
 
     private fun modelExcluir(currentItem: DataList, contextMain: Context) {
         //Cria o gerador do AlertDialog
+        val fb = FirestoreRepository()
         val builder = AlertDialog.Builder(contextMain)
         builder.setTitle("Tem certeza que quer excluir essa lista ?")
         builder.setPositiveButton("Sim") { _, _ ->
-            FirestoreRepository().excluirList(currentItem.idList.toString(), contextMain)
+            fb.excluirList(currentItem.idList.toString(), contextMain)
         }
         builder.setNegativeButton("Não") { _, _ ->
             return@setNegativeButton

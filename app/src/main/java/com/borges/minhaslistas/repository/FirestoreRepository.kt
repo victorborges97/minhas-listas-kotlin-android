@@ -17,12 +17,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 class FirestoreRepository {
-    private val db = FirebaseFirestore.getInstance()
+    private var db = FirebaseFirestore.getInstance()
     private val mAuth = FirebaseAuth.getInstance()
     private val TAG = "FIREBASE_CLASSE"
     private var googleSignClient : GoogleSignInClient? = null
 
     fun requestSignInOptions(c: Context): GoogleSignInClient? {
+        db = FirebaseFirestore.getInstance()
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(c.getString(R.string.default_web_client_id))
             .requestEmail()
@@ -32,6 +33,7 @@ class FirestoreRepository {
     }
 
     fun updateItemListComprado(idList: String, idItem: String, comprado: Boolean ) {
+        db = FirebaseFirestore.getInstance()
         val item = hashMapOf<String, Any>()
         item["comprado"] = comprado == false
 
@@ -52,6 +54,7 @@ class FirestoreRepository {
     }
 
     fun updateItemList(nome: String, quantInt: Int, valorDouble: Double, multiply: Double, idList: String, idItem: String ) {
+        db = FirebaseFirestore.getInstance()
         val item = hashMapOf<String, Any>()
 
         item["nome"] = nome
@@ -76,6 +79,7 @@ class FirestoreRepository {
     }
 
     fun createItemList(nome: String, quantInt: Int, valorDouble: Double, multiply: Double, idList: String, now: Timestamp) {
+        db = FirebaseFirestore.getInstance()
         val comprado = false
         val item = hashMapOf<String, Any>()
 
@@ -101,6 +105,7 @@ class FirestoreRepository {
     }
 
     fun excluirItemList(idList: String, idItem: String) {
+        db = FirebaseFirestore.getInstance()
         db.collection(mAuth.currentUser?.uid.toString())
             .document(idList)
             .collection("itens")
@@ -111,6 +116,7 @@ class FirestoreRepository {
     }
 
     fun updateList(idList: String, nomeDaLista: String, mercado: String) {
+        db = FirebaseFirestore.getInstance()
         val item = hashMapOf<String, Any>()
         item["nomeDaLista"] = nomeDaLista
         item["nomeDoMercado"] = mercado
@@ -129,6 +135,7 @@ class FirestoreRepository {
     }
 
     fun createList(nomeDaLista: String?, mercado: String?) {
+        db = FirebaseFirestore.getInstance()
         val item = hashMapOf<String, Any>()
 
         item["nomeDaLista"] = nomeDaLista.toString()
@@ -148,16 +155,23 @@ class FirestoreRepository {
     }
 
     fun excluirList(idList: String, context: Context) {
-        db.collection(mAuth.currentUser?.uid.toString())
-            .document(idList)
-            .delete()
-            .addOnSuccessListener {
-                Toast.makeText(context, "Lista excluida com sucesso!", Toast.LENGTH_LONG).show()
-            }
-            .addOnFailureListener { e -> Log.w("DELETE_FIREBASE_LISTA", "Error deleting document", e) }
+        db = FirebaseFirestore.getInstance()
+        try {
+            db.collection(mAuth.currentUser?.uid.toString())
+                .document(idList)
+                .delete()
+                .addOnSuccessListener {
+                    Toast.makeText(context, "Lista excluida com sucesso!", Toast.LENGTH_LONG).show()
+                }
+                .addOnFailureListener { e -> Log.w("DELETE_FIREBASE_LISTA", "Error deleting document", e) }
+        } catch (e: Error) {
+            Log.w("DELETE_FIREBASE_LISTA", "Error deleting document", e)
+        }
+
     }
 
     fun dupliqueList(idList: String, nomeNovo: String, mercadoNovo: String) {
+        db = FirebaseFirestore.getInstance()
         val list = hashMapOf<String, Any>()
 
         list["nomeDaLista"] = nomeNovo.toString()
@@ -199,9 +213,9 @@ class FirestoreRepository {
     }
 
     fun getListShared(id: String, idList: String): Task<QuerySnapshot> {
-        val listsRef = FirebaseFirestore.getInstance()
+        db = FirebaseFirestore.getInstance()
 
-        return listsRef
+        return db
             .collection(id)
             .document(idList)
             .collection("itens")
@@ -210,8 +224,9 @@ class FirestoreRepository {
     }
 
     fun getListsItem(idList: String): Query {
-        val listsRef = FirebaseFirestore.getInstance()
-        return listsRef
+        db = FirebaseFirestore.getInstance()
+
+        return db
             .collection(mAuth.currentUser?.uid.toString())
             .document(idList)
             .collection("itens")
@@ -219,9 +234,9 @@ class FirestoreRepository {
     }
 
     fun getLists(): Query {
-        val listsRef = FirebaseFirestore.getInstance()
+        db = FirebaseFirestore.getInstance()
 
-        return listsRef
+        return db
             .collection(mAuth.currentUser?.uid.toString())
             .orderBy("timestamp", Query.Direction.ASCENDING)
     }
