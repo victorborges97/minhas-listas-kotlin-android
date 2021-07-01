@@ -14,7 +14,7 @@
 
 ## 👍🏾 Imagens.
 
-![Simulator Example](https://raw.githubusercontent.com/victorborges97/repo-img/main/App%20Minhas%20Listas/1.png?token=ALM6VBRXGYR2S2G6MOIRKWTAYQDNI)
+![Simulator Example](https://raw.githubusercontent.com/victorborges97/repo-img/main/App%20Minhas%20Listas/1.png)
 
-![Simulator Example](https://raw.githubusercontent.com/victorborges97/repo-img/main/App%20Minhas%20Listas/2.png?token=ALM6VBR5PWGLVEUD2767K4TAYQDNO)
+![Simulator Example](https://raw.githubusercontent.com/victorborges97/repo-img/main/App%20Minhas%20Listas/2.png)
 
