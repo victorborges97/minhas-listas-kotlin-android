@@ -1,4 +1,4 @@
-package com.borges.minhaslistas.adapters
+package com.borges.minhaslistas.ui.list.adapters
 
 import android.content.Context
 import android.graphics.Paint

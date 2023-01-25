@@ -1,4 +1,4 @@
-package com.borges.minhaslistas.adapters
+package com.borges.minhaslistas.ui.home.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -16,7 +16,7 @@ import com.borges.minhaslistas.models.DataItem
 import com.borges.minhaslistas.models.DataList
 import com.borges.minhaslistas.repository.FirestoreRepository
 import com.borges.minhaslistas.utils.Utils
-import com.borges.minhaslistas.views.AddActivity
+import com.borges.minhaslistas.ui.list.activity.AddActivity
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_add.*

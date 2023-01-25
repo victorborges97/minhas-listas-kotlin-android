@@ -8,7 +8,7 @@
     android:paddingLeft="35dp"
     android:paddingRight="35dp"
     android:layout_gravity="center"
-    tools:context=".views.LoginActivity">
+    tools:context=".ui.auth.AuthLoginActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/content_login"

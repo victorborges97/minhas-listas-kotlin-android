@@ -22,14 +22,14 @@ class FirestoreRepository {
     private val TAG = "FIREBASE_CLASSE"
     private var googleSignClient : GoogleSignInClient? = null
 
-    fun requestSignInOptions(c: Context): GoogleSignInClient? {
+    fun requestSignInOptions(c: Context): GoogleSignInClient {
         db = FirebaseFirestore.getInstance()
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(c.getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
         googleSignClient = GoogleSignIn.getClient(c, gso)
-        return googleSignClient
+        return googleSignClient!!
     }
 
     fun updateItemListComprado(idList: String, idItem: String, comprado: Boolean ) {

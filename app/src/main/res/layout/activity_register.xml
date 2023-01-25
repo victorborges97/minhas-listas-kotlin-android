@@ -8,7 +8,7 @@
     android:paddingLeft="35dp"
     android:paddingRight="35dp"
     android:layout_gravity="center"
-    tools:context=".views.RegisterActivity">
+    tools:context=".ui.auth.AuthSignupActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

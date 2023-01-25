@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/appPrimaryBg"
-    tools:context=".views.AddActivity">
+    tools:context=".ui.list.activity.AddActivity">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/nomeDaLista"

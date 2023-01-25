@@ -1,6 +1,5 @@
-package com.borges.minhaslistas.views
+package com.borges.minhaslistas.ui.list.activity
 
-import android.annotation.SuppressLint
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
@@ -9,16 +8,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.borges.minhaslistas.R
-import com.borges.minhaslistas.adapters.AddAdapter
-import com.borges.minhaslistas.dialogs.DialogAddItem
+import com.borges.minhaslistas.ui.list.adapters.AddAdapter
+import com.borges.minhaslistas.ui.list.dialogs.DialogAddItem
 import com.borges.minhaslistas.dialogs.DialogEditItem
 import com.borges.minhaslistas.models.DataItem
 import com.borges.minhaslistas.repository.FirestoreRepository
 import com.borges.minhaslistas.utils.Utils
 import com.google.firebase.firestore.DocumentChange
 import kotlinx.android.synthetic.main.activity_add.*
-import kotlinx.android.synthetic.main.activity_add.view.*
-import kotlinx.android.synthetic.main.activity_main.*
 import java.text.NumberFormat
 import java.util.*
 

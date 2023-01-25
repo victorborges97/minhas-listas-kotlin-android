@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bgColorDialogFeito"
-    tools:context=".views.AddActivity">
+    tools:context=".ui.list.activity.AddActivity" tools:ignore="MissingClass">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/nomeDaLista"

@@ -1,4 +1,4 @@
-package com.borges.minhaslistas.views
+package com.borges.minhaslistas.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.borges.minhaslistas.R
+import com.borges.minhaslistas.ui.home.activity.MainActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -13,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_register.*
 import java.util.*
 
 
-class RegisterActivity : AppCompatActivity() {
+class AuthSignupActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +60,7 @@ class RegisterActivity : AppCompatActivity() {
                 OnCompleteListener<AuthResult?> { task ->
                     if (task.isSuccessful) {
                         Log.i("REGISTER", "Usuário Criado.")
-                        startActivity(Intent(applicationContext, LoginActivity::class.java))
+                        startActivity(Intent(applicationContext, AuthLoginActivity::class.java))
                         finish()
                     } else {
                         progressBar.visibility = View.INVISIBLE
@@ -70,7 +71,7 @@ class RegisterActivity : AppCompatActivity() {
         })
 
         btn_voltar.setOnClickListener(View.OnClickListener {
-            val intent = Intent(applicationContext, LoginActivity::class.java)
+            val intent = Intent(applicationContext, AuthLoginActivity::class.java)
             startActivity(intent)
             finish()
         })

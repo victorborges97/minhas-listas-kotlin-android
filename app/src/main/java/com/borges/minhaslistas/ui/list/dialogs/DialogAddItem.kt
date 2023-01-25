@@ -1,4 +1,4 @@
-package com.borges.minhaslistas.dialogs
+package com.borges.minhaslistas.ui.list.dialogs
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,11 +9,7 @@ import androidx.fragment.app.DialogFragment
 import com.borges.minhaslistas.R
 import com.borges.minhaslistas.repository.FirestoreRepository
 import com.google.firebase.Timestamp
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.dialog_add_item.view.*
-import kotlinx.android.synthetic.main.dialog_add_list.view.*
-import kotlinx.android.synthetic.main.dialog_edit_item.view.*
-import java.util.*
 
 
 class DialogAddItem: DialogFragment() {

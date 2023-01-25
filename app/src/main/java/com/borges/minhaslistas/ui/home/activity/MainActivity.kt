@@ -1,4 +1,4 @@
-package com.borges.minhaslistas.views
+package com.borges.minhaslistas.ui.home.activity
 
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
@@ -9,22 +9,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.borges.minhaslistas.R
-import com.borges.minhaslistas.adapters.MainAdapter
-import com.borges.minhaslistas.dialogs.DialogAddList
-import com.borges.minhaslistas.dialogs.DialogDuplicList
-import com.borges.minhaslistas.dialogs.DialogEditList
+import com.borges.minhaslistas.ui.home.adapters.MainAdapter
+import com.borges.minhaslistas.ui.list.dialogs.DialogAddList
+import com.borges.minhaslistas.ui.home.dialogs.DialogDuplicList
+import com.borges.minhaslistas.ui.home.dialogs.DialogEditList
 import com.borges.minhaslistas.models.DataList
 import com.borges.minhaslistas.repository.FirestoreRepository
+import com.borges.minhaslistas.ui.auth.AuthLoginActivity
 import com.borges.minhaslistas.utils.Utils
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.activity_add.*
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
-
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
@@ -105,7 +103,7 @@ class MainActivity : AppCompatActivity() {
     private fun logout() {
         FirebaseAuth.getInstance().signOut()
         signOutGoogle()
-        val intent = Intent(applicationContext, LoginActivity::class.java)
+        val intent = Intent(applicationContext, AuthLoginActivity::class.java)
         startActivity(intent)
         finish()
     }
